@@ -1,0 +1,184 @@
+Building for debugging...
+[1 / 1]
+[2 / 11] CourseKit
+[4 / 13] CourseKit
+[7 / 16] CourseKit
+[12 / 13] CourseKitTests-product
+Build complete! (1.22秒)
+Test Suite 'All tests' started at 2026-10-01 23:39:46.141.
+Test Suite 'All tests' passed at 2026-10-01 23:39:46.143.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "外部 AI JSON 导入" started.
+◇ Suite "备份与日历导出" started.
+◇ Suite "官方调休与确认" started.
+◇ Suite "输入验证与周数解析" started.
+◇ Suite ExportPreferencesTests started.
+◇ Suite "课表与作息导入" started.
+◇ Suite "学期时间和实际课次" started.
+◇ Suite "后续安排编辑" started.
+◇ Suite "调休目标作息验证" started.
+◇ Test rejectsWrongEnvelopeWithoutDroppingRecords() started.
+◇ Test calendarEscapesFoldsAndKeepsStableUIDs() started.
+◇ Test backupRejectsInvalidTimeZonesAndDuplicateOverrideDates() started.
+◇ Test backupRejectsBrokenReferencesAndDuplicateIDs() started.
+◇ Test calendarHonorsDisabledReminder() started.
+◇ Test backupRejectsFutureVersionsBeforePayloadDecode() started.
+◇ Test documentationFixturesMatchTheImportContract() started.
+◇ Test promptsSevenDaysBeforeAndThroughDayOnly() started.
+◇ Test promptContainsVersionedExamplesAndNoInferenceInstructions() started.
+◇ Test explicitWeekPatternsAreExpandedWithoutTruncation() started.
+◇ Test inputLimitsAreEnforcedBeforePartialImport() started.
+◇ Test backupRoundTripIncludingRelationships() started.
+◇ Test numericArraysAreAtomicAndBooleansCannotBecomeNumbers() started.
+◇ Test closingKeepsExplicitAddedAndMovedLessons() started.
+◇ Test periodsTakePriorityEvenWhenPeriodInputNeedsCorrection() started.
+◇ Test rejectsInvalidDecisionDatesAndDuplicateDates() started.
+◇ Test v1ReadsAndV2PreservesDecisions() started.
+◇ Test partialAndWrongTypedLessonFieldsRemainEditable() started.
+◇ Test rejectsAmbiguousOrUnterminatedFencesAndCode() started.
+◇ Test officialNoticeMatchesBundledDays() started.
+◇ Test explicitClockSupportsMidnightEndButDoesNotGuessNextDate() started.
+◇ Test oversizedNumberTokensCannotOverflowTheWeekParser() started.
+◇ Test pendingDoesNotChangeOriginalScheduleAndManualOverrideResolvesIt() started.
+◇ Test incompleteDuplicateAndInvalidBellPeriodsAreRejected() started.
+◇ Test malformedWarningsAndMetadataAreNotSilentlyAccepted() started.
+◇ Test exampleIsAValidRestorableSnapshot() started.
+◇ Test rejectsInvalidWeekExpressions() started.
+◇ Test acceptsOneJSONFenceWithSurroundingProse() started.
+◇ Test draftRejectsMixedOrInvalidTimes() started.
+◇ Test completeRecordRetainsMetadataAndUnknownTimes() started.
+◇ Test refusesWrongWeekdayCountYearAndUnofficialSource() started.
+◇ Test dayKeysFollowSchoolZoneAcrossMidnight() started.
+◇ Test closingSourceDayStillAllowsExplicitMoveOut() started.
+◇ Test followsSourceTeachingWeekRatherThanTargetWeek() started.
+◇ Test draftNeedsKnownTimesAcrossEveryWeek() started.
+◇ Test confirmationIsIdempotentAndResetRetainsManualOverrides() started.
+◇ Test bellScheduleRetainsBreaksAndSortsByPeriodNumber() started.
+◇ Test parsesRangesParityChineseAndExclusions() started.
+◇ Test summariesRoundTrip() started.
+◇ Test icsUsesGlobalReminderAndCourseOverride() started.
+◇ Test preservesHolidayExceptionBasedOnSourceWeek() started.
+◇ Test rejectsReusedIDsAndEarlierWeeks() started.
+◇ Test editingAllWeekdaysPreservesOneOffDestinationsAndCancellations() started.
+◇ Test preservesHistoryAndMovedExceptionDestination() started.
+◇ Test editingAllKeepsHolidayDatesAndDropsOnlyDeletedRuleExceptions() started.
+◇ Test reattachesAddedLessonWithoutChangingItsDate() started.
+◇ Test invalidMoveDoesNotCreatePhantomClass() started.
+◇ Test backupDoesNotTransferCalendarWriterDevice() started.
+◇ Test moveAndLocationEditsPreserveCalendarIdentity() started.
+◇ Test teachingAnotherCourseDuringBreakTakesPrecedence() started.
+◇ Test upcomingAndSemesterStates() started.
+◇ Test effectiveBellScheduleUsesTargetDate() started.
+◇ Test conflictsIgnoreBreaksAndTouchingBoundaries() started.
+◇ Test cancellationAndAddedClassHaveSeparateIdentities() started.
+◇ Test mappedTablePreservesUnknownsRatherThanInventingTimes() started.
+◇ Test quotedCSVPreservesCommasMultilineAndEscapedQuotes() started.
+◇ Test dayOverrideThenTargetCancellation() started.
+◇ Test spreadsheetFractionalClockValuesAreRecognized() started.
+◇ Test detectsBellScheduleWithoutTurningBreaksIntoLessons() started.
+◇ Test explicitClockTimesArePreservedAndValidated() started.
+◇ Test requiresAllSourcePeriodsInTargetsEffectiveVersion() started.
+◇ Test periodParsingNeverSilentlyTruncatesInvalidRanges() started.
+◇ Test classAndBreakBoundariesAreHalfOpen() started.
+◇ Test directTimesNeedNoBellAndTrulyEmptySourceCanClearDay() started.
+◇ Test mergedCellSpansSeveralTeachingPeriods() started.
+◇ Test respectsWeekMaskAndSegments() started.
+◇ Test visionListTableUsesHeaderMapping() started.
+◇ Test earlierConfirmedBellScheduleMakesBeforeTermMakeupValid() started.
+◇ Test unconfirmedAndMissingPeriodsDoNotGenerateClasses() started.
+◇ Test pastedWeekRangeDoesNotConsumePrecedingClockMinutes() started.
+◇ Test preventsEmptyPreviewWhenTargetPredatesKnownBellSchedule() started.
+◇ Test oddWeeksAndInvalidWeeksRequireFaithfulParsing() started.
+◇ Test dayOverrideReplacesTargetAndMatchesSourceWeek() started.
+◇ Test independentPastedCoursesAndTeacherLocation() started.
+◇ Test weekBoundariesUseSchoolTimezone() started.
+◇ Test calendarArithmeticSurvivesDST() started.
+✔ Test backupRejectsFutureVersionsBeforePayloadDecode() passed after 0.009 seconds.
+✔ Test backupRejectsBrokenReferencesAndDuplicateIDs() passed after 0.010 seconds.
+✔ Test numericArraysAreAtomicAndBooleansCannotBecomeNumbers() passed after 0.011 seconds.
+✔ Test backupRejectsInvalidTimeZonesAndDuplicateOverrideDates() passed after 0.011 seconds.
+✔ Test rejectsWrongEnvelopeWithoutDroppingRecords() passed after 0.026 seconds.
+✔ Test backupRoundTripIncludingRelationships() passed after 0.026 seconds.
+✔ Test rejectsInvalidDecisionDatesAndDuplicateDates() passed after 0.036 seconds.
+✔ Test rejectsAmbiguousOrUnterminatedFencesAndCode() passed after 0.036 seconds.
+✔ Test closingKeepsExplicitAddedAndMovedLessons() passed after 0.037 seconds.
+✔ Test promptsSevenDaysBeforeAndThroughDayOnly() passed after 0.037 seconds.
+✔ Test v1ReadsAndV2PreservesDecisions() passed after 0.041 seconds.
+✔ Test calendarHonorsDisabledReminder() passed after 0.049 seconds.
+✔ Test incompleteDuplicateAndInvalidBellPeriodsAreRejected() passed after 0.050 seconds.
+✔ Test calendarEscapesFoldsAndKeepsStableUIDs() passed after 0.054 seconds.
+✔ Test pendingDoesNotChangeOriginalScheduleAndManualOverrideResolvesIt() passed after 0.059 seconds.
+✔ Test draftRejectsMixedOrInvalidTimes() passed after 0.061 seconds.
+✔ Test malformedWarningsAndMetadataAreNotSilentlyAccepted() passed after 0.061 seconds.
+✔ Test partialAndWrongTypedLessonFieldsRemainEditable() passed after 0.061 seconds.
+✔ Test acceptsOneJSONFenceWithSurroundingProse() passed after 0.061 seconds.
+✔ Test promptContainsVersionedExamplesAndNoInferenceInstructions() passed after 0.061 seconds.
+✔ Test oversizedNumberTokensCannotOverflowTheWeekParser() passed after 0.061 seconds.
+✔ Test explicitClockSupportsMidnightEndButDoesNotGuessNextDate() passed after 0.061 seconds.
+✔ Test periodsTakePriorityEvenWhenPeriodInputNeedsCorrection() passed after 0.061 seconds.
+✔ Test explicitWeekPatternsAreExpandedWithoutTruncation() passed after 0.061 seconds.
+✔ Test completeRecordRetainsMetadataAndUnknownTimes() passed after 0.061 seconds.
+✔ Test bellScheduleRetainsBreaksAndSortsByPeriodNumber() passed after 0.061 seconds.
+✔ Test summariesRoundTrip() passed after 0.061 seconds.
+✔ Test rejectsInvalidWeekExpressions() passed after 0.061 seconds.
+✔ Test parsesRangesParityChineseAndExclusions() passed after 0.061 seconds.
+✔ Test documentationFixturesMatchTheImportContract() passed after 0.061 seconds.
+✔ Test draftNeedsKnownTimesAcrossEveryWeek() passed after 0.061 seconds.
+✔ Test confirmationIsIdempotentAndResetRetainsManualOverrides() passed after 0.061 seconds.
+✔ Test editingAllKeepsHolidayDatesAndDropsOnlyDeletedRuleExceptions() passed after 0.060 seconds.
+✔ Test officialNoticeMatchesBundledDays() passed after 0.061 seconds.
+✔ Test refusesWrongWeekdayCountYearAndUnofficialSource() passed after 0.061 seconds.
+✔ Test rejectsReusedIDsAndEarlierWeeks() passed after 0.060 seconds.
+✔ Test dayKeysFollowSchoolZoneAcrossMidnight() passed after 0.061 seconds.
+✔ Test preservesHolidayExceptionBasedOnSourceWeek() passed after 0.061 seconds.
+✔ Test reattachesAddedLessonWithoutChangingItsDate() passed after 0.060 seconds.
+✔ Test invalidMoveDoesNotCreatePhantomClass() passed after 0.057 seconds.
+✔ Test teachingAnotherCourseDuringBreakTakesPrecedence() passed after 0.057 seconds.
+✔ Test mappedTablePreservesUnknownsRatherThanInventingTimes() passed after 0.056 seconds.
+✔ Test quotedCSVPreservesCommasMultilineAndEscapedQuotes() passed after 0.056 seconds.
+✔ Test closingSourceDayStillAllowsExplicitMoveOut() passed after 0.061 seconds.
+✔ Test upcomingAndSemesterStates() passed after 0.057 seconds.
+✔ Test detectsBellScheduleWithoutTurningBreaksIntoLessons() passed after 0.056 seconds.
+✔ Test spreadsheetFractionalClockValuesAreRecognized() passed after 0.056 seconds.
+✔ Test editingAllWeekdaysPreservesOneOffDestinationsAndCancellations() passed after 0.060 seconds.
+✔ Test periodParsingNeverSilentlyTruncatesInvalidRanges() passed after 0.056 seconds.
+✔ Test explicitClockTimesArePreservedAndValidated() passed after 0.056 seconds.
+✔ Test requiresAllSourcePeriodsInTargetsEffectiveVersion() passed after 0.056 seconds.
+✔ Test mergedCellSpansSeveralTeachingPeriods() passed after 0.056 seconds.
+✔ Test directTimesNeedNoBellAndTrulyEmptySourceCanClearDay() passed after 0.056 seconds.
+✔ Test visionListTableUsesHeaderMapping() passed after 0.055 seconds.
+✔ Test preservesHistoryAndMovedExceptionDestination() passed after 0.060 seconds.
+✔ Test respectsWeekMaskAndSegments() passed after 0.055 seconds.
+✔ Test dayOverrideThenTargetCancellation() passed after 0.056 seconds.
+✔ Test pastedWeekRangeDoesNotConsumePrecedingClockMinutes() passed after 0.055 seconds.
+✔ Test oddWeeksAndInvalidWeeksRequireFaithfulParsing() passed after 0.055 seconds.
+✔ Test preventsEmptyPreviewWhenTargetPredatesKnownBellSchedule() passed after 0.055 seconds.
+✔ Test earlierConfirmedBellScheduleMakesBeforeTermMakeupValid() passed after 0.055 seconds.
+✔ Test effectiveBellScheduleUsesTargetDate() passed after 0.057 seconds.
+✔ Test independentPastedCoursesAndTeacherLocation() passed after 0.055 seconds.
+✔ Test moveAndLocationEditsPreserveCalendarIdentity() passed after 0.057 seconds.
+✔ Suite "输入验证与周数解析" passed after 0.062 seconds.
+✔ Suite "后续安排编辑" passed after 0.062 seconds.
+✔ Suite "课表与作息导入" passed after 0.062 seconds.
+✔ Suite "调休目标作息验证" passed after 0.062 seconds.
+✔ Test calendarArithmeticSurvivesDST() passed after 0.055 seconds.
+✔ Test weekBoundariesUseSchoolTimezone() passed after 0.056 seconds.
+✔ Test classAndBreakBoundariesAreHalfOpen() passed after 0.057 seconds.
+✔ Test dayOverrideReplacesTargetAndMatchesSourceWeek() passed after 0.059 seconds.
+✔ Test unconfirmedAndMissingPeriodsDoNotGenerateClasses() passed after 0.059 seconds.
+✔ Test backupDoesNotTransferCalendarWriterDevice() passed after 0.064 seconds.
+✔ Test conflictsIgnoreBreaksAndTouchingBoundaries() passed after 0.065 seconds.
+✔ Test inputLimitsAreEnforcedBeforePartialImport() passed after 0.075 seconds.
+✔ Suite "外部 AI JSON 导入" passed after 0.075 seconds.
+✔ Test followsSourceTeachingWeekRatherThanTargetWeek() passed after 0.077 seconds.
+✔ Suite "官方调休与确认" passed after 0.078 seconds.
+✔ Test cancellationAndAddedClassHaveSeparateIdentities() passed after 0.073 seconds.
+✔ Suite "学期时间和实际课次" passed after 0.078 seconds.
+✔ Test exampleIsAValidRestorableSnapshot() passed after 0.085 seconds.
+✔ Suite "备份与日历导出" passed after 0.086 seconds.
+✔ Test icsUsesGlobalReminderAndCourseOverride() passed after 0.086 seconds.
+✔ Suite ExportPreferencesTests passed after 0.087 seconds.
+✔ Test run with 76 tests in 9 suites passed after 0.087 seconds.

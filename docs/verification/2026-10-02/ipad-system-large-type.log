@@ -1,0 +1,128 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project CourseFlow.xcodeproj -scheme CourseFlow -configuration Debug -sdk iphonesimulator -destination "platform=iOS Simulator,id=11716F68-C2AE-42FE-976C-9044F560AEAA" -derivedDataPath /tmp/courseflow-batch-build -resultBundlePath /tmp/courseflow-batch-ipad-system-type.xcresult -parallel-testing-enabled NO "-only-testing:CourseFlowUITests/TimeHolidayUITests/testHolidayGroupWorksWithLargeTypeAndDarkAppearance" test-without-building
+
+Build settings from command line:
+    SDKROOT = iphonesimulator27.0
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX.git @ 0.14.2
+  CourseKit: ~/Documents/ChatGPT/课表APP @ local
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation.git @ 0.9.20
+
+Writing result bundle at path:
+	/tmp/courseflow-batch-ipad-system-type.xcresult
+
+2026-10-02 01:12:44.662881+0800 CourseFlowUITests-Runner[44531:1511949] [Default] Running tests...
+2026-10-02 01:12:44.708621+0800 CourseFlowUITests-Runner[44531:1511949] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-02 01:12:47.414.
+Test Suite 'CourseFlowUITests.xctest' started at 2026-10-02 01:12:47.415.
+Test Suite 'TimeHolidayUITests' started at 2026-10-02 01:12:47.415.
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testHolidayGroupWorksWithLargeTypeAndDarkAppearance]' started.
+    t =     0.00s Start Test at 2026-10-02 01:12:47.417
+    t =     0.02s Set Up
+    t =     0.02s Open com.courseflow.app
+    t =     0.02s     Launch com.courseflow.app
+2026-10-02 01:12:47.501 xcodebuild[44519:1511173] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-02 01:12:47.501 xcodebuild[44519:1511173] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[44531]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1088e0398) and /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x1089d4310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     2.56s         Setting up automation session
+    t =     4.84s         Wait for com.courseflow.app to idle
+    t =     6.95s Waiting 15.0s for "week-picker" Button to exist
+    t =     8.02s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     8.02s         Checking existence of `"week-picker" Button`
+    t =     8.28s Waiting 5.0s for "holiday-group-prompt-2026-国庆节" Button to exist
+    t =     9.35s     Checking `Expect predicate `existsNoRetry == 1` for object "holiday-group-prompt-2026-国庆节" Button`
+    t =     9.36s         Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =     9.47s Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =     9.58s Find the Target Application 'com.courseflow.app'
+    t =     9.65s Find the Target Application 'com.courseflow.app'
+    t =     9.71s Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     9.82s Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     9.94s Tap Target Application 'com.courseflow.app'[0.00, 0.00] -> (410.0, 376.8)
+    t =     9.94s     Wait for com.courseflow.app to idle
+    t =     9.94s     Find the Target Application 'com.courseflow.app'
+    t =    10.01s     Check for interrupting elements affecting "课序" Application
+    t =    10.08s         Wait for com.apple.springboard to idle
+    t =    10.10s     Synthesize event
+    t =    10.10s         Find the Target Application 'com.courseflow.app'
+    t =    10.17s         Find the Target Application 'com.courseflow.app'
+    t =    10.24s         Find the Target Application 'com.courseflow.app'
+    t =    10.59s     Wait for com.courseflow.app to idle
+    t =    10.65s Waiting 5.0s for "国庆节学校安排" NavigationBar to exist
+    t =    11.73s     Checking `Expect predicate `existsNoRetry == 1` for object "国庆节学校安排" NavigationBar`
+    t =    11.73s         Checking existence of `"国庆节学校安排" NavigationBar`
+    t =    11.89s Checking existence of `"holiday-batch-confirm" Button`
+    t =    12.02s Find the "holiday-batch-confirm" Button
+    t =    12.15s Checking existence of `"holiday-makeup-choice-2026-10-10" Any`
+    t =    12.45s Checking existence of `CollectionView (First Match)`
+    t =    12.47s Swipe up CollectionView (First Match)
+    t =    12.47s     Wait for com.courseflow.app to idle
+    t =    12.47s     Find the CollectionView (First Match)
+    t =    12.50s     Check for interrupting elements affecting CollectionView
+    t =    12.60s         Wait for com.apple.springboard to idle
+    t =    12.61s     Synthesize event
+    t =    13.12s     Wait for com.courseflow.app to idle
+    t =    15.04s Checking existence of `"holiday-batch-confirm" Button`
+    t =    15.21s Find the "holiday-batch-confirm" Button
+    t =    15.34s Checking existence of `"holiday-makeup-choice-2026-10-10" Any`
+    t =    15.67s Checking existence of `CollectionView (First Match)`
+    t =    15.70s Swipe up CollectionView (First Match)
+    t =    15.70s     Wait for com.courseflow.app to idle
+    t =    15.70s     Find the CollectionView (First Match)
+    t =    15.73s     Check for interrupting elements affecting CollectionView
+    t =    15.82s         Wait for com.apple.springboard to idle
+    t =    15.84s     Synthesize event
+    t =    16.35s     Wait for com.courseflow.app to idle
+    t =    18.39s Checking existence of `"holiday-batch-confirm" Button`
+    t =    18.59s Find the "holiday-batch-confirm" Button
+    t =    18.78s Checking existence of `"holiday-makeup-choice-2026-10-10" Any`
+    t =    18.98s Find the "holiday-makeup-choice-2026-10-10" Any
+    t =    19.17s Checking existence of `CollectionView (First Match)`
+    t =    19.19s Swipe up CollectionView (First Match)
+    t =    19.19s     Wait for com.courseflow.app to idle
+    t =    19.20s     Find the CollectionView (First Match)
+    t =    19.22s     Check for interrupting elements affecting CollectionView
+    t =    19.38s         Wait for com.apple.springboard to idle
+    t =    19.40s     Synthesize event
+    t =    19.91s     Wait for com.courseflow.app to idle
+    t =    21.87s Checking existence of `"holiday-batch-confirm" Button`
+    t =    22.01s Find the "holiday-batch-confirm" Button
+    t =    22.14s Checking existence of `"holiday-makeup-choice-2026-10-10" Button`
+    t =    22.28s Find the "holiday-makeup-choice-2026-10-10" Button
+    t =    22.42s Find the "holiday-makeup-choice-2026-10-10" Button
+    t =    22.56s Checking existence of `"holiday-makeup-choice-2026-10-10" Button`
+    t =    22.70s Find the Target Application 'com.courseflow.app'
+    t =    22.89s Added attachment named '深色大字号节日批量确认'
+    t =    22.89s Tap "稍后再说" Button
+    t =    22.89s     Wait for com.courseflow.app to idle
+    t =    23.09s     Find the "稍后再说" Button
+    t =    23.25s     Check for interrupting elements affecting "稍后再说" Button
+    t =    23.35s         Wait for com.apple.springboard to idle
+    t =    23.37s     Synthesize event
+    t =    23.66s     Wait for com.courseflow.app to idle
+    t =    24.14s Waiting 5.0s for "holiday-group-prompt-2026-国庆节" Button to exist
+    t =    25.22s     Checking `Expect predicate `existsNoRetry == 1` for object "holiday-group-prompt-2026-国庆节" Button`
+    t =    25.22s         Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    25.36s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testHolidayGroupWorksWithLargeTypeAndDarkAppearance]' passed (25.625 seconds).
+Test Suite 'TimeHolidayUITests' passed at 2026-10-02 01:13:13.042.
+	 Executed 1 test, with 0 failures (0 unexpected) in 25.625 (25.627) seconds
+Test Suite 'CourseFlowUITests.xctest' passed at 2026-10-02 01:13:13.043.
+	 Executed 1 test, with 0 failures (0 unexpected) in 25.625 (25.627) seconds
+Test Suite 'Selected tests' passed at 2026-10-02 01:13:13.043.
+	 Executed 1 test, with 0 failures (0 unexpected) in 25.625 (25.629) seconds
+2026-10-02 01:13:13.342 xcodebuild[44519:1511173] [MT] IDETestOperationsObserverDebug: 29.932 elapsed -- Testing started completed.
+2026-10-02 01:13:13.342 xcodebuild[44519:1511173] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-02 01:13:13.342 xcodebuild[44519:1511173] [MT] IDETestOperationsObserverDebug: 29.932 sec, +29.932 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/courseflow-batch-ipad-system-type.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

@@ -1,0 +1,108 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project CourseFlow.xcodeproj -scheme CourseFlow -destination "platform=iOS Simulator,id=11716F68-C2AE-42FE-976C-9044F560AEAA" -derivedDataPath /tmp/courseflow-time-build -resultBundlePath /tmp/courseflow-time-ipad.xcresult -collect-test-diagnostics never -parallel-testing-enabled NO "-only-testing:CourseFlowUITests/TimeHolidayUITests/testGridAndListShowCurrentTime" "-only-testing:CourseFlowUITests/TimeHolidayUITests/testLargeTypeAutomaticallyUsesAgenda"
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  CourseKit: ~/Documents/ChatGPT/课表APP @ local
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation.git @ 0.9.20
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX.git @ 0.14.2
+
+Writing result bundle at path:
+	/tmp/courseflow-time-ipad.xcresult
+
+2026-10-01 23:48:59.065268+0800 CourseFlowUITests-Runner[36780:1365944] [Default] Running tests...
+2026-10-01 23:48:59.110249+0800 CourseFlowUITests-Runner[36780:1365944] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-01 23:49:02.623.
+Test Suite 'CourseFlowUITests.xctest' started at 2026-10-01 23:49:02.624.
+Test Suite 'TimeHolidayUITests' started at 2026-10-01 23:49:02.624.
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testGridAndListShowCurrentTime]' started.
+    t =     0.00s Start Test at 2026-10-01 23:49:02.628
+    t =     0.16s Set Up
+    t =     0.16s Open com.courseflow.app
+    t =     0.16s     Launch com.courseflow.app
+2026-10-01 23:49:02.852 xcodebuild[36624:1364627] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-01 23:49:02.852 xcodebuild[36624:1364627] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[36780]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x106e58398) and /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x106f4c310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     1.71s         Setting up automation session
+    t =     4.33s         Wait for com.courseflow.app to idle
+    t =     6.64s Waiting 15.0s for "week-picker" Button to exist
+    t =     7.69s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     7.69s         Checking existence of `"week-picker" Button`
+    t =     8.27s Checking existence of `"grid-now-line" Other`
+    t =     8.52s Find the Target Application 'com.courseflow.app'
+    t =     8.95s Added attachment named '当前时间周课表'
+    t =     8.95s Tap "课表显示与分享" Button
+    t =     8.95s     Wait for com.courseflow.app to idle
+    t =     8.97s     Find the "课表显示与分享" Button
+    t =     9.31s     Check for interrupting elements affecting "课表显示与分享" Button
+    t =     9.79s         Wait for com.apple.springboard to idle
+    t =     9.94s     Synthesize event
+    t =    10.43s     Wait for com.courseflow.app to idle
+    t =    11.30s Tap "显示日程列表" Button
+    t =    11.30s     Wait for com.courseflow.app to idle
+    t =    11.33s     Find the "显示日程列表" Button
+    t =    11.61s     Check for interrupting elements affecting "list.bullet" Button
+    t =    11.94s         Wait for com.apple.springboard to idle
+    t =    11.98s     Synthesize event
+    t =    12.06s         Scroll element to visible
+    t =    12.07s                 Retrying failed scroll-to-visible with containing cell Cell
+    t =    12.07s         Find the "list.bullet" Button
+    t =    12.52s         Computed hit point {698, 59} after scrolling to visible
+    t =    12.83s     Wait for com.courseflow.app to idle
+    t =    13.93s Checking existence of `"now-marker" Other`
+    t =    14.11s Checking existence of `"正在上课" StaticText`
+    t =    14.22s Find the "now-marker" Any
+    t =    14.32s Find the Target Application 'com.courseflow.app'
+    t =    14.42s Find the Target Application 'com.courseflow.app'
+    t =    14.62s Added attachment named '当前时间日程列表'
+    t =    14.63s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testGridAndListShowCurrentTime]' passed (14.852 seconds).
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testLargeTypeAutomaticallyUsesAgenda]' started.
+    t =     0.00s Start Test at 2026-10-01 23:49:17.481
+    t =     0.02s Set Up
+    t =     0.02s Open com.courseflow.app
+    t =     0.03s     Launch com.courseflow.app
+    t =     0.03s         Terminate com.courseflow.app:36807
+2026-10-01 23:49:18.604 xcodebuild[36624:1364627] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-01 23:49:18.604 xcodebuild[36624:1364627] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.37s         Setting up automation session
+    t =     4.01s         Wait for com.courseflow.app to idle
+    t =     6.24s Waiting 15.0s for "week-picker" Button to exist
+    t =     7.32s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     7.32s         Checking existence of `"week-picker" Button`
+    t =     7.64s Checking existence of `"now-marker" Any`
+    t =     7.73s Find the "now-marker" Any
+    t =     7.83s Find the Target Application 'com.courseflow.app'
+    t =     7.90s Swipe up Target Application 'com.courseflow.app'
+    t =     7.90s     Wait for com.courseflow.app to idle
+    t =     7.90s     Find the Target Application 'com.courseflow.app'
+    t =     7.99s     Check for interrupting elements affecting "课序" Application
+    t =     8.06s         Wait for com.apple.springboard to idle
+    t =     8.08s     Synthesize event
+    t =     8.57s     Wait for com.courseflow.app to idle
+    t =    10.53s Find the "now-marker" Other
+    t =    10.61s Find the Target Application 'com.courseflow.app'
+    t =    10.68s Find the Target Application 'com.courseflow.app'
+    t =    10.85s Added attachment named '深色大字号时间日程'
+    t =    10.85s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testLargeTypeAutomaticallyUsesAgenda]' passed (11.083 seconds).
+Test Suite 'TimeHolidayUITests' passed at 2026-10-01 23:49:28.564.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 25.935 (25.940) seconds
+Test Suite 'CourseFlowUITests.xctest' passed at 2026-10-01 23:49:28.565.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 25.935 (25.941) seconds
+Test Suite 'Selected tests' passed at 2026-10-01 23:49:28.566.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 25.935 (25.943) seconds
+2026-10-01 23:49:28.870 xcodebuild[36624:1364627] [MT] IDETestOperationsObserverDebug: 36.840 elapsed -- Testing started completed.
+2026-10-01 23:49:28.870 xcodebuild[36624:1364627] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-01 23:49:28.870 xcodebuild[36624:1364627] [MT] IDETestOperationsObserverDebug: 36.840 sec, +36.840 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/courseflow-time-ipad.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

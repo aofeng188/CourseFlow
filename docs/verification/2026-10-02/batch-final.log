@@ -1,0 +1,1304 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project CourseFlow.xcodeproj -scheme CourseFlow -configuration Debug -sdk iphonesimulator -destination "platform=iOS Simulator,id=3DB168AE-3DDE-4578-A1B8-47B0A0E3AD59" -derivedDataPath /tmp/courseflow-batch-build -resultBundlePath /tmp/courseflow-batch-final.xcresult -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM= "-only-testing:CourseFlowTests/HolidayIntegrationTests" "-only-testing:CourseFlowTests/HolidaySystemIntegrationTests" "-only-testing:CourseFlowTests/PersistenceTests" "-only-testing:CourseFlowTests/SystemIntegrationTests/testWidgetBridgeRoundTripInSharedAppGroupAndRestoreSnapshot" "-only-testing:CourseFlowTests/SystemIntegrationTests/testCalendarRoundTripDeduplicationAndManualEditProtection" "-only-testing:CourseFlowUITests/TimeHolidayUITests" test
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGNING_ALLOWED = YES
+    DEVELOPMENT_TEAM = 
+    SDKROOT = iphonesimulator27.0
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation.git @ 0.9.20
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  CourseKit: ~/Documents/ChatGPT/课表APP @ local
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX.git @ 0.14.2
+
+Writing result bundle at path:
+	/tmp/courseflow-batch-final.xcresult
+
+note: Using codesigning identity override: -
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (13 targets)
+    Target 'CourseFlowTests' in project 'CourseFlow'
+        ➜ Explicit dependency on target 'CourseFlow' in project 'CourseFlow'
+        ➜ Explicit dependency on target 'CourseKit-product' in project 'CourseKit'
+    Target 'CourseFlowUITests' in project 'CourseFlow'
+        ➜ Explicit dependency on target 'CourseFlow' in project 'CourseFlow'
+    Target 'CourseFlow' in project 'CourseFlow'
+        ➜ Explicit dependency on target 'CourseWidgets' in project 'CourseFlow'
+        ➜ Explicit dependency on target 'CourseKit-product' in project 'CourseKit'
+        ➜ Explicit dependency on target 'CoreXLSX-product' in project 'CoreXLSX'
+    Target 'CoreXLSX-product' in project 'CoreXLSX'
+        ➜ Explicit dependency on target 'CoreXLSX' in project 'CoreXLSX'
+        ➜ Explicit dependency on target 'XMLCoder-product' in project 'XMLCoder'
+        ➜ Explicit dependency on target 'ZIPFoundation-product' in project 'ZIPFoundation'
+    Target 'CoreXLSX' in project 'CoreXLSX'
+        ➜ Explicit dependency on target 'XMLCoder-product' in project 'XMLCoder'
+        ➜ Explicit dependency on target 'ZIPFoundation-product' in project 'ZIPFoundation'
+    Target 'ZIPFoundation-product' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation' (no dependencies)
+    Target 'XMLCoder-product' in project 'XMLCoder'
+        ➜ Explicit dependency on target 'XMLCoder' in project 'XMLCoder'
+    Target 'XMLCoder' in project 'XMLCoder' (no dependencies)
+    Target 'CourseWidgets' in project 'CourseFlow'
+        ➜ Explicit dependency on target 'CourseKit-product' in project 'CourseKit'
+    Target 'CourseKit-product' in project 'CourseKit'
+        ➜ Explicit dependency on target 'CourseKit' in project 'CourseKit'
+    Target 'CourseKit' in project 'CourseKit' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk /tmp/courseflow-batch-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache
+    cd ~/Documents/ChatGPT/课表APP/CourseFlow.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -o /tmp/courseflow-batch-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache
+
+SwiftDriver CourseFlow normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CourseFlow -Onone @/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.SwiftFileList -DDEBUG -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /tmp/courseflow-batch-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/courseflow-batch-build/Index.noindex/DataStore -swift-version 6 -I /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -F /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64 -c -j14 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/courseflow-batch-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/courseflow-batch-build/ModuleCache.noindex -sdk-module-cache-path /tmp/courseflow-batch-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/courseflow-batch-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-generated-files.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-own-target-headers.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow-325aadb44cc2f77eb97a59b3aed8ef18-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-project-headers.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources-normal/arm64 -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources/arm64 -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-Swift.h -working-directory ~/Documents/ChatGPT/课表APP -experimental-emit-module-separately -disable-cmo
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ CourseFlow (in target 'CourseFlow' from project 'CourseFlow')
+
+SwiftCompile normal arm64 (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for CourseFlow (in target 'CourseFlow' from project 'CourseFlow')
+
+SwiftDriver\ Compilation\ Requirements CourseFlow normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CourseFlow -Onone @/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.SwiftFileList -DDEBUG -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /tmp/courseflow-batch-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/courseflow-batch-build/Index.noindex/DataStore -swift-version 6 -I /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -F /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64 -c -j14 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/courseflow-batch-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/courseflow-batch-build/ModuleCache.noindex -sdk-module-cache-path /tmp/courseflow-batch-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/courseflow-batch-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-generated-files.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-own-target-headers.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow-325aadb44cc2f77eb97a59b3aed8ef18-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-project-headers.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources-normal/arm64 -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources/arm64 -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-Swift.h -working-directory ~/Documents/ChatGPT/课表APP -experimental-emit-module-separately -disable-cmo
+
+Copy /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.swiftsourceinfo (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.swiftsourceinfo /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+Copy /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.swiftmodule/arm64-apple-ios-simulator.abi.json /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.abi.json (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.abi.json /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+Copy /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -remove-static-executable /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D -S -no_atom_info /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct -o /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct
+SwiftCompile normal arm64 Compiling\ HolidayGroupViews.swift ~/Documents/ChatGPT/课表APP/App/UI/HolidayGroupViews.swift (in target 'CourseFlow' from project 'CourseFlow')
+
+SwiftCompile normal arm64 ~/Documents/ChatGPT/课表APP/App/UI/HolidayGroupViews.swift (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-SwiftPerFileCompile HolidayGroupViews.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling HolidayGroupViews.swift (in target 'CourseFlow' from project 'CourseFlow')
+
+SwiftDriver\ Compilation CourseFlow normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CourseFlow -Onone @/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.SwiftFileList -DDEBUG -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /tmp/courseflow-batch-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/courseflow-batch-build/Index.noindex/DataStore -swift-version 6 -I /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -F /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64 -c -j14 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/courseflow-batch-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/courseflow-batch-build/ModuleCache.noindex -sdk-module-cache-path /tmp/courseflow-batch-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/courseflow-batch-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-generated-files.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-own-target-headers.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow-325aadb44cc2f77eb97a59b3aed8ef18-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-project-headers.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources-normal/arm64 -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources/arm64 -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-Swift.h -working-directory ~/Documents/ChatGPT/课表APP -experimental-emit-module-separately -disable-cmo
+
+Ld /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow.debug.dylib normal (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/tmp/courseflow-batch-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -F/tmp/courseflow-batch-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -filelist /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.LinkFileList -install_name @rpath/CourseFlow.debug.dylib -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.swiftmodule -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct -Xlinker -no_adhoc_codesign -o /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow.debug.dylib
+
+ConstructStubExecutorLinkFileList /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-ExecutorLinkFileList-normal-arm64.txt (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    construct-stub-executor-link-file-list /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-ExecutorLinkFileList-normal-arm64.txt
+note: Using stub executor library with Swift entry point. (in target 'CourseFlow' from project 'CourseFlow')
+
+Ld /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow normal (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -F/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-ExecutorLinkFileList-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app-Simulated.xcent.der /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow.debug.dylib -Xlinker -no_adhoc_codesign -o /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow
+
+ProcessInfoPlistFile /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Info.plist ~/Documents/ChatGPT/课表APP/Config/App-Info.plist (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-infoPlistUtility ~/Documents/ChatGPT/课表APP/Config/App-Info.plist -producttype com.apple.product-type.application -genpkginfo /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/assetcatalog_generated_info.plist -scanforprivacyfile /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework -scanforprivacyfile /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseWidgets.appex -scanforprivacyfile /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/ZIPFoundation_ZIPFoundation.bundle -o /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Info.plist
+
+ExtractAppIntentsMetadata (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name CourseFlow --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk --xcode-version 27A266a --platform-family iOS --deployment-target 26.0 --bundle-identifier com.courseflow.app --output /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app --target-triple arm64-apple-ios26.0-simulator --binary-file /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow --dependency-file /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow_dependency_info.dat --stringsdata-file /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.SwiftFileList --metadata-file-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.DependencyMetadataFileList --static-metadata-file-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-02 00:52:17.227 appintentsmetadataprocessor[43038:1478642] Starting appintentsmetadataprocessor export
+2026-10-02 00:52:17.271 appintentsmetadataprocessor[43038:1478642] Extracted no relevant App Intents symbols, skipping writing output
+
+CopySwiftLibs /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow.debug.dylib --scan-folder /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks --scan-folder /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns --scan-folder /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/SystemExtensions --scan-folder /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Extensions --scan-folder /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+CodeSign /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --preserve-metadata\=identifier,entitlements,flags --generate-entitlement-der /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework
+/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework: replacing existing signature
+
+Ld /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/CourseFlowTests normal (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/tmp/courseflow-batch-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/tmp/courseflow-batch-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -filelist /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.LinkFileList -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -bundle_loader /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow -Xlinker -object_path_lto -Xlinker /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.swiftmodule -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow.debug.dylib -Xlinker -no_adhoc_codesign -o /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/CourseFlowTests
+
+ExtractAppIntentsMetadata (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name CourseFlowTests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk --xcode-version 27A266a --platform-family iOS --deployment-target 26.0 --bundle-identifier com.courseflow.app.tests --output /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest --target-triple arm64-apple-ios26.0-simulator --binary-file /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/CourseFlowTests --dependency-file /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests_dependency_info.dat --stringsdata-file /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.SwiftFileList --metadata-file-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/CourseFlowTests.DependencyMetadataFileList --static-metadata-file-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/CourseFlowTests.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-02 00:52:17.521 appintentsmetadataprocessor[43042:1478665] Starting appintentsmetadataprocessor export
+2026-10-02 00:52:17.561 appintentsmetadataprocessor[43042:1478665] Extracted no relevant App Intents symbols, skipping writing output
+
+Copy /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -remove-static-executable /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Frameworks
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D -S -no_atom_info /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct -o /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct
+CopySwiftLibs /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/CourseFlowTests --scan-folder /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Frameworks --scan-folder /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/PlugIns --scan-folder /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/SystemExtensions --scan-folder /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Extensions --scan-folder /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+SwiftDriver CourseFlowUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CourseFlowUITests -Onone @/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /tmp/courseflow-batch-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/courseflow-batch-build/Index.noindex/DataStore -swift-version 6 -I /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -emit-localized-strings -emit-localized-strings-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64 -c -j14 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/courseflow-batch-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/courseflow-batch-build/ModuleCache.noindex -sdk-module-cache-path /tmp/courseflow-batch-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/courseflow-batch-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-generated-files.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-own-target-headers.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow-325aadb44cc2f77eb97a59b3aed8ef18-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-project-headers.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources/arm64 -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-Swift.h -working-directory ~/Documents/ChatGPT/课表APP -experimental-emit-module-separately -disable-cmo
+
+CodeSign /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --preserve-metadata\=identifier,entitlements,flags --generate-entitlement-der /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework
+/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework: replacing existing signature
+
+CodeSign /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest
+
+CodeSign /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow.debug.dylib (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow.debug.dylib
+
+CodeSign /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/__preview.dylib (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/__preview.dylib
+/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/__preview.dylib: replacing existing signature
+
+CodeSign /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --entitlements /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app.xcent --timestamp\=none --generate-entitlement-der /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app
+
+Validate /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-validationUtility /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlow.app -shallow-bundle -infoplist-subpath Info.plist
+
+SwiftCompile normal arm64 Compiling\ TimeHolidayUITests.swift ~/Documents/ChatGPT/课表APP/UITests/TimeHolidayUITests.swift (in target 'CourseFlowUITests' from project 'CourseFlow')
+
+SwiftCompile normal arm64 ~/Documents/ChatGPT/课表APP/UITests/TimeHolidayUITests.swift (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-SwiftPerFileCompile TimeHolidayUITests.swift
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ CourseFlowUITests (in target 'CourseFlowUITests' from project 'CourseFlow')
+
+SwiftCompile normal arm64 (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for CourseFlowUITests (in target 'CourseFlowUITests' from project 'CourseFlow')
+
+SwiftDriver\ Compilation\ Requirements CourseFlowUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CourseFlowUITests -Onone @/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /tmp/courseflow-batch-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/courseflow-batch-build/Index.noindex/DataStore -swift-version 6 -I /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -emit-localized-strings -emit-localized-strings-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64 -c -j14 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/courseflow-batch-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/courseflow-batch-build/ModuleCache.noindex -sdk-module-cache-path /tmp/courseflow-batch-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/courseflow-batch-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-generated-files.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-own-target-headers.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow-325aadb44cc2f77eb97a59b3aed8ef18-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-project-headers.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources/arm64 -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-Swift.h -working-directory ~/Documents/ChatGPT/课表APP -experimental-emit-module-separately -disable-cmo
+
+Copy /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.swiftsourceinfo (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.swiftsourceinfo /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+Copy /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests.swiftmodule/arm64-apple-ios-simulator.swiftmodule /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.swiftmodule (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.swiftmodule /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests.swiftmodule/arm64-apple-ios-simulator.swiftmodule
+
+Copy /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests.swiftmodule/arm64-apple-ios-simulator.abi.json /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.abi.json (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.abi.json /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+SwiftDriverJobDiscovery normal arm64 Compiling TimeHolidayUITests.swift (in target 'CourseFlowUITests' from project 'CourseFlow')
+
+SwiftDriver\ Compilation CourseFlowUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CourseFlowUITests -Onone @/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /tmp/courseflow-batch-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/courseflow-batch-build/Index.noindex/DataStore -swift-version 6 -I /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -emit-localized-strings -emit-localized-strings-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64 -c -j14 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/courseflow-batch-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/courseflow-batch-build/ModuleCache.noindex -sdk-module-cache-path /tmp/courseflow-batch-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/courseflow-batch-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-generated-files.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-own-target-headers.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow-325aadb44cc2f77eb97a59b3aed8ef18-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-project-headers.hmap -Xcc -I/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources/arm64 -Xcc -I/tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-Swift.h -working-directory ~/Documents/ChatGPT/课表APP -experimental-emit-module-separately -disable-cmo
+
+Ld /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/CourseFlowUITests normal (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/tmp/courseflow-batch-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/tmp/courseflow-batch-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -filelist /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.LinkFileList -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.swiftmodule -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests.xctest-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests.xctest-Simulated.xcent.der -Xlinker -no_adhoc_codesign -o /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/CourseFlowUITests
+
+CopySwiftLibs /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/CourseFlowUITests --scan-folder /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/Frameworks --scan-folder /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/PlugIns --scan-folder /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/SystemExtensions --scan-folder /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ExtractAppIntentsMetadata (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name CourseFlowUITests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk --xcode-version 27A266a --platform-family iOS --deployment-target 26.0 --bundle-identifier com.courseflow.app.uitests --output /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest --target-triple arm64-apple-ios26.0-simulator --binary-file /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/CourseFlowUITests --dependency-file /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests_dependency_info.dat --stringsdata-file /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.SwiftFileList --metadata-file-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests.DependencyMetadataFileList --static-metadata-file-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/courseflow-batch-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-02 00:52:18.089 appintentsmetadataprocessor[43054:1478756] Starting appintentsmetadataprocessor export
+2026-10-02 00:52:18.090 appintentsmetadataprocessor[43054:1478756] warning: Metadata extraction skipped, no AppIntents.framework dependency found
+
+CodeSign /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest
+
+CodeSign /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app
+/tmp/courseflow-batch-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app: replacing existing signature
+
+PruneExplicitPrecompiledModules /tmp/courseflow-batch-build/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/courseflow-batch-build/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/courseflow-batch-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+2026-10-02 00:52:19.340091+0800 CourseFlowUITests-Runner[43057:1478956] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-02 00:52:21.897.
+Test Suite 'CourseFlowUITests.xctest' started at 2026-10-02 00:52:21.898.
+Test Suite 'TimeHolidayUITests' started at 2026-10-02 00:52:21.898.
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testEveningOutOfRangeAndEmptyTodayAgenda]' started.
+    t =     0.00s Start Test at 2026-10-02 00:52:21.900
+    t =     0.02s Set Up
+    t =     0.02s Open com.courseflow.app
+    t =     0.02s     Launch com.courseflow.app
+2026-10-02 00:52:21.980 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-02 00:52:21.980 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[43057]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1062f4398) and /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x106c28310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     0.49s         Setting up automation session
+    t =     2.83s         Wait for com.courseflow.app to idle
+    t =     4.72s Waiting 15.0s for "week-picker" Button to exist
+    t =     5.77s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     5.77s         Checking existence of `"week-picker" Button`
+    t =     6.01s Swipe up Target Application 'com.courseflow.app'
+    t =     6.01s     Wait for com.courseflow.app to idle
+    t =     6.01s     Find the Target Application 'com.courseflow.app'
+    t =     6.09s     Check for interrupting elements affecting "课序" Application
+    t =     6.16s     Synthesize event
+    t =     6.59s     Wait for com.courseflow.app to idle
+    t =     8.69s Checking existence of `"有课待定，确认后显示学校课程" StaticText`
+    t =     8.81s Checking existence of `"now-marker" Other`
+    t =     8.90s Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =     9.15s Checking existence of `"holiday-batch-confirm" Button`
+    t =     9.25s Find the Target Application 'com.courseflow.app'
+    t =     9.32s Checking existence of `"now-marker" Any`
+    t =     9.42s Find the "now-marker" Any
+    t =     9.53s Checking existence of `CollectionView (First Match)`
+    t =     9.64s Checking existence of `ScrollView (First Match)`
+    t =     9.67s Swipe up ScrollView (First Match)
+    t =     9.67s     Wait for com.courseflow.app to idle
+    t =     9.68s     Find the ScrollView (First Match)
+    t =     9.71s     Check for interrupting elements affecting ScrollView
+    t =     9.79s     Synthesize event
+    t =    10.32s     Wait for com.courseflow.app to idle
+    t =    10.99s Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    11.26s Checking existence of `"holiday-batch-confirm" Button`
+    t =    11.35s Find the Target Application 'com.courseflow.app'
+    t =    11.42s Checking existence of `"now-marker" Other`
+    t =    11.53s Find the "now-marker" Other
+    t =    11.64s Find the "now-marker" Other
+    t =    11.77s Find the Target Application 'com.courseflow.app'
+    t =    11.93s Added attachment named '夜间待定日程'
+    t =    11.93s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testEveningOutOfRangeAndEmptyTodayAgenda]' passed (12.196 seconds).
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testExportHasNoLiveTimeMarkers]' started.
+    t =     0.00s Start Test at 2026-10-02 00:52:34.099
+    t =     0.03s Set Up
+    t =     0.04s Open com.courseflow.app
+    t =     0.04s     Launch com.courseflow.app
+    t =     0.04s         Terminate com.courseflow.app:43066
+2026-10-02 00:52:35.147 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-02 00:52:35.147 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.27s         Setting up automation session
+    t =     3.42s         Wait for com.courseflow.app to idle
+    t =     5.33s Waiting 15.0s for "week-picker" Button to exist
+    t =     6.41s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     6.41s         Checking existence of `"week-picker" Button`
+    t =     6.68s Tap "课表显示与分享" Button
+    t =     6.68s     Wait for com.courseflow.app to idle
+    t =     6.68s     Find the "课表显示与分享" Button
+    t =     6.83s     Check for interrupting elements affecting "课表显示与分享" Button
+    t =     6.95s     Synthesize event
+    t =     7.27s     Wait for com.courseflow.app to idle
+    t =     8.16s Tap "分享本周图片" Button
+    t =     8.16s     Wait for com.courseflow.app to idle
+    t =     8.16s     Find the "分享本周图片" Button
+    t =     8.32s     Check for interrupting elements affecting "photo" Button
+    t =     8.44s     Synthesize event
+    t =     8.73s     Wait for com.courseflow.app to idle
+    t =    10.10s Waiting 5.0s for "关闭" Button to exist
+    t =    11.18s     Checking `Expect predicate `existsNoRetry == 1` for object "关闭" Button`
+    t =    11.18s         Checking existence of `"关闭" Button`
+    t =    11.41s Find the Target Application 'com.courseflow.app'
+    t =    11.64s Added attachment named '静态课表分享'
+    t =    11.64s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testExportHasNoLiveTimeMarkers]' passed (11.877 seconds).
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testGridAndListShowCurrentTime]' started.
+    t =     0.00s Start Test at 2026-10-02 00:52:45.976
+    t =     0.02s Set Up
+    t =     0.02s Open com.courseflow.app
+    t =     0.02s     Launch com.courseflow.app
+    t =     0.03s         Terminate com.courseflow.app:43073
+2026-10-02 00:52:47.098 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-02 00:52:47.098 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.34s         Setting up automation session
+    t =     3.48s         Wait for com.courseflow.app to idle
+    t =     5.42s Waiting 15.0s for "week-picker" Button to exist
+    t =     6.49s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     6.49s         Checking existence of `"week-picker" Button`
+    t =     6.74s Checking existence of `"grid-now-line" Other`
+    t =     6.89s Find the Target Application 'com.courseflow.app'
+    t =     7.08s Added attachment named '当前时间周课表'
+    t =     7.08s Tap "课表显示与分享" Button
+    t =     7.08s     Wait for com.courseflow.app to idle
+    t =     7.08s     Find the "课表显示与分享" Button
+    t =     7.23s     Check for interrupting elements affecting "课表显示与分享" Button
+    t =     7.34s     Synthesize event
+    t =     7.65s     Wait for com.courseflow.app to idle
+    t =     8.54s Tap "显示日程列表" Button
+    t =     8.55s     Wait for com.courseflow.app to idle
+    t =     8.55s     Find the "显示日程列表" Button
+    t =     8.72s     Check for interrupting elements affecting "list.bullet" Button
+    t =     8.84s     Synthesize event
+    t =     9.13s     Wait for com.courseflow.app to idle
+    t =    10.25s Checking existence of `"now-marker" Other`
+    t =    10.39s Checking existence of `"正在上课" StaticText`
+    t =    10.46s Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    10.71s Checking existence of `"holiday-batch-confirm" Button`
+    t =    10.83s Find the Target Application 'com.courseflow.app'
+    t =    10.91s Checking existence of `"now-marker" Any`
+    t =    11.00s Find the "now-marker" Any
+    t =    11.09s Find the "now-marker" Other
+    t =    11.20s Find the Target Application 'com.courseflow.app'
+    t =    11.35s Added attachment named '当前时间日程列表'
+    t =    11.35s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testGridAndListShowCurrentTime]' passed (11.604 seconds).
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testHolidayBatchCanExcludeOneDate]' started.
+    t =     0.00s Start Test at 2026-10-02 00:52:57.582
+    t =     0.03s Set Up
+    t =     0.03s Open com.courseflow.app
+    t =     0.04s     Launch com.courseflow.app
+    t =     0.04s         Terminate com.courseflow.app:43084
+2026-10-02 00:52:58.680 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-02 00:52:58.680 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.31s         Setting up automation session
+    t =     3.53s         Wait for com.courseflow.app to idle
+    t =     5.44s Waiting 15.0s for "week-picker" Button to exist
+    t =     6.46s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     6.47s         Checking existence of `"week-picker" Button`
+    t =     6.74s Waiting 5.0s for "holiday-group-prompt-2026-国庆节" Button to exist
+    t =     7.82s     Checking `Expect predicate `existsNoRetry == 1` for object "holiday-group-prompt-2026-国庆节" Button`
+    t =     7.82s         Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =     8.00s Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =     8.28s Checking existence of `"holiday-batch-confirm" Button`
+    t =     8.45s Find the Target Application 'com.courseflow.app'
+    t =     8.56s Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =     8.72s Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     8.88s Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     9.07s Tap "holiday-group-prompt-2026-国庆节" Button
+    t =     9.07s     Wait for com.courseflow.app to idle
+    t =     9.07s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     9.22s     Check for interrupting elements affecting "holiday-group-prompt-2026-国庆节" Button
+    t =     9.34s     Synthesize event
+    t =     9.64s     Wait for com.courseflow.app to idle
+    t =     9.78s Waiting 5.0s for "国庆节学校安排" NavigationBar to exist
+    t =    10.84s     Checking `Expect predicate `existsNoRetry == 1` for object "国庆节学校安排" NavigationBar`
+    t =    10.85s         Checking existence of `"国庆节学校安排" NavigationBar`
+    t =    11.09s Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    11.14s Find the "holiday-batch-confirmation-bar" Any
+    t =    11.20s Checking existence of `"holiday-select-2026-10-03" Switch`
+    t =    11.38s Find the "holiday-select-2026-10-03" Switch
+    t =    11.56s Checking existence of `CollectionView (First Match)`
+    t =    11.59s Swipe up CollectionView (First Match)
+    t =    11.59s     Wait for com.courseflow.app to idle
+    t =    11.59s     Find the CollectionView (First Match)
+    t =    11.62s     Check for interrupting elements affecting CollectionView
+    t =    11.76s     Synthesize event
+    t =    12.28s     Wait for com.courseflow.app to idle
+    t =    14.23s Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    14.29s Find the "holiday-batch-confirmation-bar" Any
+    t =    14.35s Checking existence of `"holiday-select-2026-10-03" Switch`
+    t =    14.54s Find the "holiday-select-2026-10-03" Switch
+    t =    14.72s Find the "holiday-select-2026-10-03" Switch
+    t =    14.91s Find the Target Application 'com.courseflow.app'
+    t =    15.12s Added attachment named '取消单日之前'
+    t =    15.12s Tap "holiday-select-2026-10-03" Switch
+    t =    15.12s     Wait for com.courseflow.app to idle
+    t =    15.13s     Find the "holiday-select-2026-10-03" Switch
+    t =    15.30s     Check for interrupting elements affecting "holiday-select-2026-10-03" Switch
+    t =    15.45s     Synthesize event
+    t =    15.75s     Wait for com.courseflow.app to idle
+    t =    15.75s Find the Target Application 'com.courseflow.app'
+    t =    15.99s Added attachment named '取消单日之后'
+    t =    15.99s Find the "holiday-select-2026-10-03" Switch
+~/Documents/ChatGPT/课表APP/UITests/TimeHolidayUITests.swift:146: error: -[CourseFlowUITests.TimeHolidayUITests testHolidayBatchCanExcludeOneDate] : XCTAssertEqual failed: ("Optional("1")") is not equal to ("Optional("0")")
+    t =    16.21s Find the "holiday-batch-confirm" Button
+    t =    17.40s     Find the "holiday-batch-confirm" Button (retry 1)
+    t =    18.62s     Find the "holiday-batch-confirm" Button (retry 2)
+    t =    18.84s     Collecting debug information to assist test failure triage
+    t =    18.84s         Requesting snapshot of accessibility hierarchy for app with pid 43098
+    t =    19.06s     Requesting snapshot of accessibility hierarchy for app with pid 43098
+    t =    19.27s     Find: Descendants matching type Button
+    t =    19.27s     Find: Elements matching predicate '"holiday-batch-confirm" IN identifiers'
+    t =    19.28s     Requesting snapshot of accessibility hierarchy for app with pid 43098
+~/Documents/ChatGPT/课表APP/UITests/TimeHolidayUITests.swift:147: error: -[CourseFlowUITests.TimeHolidayUITests testHolidayBatchCanExcludeOneDate] : Failed to get matching snapshot: No matches found for Elements matching predicate '"holiday-batch-confirm" IN identifiers' from input {(
+    Button, label: '稍后再说',
+    Button, identifier: 'holiday-batch-confirmation-bar', label: '确认7天安排',
+    Button, label: '课表', Selected,
+    Button, label: '课程',
+    Button, label: '设置',
+    Button, identifier: 'add-menu', label: '添加',
+    Button, label: '课表显示与分享',
+    Button,
+    Button,
+    Button, label: '10月1日，单独查看或修改',
+    Button, label: '10月2日，单独查看或修改',
+    Button, label: '10月3日，单独查看或修改',
+    Button, label: '10月4日，单独查看或修改',
+    Button, label: '10月5日，单独查看或修改',
+    Button, label: '10月6日，单独查看或修改',
+    Button, label: '10月7日，单独查看或修改',
+    Button, identifier: 'holiday-makeup-choice-2026-09-20', label: '学校安排、9月20日补班学校安排',
+    Button, label: '9月20日，单独查看或修改',
+    Button, identifier: 'holiday-makeup-choice-2026-10-10', label: '学校安排、10月10日补班学校安排',
+    Button, label: '10月10日，单独查看或修改',
+    Button, identifier: 'holiday-group-prompt-2026-国庆节', label: '国庆节学校安排待确认、放假：10月1日–10月7日、9月20日补班 · 已过，未确认、10月10日补班 · 调休课程待定、整段放假可一次确认；补班日可以稍后决定。原课程和提醒继续保留。',
+    Button, identifier: 'chevron.left', label: '上一周',
+    Button, identifier: 'week-picker', label: '第 4 周',
+    Button, identifier: 'chevron.right', label: '下一周',
+    Button, label: '高等数学，周一，08:00至09:40，明德楼 A301',
+    Button, label: '大学物理，周三，08:00至09:40，理科楼 402',
+    Button, label: '大学英语，周五，08:00至09:40，博学楼 B205',
+    Button, label: '大学英语，周二，10:00至11:40，博学楼 B205',
+    Button, label: '高等数学，周四，10:00至11:40，明德楼 A301',
+    Button, label: '程序设计，周一，14:00至15:40，信息楼 503',
+    Button, label: '大学物理，周五，14:00至15:40，实验楼 201',
+    Button, label: '体育，周二，16:00至17:40，南区体育馆',
+    Button, label: '程序设计，周四，16:00至17:40，计算机中心 302'
+)}
+Possibly caused by runtime issues:
+Automation type mismatch: computed Button from legacy attributes vs PopUpButton from modern attribute. Input attributes and values: {
+    "XC_kAXXCAttributeAutomationType" = 14;
+    "XC_kAXXCAttributeElementBaseType" = NSObject;
+    "XC_kAXXCAttributeElementType" = "SwiftUI.AccessibilityNode";
+    "XC_kAXXCAttributeTraits" = 1108101562369;
+}
+See test report attachments for more detail.
+    t =    19.50s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testHolidayBatchCanExcludeOneDate]' failed (19.774 seconds).
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testHolidayGroupStartsSevenDaysBeforeFirstRelatedDate]' started.
+    t =     0.00s Start Test at 2026-10-02 00:53:17.357
+    t =     0.03s Set Up
+    t =     0.03s     Open com.courseflow.app
+    t =     0.03s         Launch com.courseflow.app
+    t =     0.03s             Terminate com.courseflow.app:43098
+2026-10-02 00:53:18.495 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-02 00:53:18.495 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.35s             Setting up automation session
+    t =     3.50s             Wait for com.courseflow.app to idle
+    t =     5.26s     Waiting 15.0s for "week-picker" Button to exist
+    t =     6.29s         Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     6.29s             Checking existence of `"week-picker" Button`
+    t =     6.52s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =     6.63s     Terminate com.courseflow.app:43128
+    t =     7.68s     Open com.courseflow.app
+    t =     7.69s         Launch com.courseflow.app
+2026-10-02 00:53:25.044 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-02 00:53:25.044 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     7.90s             Setting up automation session
+    t =    10.14s             Wait for com.courseflow.app to idle
+    t =    12.09s     Waiting 15.0s for "week-picker" Button to exist
+    t =    13.12s         Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =    13.13s             Checking existence of `"week-picker" Button`
+    t =    13.45s     Checking existence of `"holiday-group-day-2026-10-10" StaticText`
+    t =    13.57s     Waiting 5.0s for "holiday-group-prompt-2026-国庆节" Button to exist
+    t =    14.60s         Checking `Expect predicate `existsNoRetry == 1` for object "holiday-group-prompt-2026-国庆节" Button`
+    t =    14.60s             Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    14.78s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    15.04s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    15.19s     Find the Target Application 'com.courseflow.app'
+    t =    15.30s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    15.45s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    15.61s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    15.80s     Tap "holiday-group-prompt-2026-国庆节" Button
+    t =    15.80s         Wait for com.courseflow.app to idle
+    t =    15.80s         Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    15.95s         Check for interrupting elements affecting "holiday-group-prompt-2026-国庆节" Button
+    t =    16.06s         Synthesize event
+    t =    16.37s         Wait for com.courseflow.app to idle
+    t =    16.49s     Waiting 5.0s for "国庆节学校安排" NavigationBar to exist
+    t =    17.52s         Checking `Expect predicate `existsNoRetry == 1` for object "国庆节学校安排" NavigationBar`
+    t =    17.53s             Checking existence of `"国庆节学校安排" NavigationBar`
+    t =    17.75s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    17.80s     Find the "holiday-batch-confirmation-bar" Any
+    t =    17.85s     Checking existence of `"holiday-select-2026-10-01" Switch`
+    t =    18.01s     Find the "holiday-select-2026-10-01" Switch
+    t =    18.18s     Find the "holiday-select-2026-10-01" Switch
+    t =    18.35s     Checking existence of `"holiday-select-2026-10-01" Switch`
+    t =    18.52s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    18.57s     Find the "holiday-batch-confirmation-bar" Any
+    t =    18.62s     Checking existence of `"holiday-select-2026-10-07" Switch`
+    t =    18.78s     Checking existence of `CollectionView (First Match)`
+    t =    18.81s     Swipe up CollectionView (First Match)
+    t =    18.81s         Wait for com.courseflow.app to idle
+    t =    18.81s         Find the CollectionView (First Match)
+    t =    18.84s         Check for interrupting elements affecting CollectionView
+    t =    18.98s         Synthesize event
+    t =    19.49s         Wait for com.courseflow.app to idle
+    t =    21.43s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    21.50s     Find the "holiday-batch-confirmation-bar" Any
+    t =    21.56s     Checking existence of `"holiday-select-2026-10-07" Switch`
+    t =    21.73s     Find the "holiday-select-2026-10-07" Switch
+    t =    21.90s     Find the "holiday-select-2026-10-07" Switch
+    t =    22.07s     Checking existence of `"holiday-select-2026-10-07" Switch`
+    t =    22.23s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    22.28s     Find the "holiday-batch-confirmation-bar" Any
+    t =    22.33s     Checking existence of `"holiday-makeup-choice-2026-09-20" Any`
+    t =    22.51s     Find the "holiday-makeup-choice-2026-09-20" Any
+    t =    22.70s     Find the "holiday-makeup-choice-2026-09-20" Button
+    t =    22.89s     Checking existence of `"holiday-makeup-choice-2026-09-20" Any`
+    t =    23.07s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    23.12s     Find the "holiday-batch-confirmation-bar" Any
+    t =    23.17s     Checking existence of `"holiday-makeup-choice-2026-10-10" Any`
+    t =    23.36s     Find the "holiday-makeup-choice-2026-10-10" Any
+    t =    23.55s     Checking existence of `CollectionView (First Match)`
+    t =    23.58s     Swipe up CollectionView (First Match)
+    t =    23.58s         Wait for com.courseflow.app to idle
+    t =    23.58s         Find the CollectionView (First Match)
+    t =    23.61s         Check for interrupting elements affecting CollectionView
+    t =    23.74s         Synthesize event
+    t =    24.26s         Wait for com.courseflow.app to idle
+    t =    25.06s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    25.12s     Find the "holiday-batch-confirmation-bar" Any
+    t =    25.18s     Checking existence of `"holiday-makeup-choice-2026-10-10" Button`
+    t =    25.35s     Find the "holiday-makeup-choice-2026-10-10" Button
+    t =    25.52s     Find the "holiday-makeup-choice-2026-10-10" Button
+    t =    25.69s     Checking existence of `"holiday-makeup-choice-2026-10-10" Any`
+    t =    25.86s     Find the Target Application 'com.courseflow.app'
+    t =    26.08s Added attachment named '国庆提前整组提示'
+    t =    26.08s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testHolidayGroupStartsSevenDaysBeforeFirstRelatedDate]' passed (26.378 seconds).
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testHolidayGroupWorksWithLargeTypeAndDarkAppearance]' started.
+    t =     0.00s Start Test at 2026-10-02 00:53:43.739
+    t =     0.04s Set Up
+    t =     0.04s     Open com.courseflow.app
+    t =     0.04s         Launch com.courseflow.app
+    t =     0.04s             Terminate com.courseflow.app:43134
+2026-10-02 00:53:44.829 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-02 00:53:44.829 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.30s             Setting up automation session
+    t =     3.45s             Wait for com.courseflow.app to idle
+    t =     5.33s     Waiting 15.0s for "week-picker" Button to exist
+    t =     6.36s         Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     6.37s             Checking existence of `"week-picker" Button`
+    t =     6.60s     Waiting 5.0s for "holiday-group-prompt-2026-国庆节" Button to exist
+    t =     7.63s         Checking `Expect predicate `existsNoRetry == 1` for object "holiday-group-prompt-2026-国庆节" Button`
+    t =     7.63s             Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =     7.78s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =     8.01s     Checking existence of `"holiday-batch-confirm" Button`
+    t =     8.12s     Find the Target Application 'com.courseflow.app'
+    t =     8.18s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =     8.30s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     8.41s     Checking existence of `CollectionView (First Match)`
+    t =     8.52s     Checking existence of `ScrollView (First Match)`
+    t =     8.55s     Swipe up ScrollView (First Match)
+    t =     8.55s         Wait for com.courseflow.app to idle
+    t =     8.56s         Find the ScrollView (First Match)
+    t =     8.59s         Check for interrupting elements affecting ScrollView
+    t =     8.67s         Synthesize event
+    t =     9.20s         Wait for com.courseflow.app to idle
+    t =    11.13s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    11.39s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    11.50s     Find the Target Application 'com.courseflow.app'
+    t =    11.57s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    11.68s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    11.79s     Checking existence of `CollectionView (First Match)`
+    t =    11.90s     Checking existence of `ScrollView (First Match)`
+    t =    11.93s     Swipe down ScrollView (First Match)
+    t =    11.93s         Wait for com.courseflow.app to idle
+    t =    11.93s         Find the ScrollView (First Match)
+    t =    11.97s         Check for interrupting elements affecting ScrollView
+    t =    12.05s         Synthesize event
+    t =    12.57s         Wait for com.courseflow.app to idle
+    t =    14.16s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    14.40s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    14.51s     Find the Target Application 'com.courseflow.app'
+    t =    14.58s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    14.70s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    14.82s     Checking existence of `CollectionView (First Match)`
+    t =    14.92s     Checking existence of `ScrollView (First Match)`
+    t =    14.96s     Swipe up ScrollView (First Match)
+    t =    14.96s         Wait for com.courseflow.app to idle
+    t =    14.96s         Find the ScrollView (First Match)
+    t =    14.99s         Check for interrupting elements affecting ScrollView
+    t =    15.07s         Synthesize event
+    t =    15.60s         Wait for com.courseflow.app to idle
+    t =    17.53s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    17.78s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    17.90s     Find the Target Application 'com.courseflow.app'
+    t =    17.97s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    18.08s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    18.20s     Checking existence of `CollectionView (First Match)`
+    t =    18.30s     Checking existence of `ScrollView (First Match)`
+    t =    18.34s     Swipe down ScrollView (First Match)
+    t =    18.34s         Wait for com.courseflow.app to idle
+    t =    18.34s         Find the ScrollView (First Match)
+    t =    18.37s         Check for interrupting elements affecting ScrollView
+    t =    18.45s         Synthesize event
+    t =    18.98s         Wait for com.courseflow.app to idle
+    t =    20.55s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    20.81s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    20.92s     Find the Target Application 'com.courseflow.app'
+    t =    21.00s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    21.11s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    21.22s     Checking existence of `CollectionView (First Match)`
+    t =    21.33s     Checking existence of `ScrollView (First Match)`
+    t =    21.36s     Swipe up ScrollView (First Match)
+    t =    21.36s         Wait for com.courseflow.app to idle
+    t =    21.36s         Find the ScrollView (First Match)
+    t =    21.40s         Check for interrupting elements affecting ScrollView
+    t =    21.48s         Synthesize event
+    t =    22.00s         Wait for com.courseflow.app to idle
+    t =    23.93s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    24.18s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    24.30s     Find the Target Application 'com.courseflow.app'
+    t =    24.37s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    24.48s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    24.59s     Checking existence of `CollectionView (First Match)`
+    t =    24.70s     Checking existence of `ScrollView (First Match)`
+    t =    24.73s     Swipe down ScrollView (First Match)
+    t =    24.73s         Wait for com.courseflow.app to idle
+    t =    24.74s         Find the ScrollView (First Match)
+    t =    24.77s         Check for interrupting elements affecting ScrollView
+    t =    24.85s         Synthesize event
+    t =    25.38s         Wait for com.courseflow.app to idle
+    t =    26.97s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    27.23s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    27.34s     Find the Target Application 'com.courseflow.app'
+    t =    27.41s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    27.52s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    27.63s     Checking existence of `CollectionView (First Match)`
+    t =    27.74s     Checking existence of `ScrollView (First Match)`
+    t =    27.77s     Swipe up ScrollView (First Match)
+    t =    27.77s         Wait for com.courseflow.app to idle
+    t =    27.77s         Find the ScrollView (First Match)
+    t =    27.81s         Check for interrupting elements affecting ScrollView
+    t =    27.89s         Synthesize event
+    t =    28.41s         Wait for com.courseflow.app to idle
+    t =    30.35s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    30.60s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    30.71s     Find the Target Application 'com.courseflow.app'
+    t =    30.78s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    30.89s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    31.00s     Checking existence of `CollectionView (First Match)`
+    t =    31.11s     Checking existence of `ScrollView (First Match)`
+    t =    31.14s     Swipe down ScrollView (First Match)
+    t =    31.14s         Wait for com.courseflow.app to idle
+    t =    31.14s         Find the ScrollView (First Match)
+    t =    31.18s         Check for interrupting elements affecting ScrollView
+    t =    31.26s         Synthesize event
+    t =    31.78s         Wait for com.courseflow.app to idle
+    t =    33.71s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    33.96s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    34.07s     Find the Target Application 'com.courseflow.app'
+    t =    34.14s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    34.26s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    34.37s     Checking existence of `CollectionView (First Match)`
+    t =    34.47s     Checking existence of `ScrollView (First Match)`
+    t =    34.51s     Swipe up ScrollView (First Match)
+    t =    34.51s         Wait for com.courseflow.app to idle
+    t =    34.51s         Find the ScrollView (First Match)
+    t =    34.54s         Check for interrupting elements affecting ScrollView
+    t =    34.62s         Synthesize event
+    t =    35.15s         Wait for com.courseflow.app to idle
+    t =    37.08s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    37.33s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    37.44s     Find the Target Application 'com.courseflow.app'
+    t =    37.51s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    37.62s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    37.73s     Checking existence of `CollectionView (First Match)`
+    t =    37.84s     Checking existence of `ScrollView (First Match)`
+    t =    37.87s     Swipe down ScrollView (First Match)
+    t =    37.87s         Wait for com.courseflow.app to idle
+    t =    37.87s         Find the ScrollView (First Match)
+    t =    37.91s         Check for interrupting elements affecting ScrollView
+    t =    37.99s         Synthesize event
+    t =    38.51s         Wait for com.courseflow.app to idle
+    t =    40.24s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    40.50s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    40.61s     Find the Target Application 'com.courseflow.app'
+    t =    40.68s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    40.79s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    40.91s     Checking existence of `CollectionView (First Match)`
+    t =    41.02s     Checking existence of `ScrollView (First Match)`
+    t =    41.05s     Swipe up ScrollView (First Match)
+    t =    41.05s         Wait for com.courseflow.app to idle
+    t =    41.05s         Find the ScrollView (First Match)
+    t =    41.09s         Check for interrupting elements affecting ScrollView
+    t =    41.17s         Synthesize event
+    t =    41.69s         Wait for com.courseflow.app to idle
+    t =    43.63s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    43.89s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    44.00s     Find the Target Application 'com.courseflow.app'
+    t =    44.07s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    44.18s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    44.29s     Checking existence of `CollectionView (First Match)`
+    t =    44.40s     Checking existence of `ScrollView (First Match)`
+    t =    44.43s     Swipe down ScrollView (First Match)
+    t =    44.43s         Wait for com.courseflow.app to idle
+    t =    44.43s         Find the ScrollView (First Match)
+    t =    44.47s         Check for interrupting elements affecting ScrollView
+    t =    44.55s         Synthesize event
+    t =    45.08s         Wait for com.courseflow.app to idle
+    t =    47.01s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    47.26s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    47.37s     Find the Target Application 'com.courseflow.app'
+    t =    47.44s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    47.55s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    47.67s     Checking existence of `CollectionView (First Match)`
+    t =    47.77s     Checking existence of `ScrollView (First Match)`
+    t =    47.80s     Swipe up ScrollView (First Match)
+    t =    47.80s         Wait for com.courseflow.app to idle
+    t =    47.81s         Find the ScrollView (First Match)
+    t =    47.84s         Check for interrupting elements affecting ScrollView
+    t =    47.92s         Synthesize event
+    t =    48.45s         Wait for com.courseflow.app to idle
+    t =    50.38s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    50.63s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    50.74s     Find the Target Application 'com.courseflow.app'
+    t =    50.82s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    50.93s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    51.04s     Checking existence of `CollectionView (First Match)`
+    t =    51.14s     Checking existence of `ScrollView (First Match)`
+    t =    51.18s     Swipe down ScrollView (First Match)
+    t =    51.18s         Wait for com.courseflow.app to idle
+    t =    51.18s         Find the ScrollView (First Match)
+    t =    51.22s         Check for interrupting elements affecting ScrollView
+    t =    51.30s         Synthesize event
+    t =    51.82s         Wait for com.courseflow.app to idle
+    t =    53.76s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    54.02s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    54.13s     Find the Target Application 'com.courseflow.app'
+    t =    54.20s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    54.31s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    54.42s     Checking existence of `CollectionView (First Match)`
+    t =    54.53s     Checking existence of `ScrollView (First Match)`
+    t =    54.56s     Swipe up ScrollView (First Match)
+    t =    54.56s         Wait for com.courseflow.app to idle
+    t =    54.56s         Find the ScrollView (First Match)
+    t =    54.60s         Check for interrupting elements affecting ScrollView
+    t =    54.68s         Synthesize event
+    t =    55.20s         Wait for com.courseflow.app to idle
+    t =    57.15s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    57.38s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    57.49s     Find the Target Application 'com.courseflow.app'
+    t =    57.56s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    57.67s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    57.78s     Checking existence of `CollectionView (First Match)`
+    t =    57.89s     Checking existence of `ScrollView (First Match)`
+    t =    57.92s     Swipe down ScrollView (First Match)
+    t =    57.92s         Wait for com.courseflow.app to idle
+    t =    57.93s         Find the ScrollView (First Match)
+    t =    57.96s         Check for interrupting elements affecting ScrollView
+    t =    58.04s         Synthesize event
+    t =    58.56s         Wait for com.courseflow.app to idle
+    t =    60.49s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    60.75s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    60.86s     Find the Target Application 'com.courseflow.app'
+    t =    60.94s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    61.05s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    61.16s     Checking existence of `CollectionView (First Match)`
+    t =    61.27s     Checking existence of `ScrollView (First Match)`
+    t =    61.30s     Swipe up ScrollView (First Match)
+    t =    61.30s         Wait for com.courseflow.app to idle
+    t =    61.30s         Find the ScrollView (First Match)
+    t =    61.34s         Check for interrupting elements affecting ScrollView
+    t =    61.42s         Synthesize event
+    t =    61.94s         Wait for com.courseflow.app to idle
+    t =    63.88s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    64.13s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    64.24s     Find the Target Application 'com.courseflow.app'
+    t =    64.31s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    64.42s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    64.53s     Checking existence of `CollectionView (First Match)`
+    t =    64.64s     Checking existence of `ScrollView (First Match)`
+    t =    64.68s     Swipe down ScrollView (First Match)
+    t =    64.68s         Wait for com.courseflow.app to idle
+    t =    64.68s         Find the ScrollView (First Match)
+    t =    64.72s         Check for interrupting elements affecting ScrollView
+    t =    64.80s         Synthesize event
+    t =    65.32s         Wait for com.courseflow.app to idle
+~/Documents/ChatGPT/课表APP/UITests/TimeHolidayUITests.swift:50: error: -[CourseFlowUITests.TimeHolidayUITests testHolidayGroupWorksWithLargeTypeAndDarkAppearance] : failed - 滚动后仍无法显示待操作控件
+    t =    67.26s     Tap "holiday-group-prompt-2026-国庆节" Button
+    t =    67.26s         Wait for com.courseflow.app to idle
+    t =    67.27s         Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    67.38s         Check for interrupting elements affecting "holiday-group-prompt-2026-国庆节" Button
+    t =    67.46s         Synthesize event
+    t =    67.78s         Wait for com.courseflow.app to idle
+    t =    67.86s     Waiting 5.0s for "国庆节学校安排" NavigationBar to exist
+    t =    68.87s         Checking `Expect predicate `existsNoRetry == 1` for object "国庆节学校安排" NavigationBar`
+    t =    68.88s             Checking existence of `"国庆节学校安排" NavigationBar`
+    t =    69.07s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    69.12s     Find the "holiday-batch-confirmation-bar" Any
+    t =    69.17s     Checking existence of `"holiday-makeup-choice-2026-10-10" Any`
+    t =    69.55s     Checking existence of `CollectionView (First Match)`
+    t =    69.57s     Swipe up CollectionView (First Match)
+    t =    69.57s         Wait for com.courseflow.app to idle
+    t =    69.57s         Find the CollectionView (First Match)
+    t =    69.60s         Check for interrupting elements affecting CollectionView
+    t =    69.70s         Synthesize event
+    t =    70.22s         Wait for com.courseflow.app to idle
+    t =    72.14s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    72.21s     Find the "holiday-batch-confirmation-bar" Any
+    t =    72.26s     Checking existence of `"holiday-makeup-choice-2026-10-10" Any`
+    t =    72.46s     Find the "holiday-makeup-choice-2026-10-10" Any
+    t =    72.66s     Checking existence of `CollectionView (First Match)`
+    t =    72.69s     Swipe up CollectionView (First Match)
+    t =    72.69s         Wait for com.courseflow.app to idle
+    t =    72.69s         Find the CollectionView (First Match)
+    t =    72.72s         Check for interrupting elements affecting CollectionView
+    t =    72.83s         Synthesize event
+    t =    73.34s         Wait for com.courseflow.app to idle
+    t =    74.20s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    74.27s     Find the "holiday-batch-confirmation-bar" Any
+    t =    74.33s     Checking existence of `"holiday-makeup-choice-2026-10-10" Button`
+    t =    74.49s     Find the "holiday-makeup-choice-2026-10-10" Button
+    t =    74.65s     Find the "holiday-makeup-choice-2026-10-10" Button
+    t =    74.82s     Checking existence of `"holiday-makeup-choice-2026-10-10" Button`
+    t =    74.97s     Find the Target Application 'com.courseflow.app'
+    t =    75.16s Added attachment named '深色大字号节日批量确认'
+    t =    75.16s     Tap "稍后再说" Button
+    t =    75.16s         Wait for com.courseflow.app to idle
+    t =    75.16s         Find the "稍后再说" Button
+    t =    75.30s         Check for interrupting elements affecting "稍后再说" Button
+    t =    75.40s         Synthesize event
+    t =    75.70s         Wait for com.courseflow.app to idle
+    t =    76.11s     Waiting 5.0s for "holiday-group-prompt-2026-国庆节" Button to exist
+    t =    77.14s         Checking `Expect predicate `existsNoRetry == 1` for object "holiday-group-prompt-2026-国庆节" Button`
+    t =    77.15s             Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    77.27s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testHolidayGroupWorksWithLargeTypeAndDarkAppearance]' failed (77.734 seconds).
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testLargeTypeAutomaticallyUsesAgenda]' started.
+    t =     0.00s Start Test at 2026-10-02 00:55:01.476
+    t =     0.04s Set Up
+    t =     0.04s     Open com.courseflow.app
+    t =     0.04s         Launch com.courseflow.app
+    t =     0.04s             Terminate com.courseflow.app:43158
+2026-10-02 00:55:02.542 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-02 00:55:02.543 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.28s             Setting up automation session
+    t =     3.42s             Wait for com.courseflow.app to idle
+    t =     5.27s     Waiting 15.0s for "week-picker" Button to exist
+    t =     6.30s         Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     6.30s             Checking existence of `"week-picker" Button`
+    t =     6.54s     Checking existence of `"now-marker" Any`
+    t =     6.63s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =     6.86s     Checking existence of `"holiday-batch-confirm" Button`
+    t =     6.97s     Find the Target Application 'com.courseflow.app'
+    t =     7.04s     Checking existence of `"now-marker" Any`
+    t =     7.13s     Find the "now-marker" Any
+    t =     7.22s     Checking existence of `CollectionView (First Match)`
+    t =     7.32s     Checking existence of `ScrollView (First Match)`
+    t =     7.36s     Swipe up ScrollView (First Match)
+    t =     7.36s         Wait for com.courseflow.app to idle
+    t =     7.36s         Find the ScrollView (First Match)
+    t =     7.39s         Check for interrupting elements affecting ScrollView
+    t =     7.47s         Synthesize event
+    t =     7.99s         Wait for com.courseflow.app to idle
+    t =     9.93s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    10.17s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    10.27s     Find the Target Application 'com.courseflow.app'
+    t =    10.34s     Checking existence of `"now-marker" Other`
+    t =    10.43s     Find the "now-marker" Other
+    t =    10.52s     Checking existence of `CollectionView (First Match)`
+    t =    10.62s     Checking existence of `ScrollView (First Match)`
+    t =    10.65s     Swipe up ScrollView (First Match)
+    t =    10.65s         Wait for com.courseflow.app to idle
+    t =    10.66s         Find the ScrollView (First Match)
+    t =    10.69s         Check for interrupting elements affecting ScrollView
+    t =    10.77s         Synthesize event
+    t =    11.29s         Wait for com.courseflow.app to idle
+    t =    13.23s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    13.48s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    13.59s     Find the Target Application 'com.courseflow.app'
+    t =    13.65s     Checking existence of `"now-marker" Other`
+    t =    13.74s     Find the "now-marker" Other
+    t =    13.83s     Find the "now-marker" Other
+    t =    13.95s     Find the Target Application 'com.courseflow.app'
+    t =    14.10s Added attachment named '深色大字号时间日程'
+    t =    14.10s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testLargeTypeAutomaticallyUsesAgenda]' passed (14.339 seconds).
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testPDFExportStillWorks]' started.
+    t =     0.00s Start Test at 2026-10-02 00:55:15.814
+    t =     0.03s Set Up
+    t =     0.04s     Open com.courseflow.app
+    t =     0.04s         Launch com.courseflow.app
+    t =     0.04s             Terminate com.courseflow.app:43220
+2026-10-02 00:55:16.902 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-02 00:55:16.902 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.30s             Setting up automation session
+    t =     3.43s             Wait for com.courseflow.app to idle
+    t =     5.33s     Waiting 15.0s for "week-picker" Button to exist
+    t =     6.35s         Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     6.35s             Checking existence of `"week-picker" Button`
+    t =     6.62s     Tap "课表显示与分享" Button
+    t =     6.62s         Wait for com.courseflow.app to idle
+    t =     6.63s         Find the "课表显示与分享" Button
+    t =     6.78s         Check for interrupting elements affecting "课表显示与分享" Button
+    t =     6.89s         Synthesize event
+    t =     7.21s         Wait for com.courseflow.app to idle
+    t =     8.11s     Tap "分享本周 PDF" Button
+    t =     8.11s         Wait for com.courseflow.app to idle
+    t =     8.11s         Find the "分享本周 PDF" Button
+    t =     8.29s         Check for interrupting elements affecting "doc" Button
+    t =     8.40s         Synthesize event
+    t =     8.70s         Wait for com.courseflow.app to idle
+    t =    10.01s     Waiting 5.0s for "关闭" Button to exist
+    t =    11.04s         Checking `Expect predicate `existsNoRetry == 1` for object "关闭" Button`
+    t =    11.04s             Checking existence of `"关闭" Button`
+    t =    11.26s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testPDFExportStillWorks]' passed (11.513 seconds).
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testPendingMakeupCanWaitThenConfirm]' started.
+    t =     0.00s Start Test at 2026-10-02 00:55:27.329
+    t =     0.04s Set Up
+    t =     0.04s     Open com.courseflow.app
+    t =     0.04s         Launch com.courseflow.app
+    t =     0.04s             Terminate com.courseflow.app:43238
+2026-10-02 00:55:28.432 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-02 00:55:28.432 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.31s             Setting up automation session
+    t =     3.46s             Wait for com.courseflow.app to idle
+    t =     5.30s     Waiting 15.0s for "week-picker" Button to exist
+    t =     6.32s         Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     6.33s             Checking existence of `"week-picker" Button`
+    t =     6.56s     Waiting 5.0s for "holiday-group-prompt-2026-国庆节" Button to exist
+    t =     7.60s         Checking `Expect predicate `existsNoRetry == 1` for object "holiday-group-prompt-2026-国庆节" Button`
+    t =     7.60s             Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =     7.75s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =     8.00s     Checking existence of `"holiday-batch-confirm" Button`
+    t =     8.12s     Find the Target Application 'com.courseflow.app'
+    t =     8.22s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =     8.34s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     8.46s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     8.62s     Tap "holiday-group-prompt-2026-国庆节" Button
+    t =     8.62s         Wait for com.courseflow.app to idle
+    t =     8.62s         Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     8.74s         Check for interrupting elements affecting "holiday-group-prompt-2026-国庆节" Button
+    t =     8.85s         Synthesize event
+    t =     9.15s         Wait for com.courseflow.app to idle
+    t =     9.24s     Waiting 5.0s for "国庆节学校安排" NavigationBar to exist
+    t =    10.27s         Checking `Expect predicate `existsNoRetry == 1` for object "国庆节学校安排" NavigationBar`
+    t =    10.27s             Checking existence of `"国庆节学校安排" NavigationBar`
+    t =    10.48s     Find the Target Application 'com.courseflow.app'
+    t =    10.69s Added attachment named '节日调休批量确认'
+    t =    10.69s     Tap "稍后再说" Button
+    t =    10.69s         Wait for com.courseflow.app to idle
+    t =    10.69s         Find the "稍后再说" Button
+    t =    10.84s         Check for interrupting elements affecting "稍后再说" Button
+    t =    10.98s         Synthesize event
+    t =    11.27s         Wait for com.courseflow.app to idle
+    t =    11.69s     Waiting 5.0s for "holiday-group-prompt-2026-国庆节" Button to exist
+    t =    12.72s         Checking `Expect predicate `existsNoRetry == 1` for object "holiday-group-prompt-2026-国庆节" Button`
+    t =    12.72s             Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    12.87s     Checking existence of `"调休课程待定" StaticText`
+    t =    12.99s     Waiting 5.0s for "holiday-group-prompt-2026-国庆节" Button to exist
+    t =    14.03s         Checking `Expect predicate `existsNoRetry == 1` for object "holiday-group-prompt-2026-国庆节" Button`
+    t =    14.03s             Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    14.18s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    14.43s     Checking existence of `"holiday-batch-confirm" Button`
+    t =    14.55s     Find the Target Application 'com.courseflow.app'
+    t =    14.65s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    14.78s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    14.90s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    15.04s     Tap "holiday-group-prompt-2026-国庆节" Button
+    t =    15.04s         Wait for com.courseflow.app to idle
+    t =    15.04s         Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    15.17s         Check for interrupting elements affecting "holiday-group-prompt-2026-国庆节" Button
+    t =    15.28s         Synthesize event
+    t =    15.58s         Wait for com.courseflow.app to idle
+    t =    16.05s     Waiting 5.0s for "国庆节学校安排" NavigationBar to exist
+    t =    17.07s         Checking `Expect predicate `existsNoRetry == 1` for object "国庆节学校安排" NavigationBar`
+    t =    17.07s             Checking existence of `"国庆节学校安排" NavigationBar`
+    t =    17.27s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    17.32s     Find the "holiday-batch-confirmation-bar" Any
+    t =    17.37s     Checking existence of `"holiday-makeup-choice-2026-10-10" Any`
+    t =    17.78s     Checking existence of `CollectionView (First Match)`
+    t =    17.80s     Swipe up CollectionView (First Match)
+    t =    17.80s         Wait for com.courseflow.app to idle
+    t =    17.81s         Find the CollectionView (First Match)
+    t =    17.84s         Check for interrupting elements affecting CollectionView
+    t =    17.97s         Synthesize event
+    t =    18.49s         Wait for com.courseflow.app to idle
+    t =    20.45s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    20.52s     Find the "holiday-batch-confirmation-bar" Any
+    t =    20.57s     Checking existence of `"holiday-makeup-choice-2026-10-10" Any`
+    t =    20.77s     Find the "holiday-makeup-choice-2026-10-10" Any
+    t =    20.97s     Checking existence of `CollectionView (First Match)`
+    t =    21.00s     Swipe up CollectionView (First Match)
+    t =    21.00s         Wait for com.courseflow.app to idle
+    t =    21.00s         Find the CollectionView (First Match)
+    t =    21.03s         Check for interrupting elements affecting CollectionView
+    t =    21.17s         Synthesize event
+    t =    21.69s         Wait for com.courseflow.app to idle
+    t =    22.53s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =    22.60s     Find the "holiday-batch-confirmation-bar" Any
+    t =    22.65s     Checking existence of `"holiday-makeup-choice-2026-10-10" Button`
+    t =    22.81s     Find the "holiday-makeup-choice-2026-10-10" Button
+    t =    22.98s     Find the "holiday-makeup-choice-2026-10-10" Button
+    t =    23.14s     Checking existence of `"holiday-makeup-choice-2026-10-10" Button`
+    t =    23.30s     Tap "holiday-makeup-choice-2026-10-10" Button
+    t =    23.30s         Wait for com.courseflow.app to idle
+    t =    23.30s         Find the "holiday-makeup-choice-2026-10-10" Button
+    t =    23.46s         Check for interrupting elements affecting "holiday-makeup-choice-2026-10-10" Button
+    t =    23.62s         Synthesize event
+    t =    23.91s         Wait for com.courseflow.app to idle
+    t =    25.16s     Waiting 3.0s for "照常按原课表" Button to exist
+    t =    26.18s         Checking `Expect predicate `existsNoRetry == 1` for object "照常按原课表" Button`
+    t =    26.18s             Checking existence of `"照常按原课表" Button`
+    t =    26.23s     Tap "照常按原课表" Button
+    t =    26.23s         Wait for com.courseflow.app to idle
+    t =    26.24s         Find the "照常按原课表" Button
+    t =    26.26s         Check for interrupting elements affecting "照常按原课表" Button
+    t =    26.40s         Synthesize event
+    t =    26.69s         Wait for com.courseflow.app to idle
+    t =    28.18s     Checking existence of `"holiday-batch-confirm" Button`
+~/Documents/ChatGPT/课表APP/UITests/TimeHolidayUITests.swift:68: error: -[CourseFlowUITests.TimeHolidayUITests testPendingMakeupCanWaitThenConfirm] : XCTAssertTrue failed
+    t =    28.35s     Tap "holiday-batch-confirm" Button
+    t =    28.35s         Wait for com.courseflow.app to idle
+    t =    28.36s         Find the "holiday-batch-confirm" Button
+    t =    29.51s             Find the "holiday-batch-confirm" Button (retry 1)
+    t =    30.70s             Find the "holiday-batch-confirm" Button (retry 2)
+    t =    30.88s     Requesting snapshot of accessibility hierarchy for app with pid 43244
+~/Documents/ChatGPT/课表APP/UITests/TimeHolidayUITests.swift:69: error: -[CourseFlowUITests.TimeHolidayUITests testPendingMakeupCanWaitThenConfirm] : Failed to tap "holiday-batch-confirm" Button: No matches found for Elements matching predicate '"holiday-batch-confirm" IN identifiers' from input {(
+    Button, label: '稍后再说',
+    Button, identifier: 'holiday-batch-confirmation-bar', label: '确认8天安排',
+    Button, label: '课表', Selected,
+    Button, label: '课程',
+    Button, label: '设置',
+    Button, identifier: 'add-menu', label: '添加',
+    Button, label: '课表显示与分享',
+    Button,
+    Button,
+    Button, label: '10月6日，单独查看或修改',
+    Button, label: '10月7日，单独查看或修改',
+    Button, identifier: 'holiday-makeup-choice-2026-09-20', label: '学校安排、9月20日补班学校安排',
+    Button, label: '9月20日，单独查看或修改',
+    Button, identifier: 'holiday-makeup-choice-2026-10-10', label: '学校安排、10月10日补班学校安排',
+    Button, label: '10月10日，单独查看或修改',
+    Button, label: '查看所选8天课程',
+    Button, label: '稍后再说',
+    Button,
+    Button, identifier: 'holiday-group-prompt-2026-国庆节', label: '国庆节学校安排待确认、放假：10月1日–10月7日、9月20日补班 · 已过，未确认、10月10日补班 · 调休课程待定、整段放假可一次确认；补班日可以稍后决定。原课程和提醒继续保留。',
+    Button, identifier: 'chevron.left', label: '上一周',
+    Button, identifier: 'week-picker', label: '第 4 周',
+    Button, identifier: 'chevron.right', label: '下一周',
+    Button, label: '高等数学，周一，08:00至09:40，明德楼 A301',
+    Button, label: '大学物理，周三，08:00至09:40，理科楼 402',
+    Button, label: '大学英语，周五，08:00至09:40，博学楼 B205',
+    Button, label: '大学英语，周二，10:00至11:40，博学楼 B205',
+    Button, label: '高等数学，周四，10:00至11:40，明德楼 A301',
+    Button, label: '程序设计，周一，14:00至15:40，信息楼 503',
+    Button, label: '大学物理，周五，14:00至15:40，实验楼 201',
+    Button, label: '体育，周二，16:00至17:40，南区体育馆',
+    Button, label: '程序设计，周四，16:00至17:40，计算机中心 302'
+)}
+Possibly caused by runtime issues:
+Automation type mismatch: computed Button from legacy attributes vs PopUpButton from modern attribute. Input attributes and values: {
+    "XC_kAXXCAttributeAutomationType" = 14;
+    "XC_kAXXCAttributeElementBaseType" = NSObject;
+    "XC_kAXXCAttributeElementType" = "SwiftUI.AccessibilityNode";
+    "XC_kAXXCAttributeTraits" = 1108101562369;
+}
+See test report attachments for more detail.
+    t =    31.08s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testPendingMakeupCanWaitThenConfirm]' failed (31.367 seconds).
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testWholeHolidayCanConfirmWhileMakeupRemainsPending]' started.
+    t =     0.00s Start Test at 2026-10-02 00:55:58.699
+    t =     0.04s Set Up
+    t =     0.04s     Open com.courseflow.app
+    t =     0.04s         Launch com.courseflow.app
+    t =     0.04s             Terminate com.courseflow.app:43244
+2026-10-02 00:55:59.793 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-02 00:55:59.793 xcodebuild[43023:1478301] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.31s             Setting up automation session
+    t =     3.53s             Wait for com.courseflow.app to idle
+    t =     5.37s     Waiting 15.0s for "week-picker" Button to exist
+    t =     6.40s         Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     6.40s             Checking existence of `"week-picker" Button`
+    t =     6.70s     Waiting 5.0s for "holiday-group-prompt-2026-国庆节" Button to exist
+    t =     7.72s         Checking `Expect predicate `existsNoRetry == 1` for object "holiday-group-prompt-2026-国庆节" Button`
+    t =     7.72s             Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =     7.90s     Checking existence of `"holiday-batch-confirmation-bar" Any`
+    t =     8.16s     Checking existence of `"holiday-batch-confirm" Button`
+    t =     8.30s     Find the Target Application 'com.courseflow.app'
+    t =     8.41s     Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =     8.56s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     8.71s     Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     8.89s     Tap "holiday-group-prompt-2026-国庆节" Button
+    t =     8.89s         Wait for com.courseflow.app to idle
+    t =     8.90s         Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     9.04s         Check for interrupting elements affecting "holiday-group-prompt-2026-国庆节" Button
+    t =     9.16s         Synthesize event
+    t =     9.46s         Wait for com.courseflow.app to idle
+    t =     9.55s     Waiting 5.0s for "国庆节学校安排" NavigationBar to exist
+    t =    10.57s         Checking `Expect predicate `existsNoRetry == 1` for object "国庆节学校安排" NavigationBar`
+    t =    10.57s             Checking existence of `"国庆节学校安排" NavigationBar`
+    t =    10.81s     Find the "holiday-batch-confirm" Button
+    t =    11.99s         Find the "holiday-batch-confirm" Button (retry 1)
+    t =    13.20s         Find the "holiday-batch-confirm" Button (retry 2)
+    t =    13.41s         Collecting debug information to assist test failure triage
+    t =    13.41s             Requesting snapshot of accessibility hierarchy for app with pid 43262
+    t =    13.64s         Requesting snapshot of accessibility hierarchy for app with pid 43262
+    t =    13.84s         Find: Descendants matching type Button
+    t =    13.84s         Find: Elements matching predicate '"holiday-batch-confirm" IN identifiers'
+    t =    13.85s         Requesting snapshot of accessibility hierarchy for app with pid 43262
+~/Documents/ChatGPT/课表APP/UITests/TimeHolidayUITests.swift:118: error: -[CourseFlowUITests.TimeHolidayUITests testWholeHolidayCanConfirmWhileMakeupRemainsPending] : Failed to get matching snapshot: No matches found for Elements matching predicate '"holiday-batch-confirm" IN identifiers' from input {(
+    Button, label: '稍后再说',
+    Button, identifier: 'holiday-batch-confirmation-bar', label: '确认7天安排',
+    Button, label: '课表', Selected,
+    Button, label: '课程',
+    Button, label: '设置',
+    Button, identifier: 'add-menu', label: '添加',
+    Button, label: '课表显示与分享',
+    Button,
+    Button,
+    Button, identifier: 'holiday-batch-rest-choice', label: '整段学校安排、整段不上课',
+    Button, label: '10月1日，单独查看或修改',
+    Button, label: '10月2日，单独查看或修改',
+    Button, label: '10月3日，单独查看或修改',
+    Button, label: '10月4日，单独查看或修改',
+    Button, label: '10月5日，单独查看或修改',
+    Button, identifier: 'holiday-group-prompt-2026-国庆节', label: '国庆节学校安排待确认、放假：10月1日–10月7日、9月20日补班 · 已过，未确认、10月10日补班 · 调休课程待定、整段放假可一次确认；补班日可以稍后决定。原课程和提醒继续保留。',
+    Button, identifier: 'chevron.left', label: '上一周',
+    Button, identifier: 'week-picker', label: '第 4 周',
+    Button, identifier: 'chevron.right', label: '下一周',
+    Button, label: '高等数学，周一，08:00至09:40，明德楼 A301',
+    Button, label: '大学物理，周三，08:00至09:40，理科楼 402',
+    Button, label: '大学英语，周五，08:00至09:40，博学楼 B205',
+    Button, label: '大学英语，周二，10:00至11:40，博学楼 B205',
+    Button, label: '高等数学，周四，10:00至11:40，明德楼 A301',
+    Button, label: '程序设计，周一，14:00至15:40，信息楼 503',
+    Button, label: '大学物理，周五，14:00至15:40，实验楼 201',
+    Button, label: '体育，周二，16:00至17:40，南区体育馆',
+    Button, label: '程序设计，周四，16:00至17:40，计算机中心 302'
+)}
+Possibly caused by runtime issues:
+Automation type mismatch: computed Button from legacy attributes vs PopUpButton from modern attribute. Input attributes and values: {
+    "XC_kAXXCAttributeAutomationType" = 14;
+    "XC_kAXXCAttributeElementBaseType" = NSObject;
+    "XC_kAXXCAttributeElementType" = "SwiftUI.AccessibilityNode";
+    "XC_kAXXCAttributeTraits" = 1108101562369;
+}
+See test report attachments for more detail.
+    t =    14.08s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testWholeHolidayCanConfirmWhileMakeupRemainsPending]' failed (14.340 seconds).
+Test Suite 'TimeHolidayUITests' failed at 2026-10-02 00:56:13.038.
+	 Executed 10 tests, with 6 failures (0 unexpected) in 231.123 (231.139) seconds
+Test Suite 'CourseFlowUITests.xctest' failed at 2026-10-02 00:56:13.039.
+	 Executed 10 tests, with 6 failures (0 unexpected) in 231.123 (231.141) seconds
+Test Suite 'Selected tests' failed at 2026-10-02 00:56:13.039.
+	 Executed 10 tests, with 6 failures (0 unexpected) in 231.123 (231.142) seconds
+2026-10-02 00:56:16.594594+0800 CourseFlow[43306:1485557] [Invalid Configuration] No symbol named 'checkmark.viewfinder' found in system symbol set
+2026-10-02 00:56:16.686104+0800 CourseFlow[43306:1485557] [XPCErrors] non-launching port is incompatible with service identifier "com.apple.PointerUI.pointeruid.default-service"
+2026-10-02 00:56:16.686464+0800 CourseFlow[43306:1485557] [API] cannot add handler to 0 from 0 - dropping
+2026-10-02 00:56:16.686577+0800 CourseFlow[43306:1485557] [API] cannot add handler to 0 from 0 - dropping
+2026-10-02 00:56:16.687471+0800 CourseFlow[43306:1485557] [API] cannot add handler to 0 from 0 - dropping
+2026-10-02 00:56:16.687510+0800 CourseFlow[43306:1485557] [API] cannot add handler to 0 from 0 - dropping
+2026-10-02 00:56:16.706558+0800 CourseFlow[43306:1485557] [Invalid Configuration] No symbol named 'checkmark.viewfinder' found in system symbol set
+Test Suite 'Selected tests' started at 2026-10-02 00:56:16.746.
+Test Suite 'CourseFlowTests.xctest' started at 2026-10-02 00:56:16.747.
+Test Suite 'HolidayIntegrationTests' started at 2026-10-02 00:56:16.747.
+Test Case '-[CourseFlowTests.HolidayIntegrationTests testBatchPersistenceSingleUndoAndV2BackupRoundTrip]' started.
+Test Case '-[CourseFlowTests.HolidayIntegrationTests testBatchPersistenceSingleUndoAndV2BackupRoundTrip]' passed (0.045 seconds).
+Test Case '-[CourseFlowTests.HolidayIntegrationTests testBatchRejectsNewlySyncedDecisionsAndManualOverridesWithoutPartialSave]' started.
+Test Case '-[CourseFlowTests.HolidayIntegrationTests testBatchRejectsNewlySyncedDecisionsAndManualOverridesWithoutPartialSave]' passed (0.019 seconds).
+Test Case '-[CourseFlowTests.HolidayIntegrationTests testDayNightUsesSchoolZone]' started.
+Test Case '-[CourseFlowTests.HolidayIntegrationTests testDayNightUsesSchoolZone]' passed (0.002 seconds).
+Test Case '-[CourseFlowTests.HolidayIntegrationTests testHolidayDecisionPersistenceUndoAndMappingReset]' started.
+Test Case '-[CourseFlowTests.HolidayIntegrationTests testHolidayDecisionPersistenceUndoAndMappingReset]' passed (0.018 seconds).
+Test Case '-[CourseFlowTests.HolidayIntegrationTests testOfflineSeedMissingYearAndInvalidCache]' started.
+Test Case '-[CourseFlowTests.HolidayIntegrationTests testOfflineSeedMissingYearAndInvalidCache]' passed (0.003 seconds).
+Test Case '-[CourseFlowTests.HolidayIntegrationTests testTimeStatusBoundariesAndAgendaInsertion]' started.
+Test Case '-[CourseFlowTests.HolidayIntegrationTests testTimeStatusBoundariesAndAgendaInsertion]' passed (0.033 seconds).
+Test Suite 'HolidayIntegrationTests' passed at 2026-10-02 00:56:16.870.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.120 (0.123) seconds
+Test Suite 'HolidaySystemIntegrationTests' started at 2026-10-02 00:56:16.870.
+Test Case '-[CourseFlowTests.HolidaySystemIntegrationTests testConfirmationRemovesAndReplacesActualPendingNotifications]' started.
+Test Case '-[CourseFlowTests.HolidaySystemIntegrationTests testConfirmationRemovesAndReplacesActualPendingNotifications]' passed (0.098 seconds).
+Test Case '-[CourseFlowTests.HolidaySystemIntegrationTests testConfirmedRestAndMakeupUpdateActualCalendar]' started.
+Test Case '-[CourseFlowTests.HolidaySystemIntegrationTests testConfirmedRestAndMakeupUpdateActualCalendar]' passed (0.181 seconds).
+Test Suite 'HolidaySystemIntegrationTests' passed at 2026-10-02 00:56:17.150.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.279 (0.280) seconds
+Test Suite 'PersistenceTests' started at 2026-10-02 00:56:17.150.
+Test Case '-[CourseFlowTests.PersistenceTests testAtomicSaveUndoAndReadback]' started.
+Test Case '-[CourseFlowTests.PersistenceTests testAtomicSaveUndoAndReadback]' passed (0.017 seconds).
+Test Case '-[CourseFlowTests.PersistenceTests testInvalidImportDoesNotPartiallyCommit]' started.
+Test Case '-[CourseFlowTests.PersistenceTests testInvalidImportDoesNotPartiallyCommit]' passed (0.005 seconds).
+Test Case '-[CourseFlowTests.PersistenceTests testRemoteRecordsAreNotDeletedByStaleEditor]' started.
+Test Case '-[CourseFlowTests.PersistenceTests testRemoteRecordsAreNotDeletedByStaleEditor]' passed (0.010 seconds).
+Test Case '-[CourseFlowTests.PersistenceTests testUndoDoesNotOverwriteNewlySyncedRecords]' started.
+Test Case '-[CourseFlowTests.PersistenceTests testUndoDoesNotOverwriteNewlySyncedRecords]' passed (0.010 seconds).
+Test Suite 'PersistenceTests' passed at 2026-10-02 00:56:17.193.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 0.042 (0.043) seconds
+Test Suite 'SystemIntegrationTests' started at 2026-10-02 00:56:17.194.
+Test Case '-[CourseFlowTests.SystemIntegrationTests testCalendarRoundTripDeduplicationAndManualEditProtection]' started.
+2026-10-02 00:56:17.441561+0800 CourseFlow[43306:1485557] [EventKit] Error getting calendar item with UUID DC0A0CA6-6214-4402-A11F-941F05D039EC: Error Domain=EKCADErrorDomain Code=1010 "Object not found. It may have been deleted." UserInfo={NSLocalizedDescription=Object not found. It may have been deleted.}
+2026-10-02 00:56:17.441885+0800 CourseFlow[43306:1485557] [EventKit] Error getting event with identifier B9144580-A165-481C-B375-4C27E0B21A20:72C01313-036B-4805-9105-B52D66B48D1F: Error Domain=EKCADErrorDomain Code=1010 "Object not found. It may have been deleted." UserInfo={NSLocalizedDescription=Object not found. It may have been deleted.}
+2026-10-02 00:56:17.442017+0800 CourseFlow[43306:1485557] [EventKit] Error getting calendar item with UUID DC0A0CA6-6214-4402-A11F-941F05D039EC: Error Domain=EKCADErrorDomain Code=1010 "Object not found. It may have been deleted." UserInfo={NSLocalizedDescription=Object not found. It may have been deleted.}
+2026-10-02 00:56:17.442151+0800 CourseFlow[43306:1485557] [EventKit] Error getting event with identifier B9144580-A165-481C-B375-4C27E0B21A20:72C01313-036B-4805-9105-B52D66B48D1F: Error Domain=EKCADErrorDomain Code=1010 "Object not found. It may have been deleted." UserInfo={NSLocalizedDescription=Object not found. It may have been deleted.}
+Test Case '-[CourseFlowTests.SystemIntegrationTests testCalendarRoundTripDeduplicationAndManualEditProtection]' passed (0.256 seconds).
+Test Case '-[CourseFlowTests.SystemIntegrationTests testWidgetBridgeRoundTripInSharedAppGroupAndRestoreSnapshot]' started.
+Test Case '-[CourseFlowTests.SystemIntegrationTests testWidgetBridgeRoundTripInSharedAppGroupAndRestoreSnapshot]' passed (0.005 seconds).
+Test Suite 'SystemIntegrationTests' passed at 2026-10-02 00:56:17.455.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.260 (0.261) seconds
+Test Suite 'CourseFlowTests.xctest' passed at 2026-10-02 00:56:17.455.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 0.701 (0.708) seconds
+Test Suite 'Selected tests' passed at 2026-10-02 00:56:17.455.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 0.701 (0.709) seconds
+2026-10-02 00:57:42.409 xcodebuild[43023:1478301] [MT] IDETestOperationsObserverDebug: 324.279 elapsed -- Testing started completed.
+2026-10-02 00:57:42.409 xcodebuild[43023:1478301] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-02 00:57:42.409 xcodebuild[43023:1478301] [MT] IDETestOperationsObserverDebug: 324.279 sec, +324.279 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/courseflow-batch-final.xcresult
+
+Failing tests:
+	TimeHolidayUITests.testHolidayBatchCanExcludeOneDate()
+	TimeHolidayUITests.testHolidayBatchCanExcludeOneDate()
+	TimeHolidayUITests.testHolidayGroupWorksWithLargeTypeAndDarkAppearance()
+	TimeHolidayUITests.testPendingMakeupCanWaitThenConfirm()
+	TimeHolidayUITests.testPendingMakeupCanWaitThenConfirm()
+	TimeHolidayUITests.testWholeHolidayCanConfirmWhileMakeupRemainsPending()
+
+** TEST FAILED **
+
+Testing started

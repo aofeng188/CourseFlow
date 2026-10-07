@@ -1,0 +1,26 @@
+{
+  "artifact": "CourseFlow-Trial-SideStore-unsigned.ipa",
+  "createdAt": "2026-10-01T17:10:32.079933+00:00",
+  "displayName": "CourseFlow",
+  "bundleIdentifier": "com.courseflow.app.trial",
+  "version": "1.0",
+  "build": "3",
+  "minimumOSVersion": "26.0",
+  "platform": "iPhoneOS",
+  "architectures": [
+    "arm64"
+  ],
+  "signingState": "unsigned-requires-device-provisioning",
+  "directlyInstallable": false,
+  "signingInstructions": "../docs/INSTALL-IPA.md",
+  "disabledFeatures": [
+    "CloudKit sync",
+    "App Groups",
+    "Widgets",
+    "Live Activities",
+    "Remote push"
+  ],
+  "sizeBytes": 4892376,
+  "sha256": "86e90ac76d418cd71e5103ee6965435a5e5bd136d626047c4d1129121c439c80",
+  "xcode": "Xcode 27.0\nBuild version 27A266a"
+}

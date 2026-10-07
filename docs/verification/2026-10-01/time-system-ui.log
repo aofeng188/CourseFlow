@@ -1,0 +1,924 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project CourseFlow.xcodeproj -scheme CourseFlow -configuration Debug -destination "platform=iOS Simulator,id=3DB168AE-3DDE-4578-A1B8-47B0A0E3AD59" -derivedDataPath /tmp/courseflow-time-build -resultBundlePath /tmp/courseflow-time-system-ui.xcresult CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM= -collect-test-diagnostics never -parallel-testing-enabled NO "-only-testing:CourseFlowTests/HolidaySystemIntegrationTests" "-only-testing:CourseFlowTests/SystemIntegrationTests/testWidgetBridgeRoundTripInSharedAppGroupAndRestoreSnapshot" "-only-testing:CourseFlowUITests/TimeHolidayUITests" test
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGNING_ALLOWED = YES
+    DEVELOPMENT_TEAM = 
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX.git @ 0.14.2
+  CourseKit: ~/Documents/ChatGPT/课表APP @ local
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation.git @ 0.9.20
+
+Writing result bundle at path:
+	/tmp/courseflow-time-system-ui.xcresult
+
+note: Using codesigning identity override: -
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (13 targets)
+    Target 'CourseFlowTests' in project 'CourseFlow'
+        ➜ Explicit dependency on target 'CourseFlow' in project 'CourseFlow'
+        ➜ Explicit dependency on target 'CourseKit-product' in project 'CourseKit'
+    Target 'CourseFlowUITests' in project 'CourseFlow'
+        ➜ Explicit dependency on target 'CourseFlow' in project 'CourseFlow'
+    Target 'CourseFlow' in project 'CourseFlow'
+        ➜ Explicit dependency on target 'CourseWidgets' in project 'CourseFlow'
+        ➜ Explicit dependency on target 'CourseKit-product' in project 'CourseKit'
+        ➜ Explicit dependency on target 'CoreXLSX-product' in project 'CoreXLSX'
+    Target 'CoreXLSX-product' in project 'CoreXLSX'
+        ➜ Explicit dependency on target 'CoreXLSX' in project 'CoreXLSX'
+        ➜ Explicit dependency on target 'XMLCoder-product' in project 'XMLCoder'
+        ➜ Explicit dependency on target 'ZIPFoundation-product' in project 'ZIPFoundation'
+    Target 'CoreXLSX' in project 'CoreXLSX'
+        ➜ Explicit dependency on target 'XMLCoder-product' in project 'XMLCoder'
+        ➜ Explicit dependency on target 'ZIPFoundation-product' in project 'ZIPFoundation'
+    Target 'ZIPFoundation-product' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation' in project 'ZIPFoundation'
+        ➜ Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'
+    Target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation' (no dependencies)
+    Target 'XMLCoder-product' in project 'XMLCoder'
+        ➜ Explicit dependency on target 'XMLCoder' in project 'XMLCoder'
+    Target 'XMLCoder' in project 'XMLCoder' (no dependencies)
+    Target 'CourseWidgets' in project 'CourseFlow'
+        ➜ Explicit dependency on target 'CourseKit-product' in project 'CourseKit'
+    Target 'CourseKit-product' in project 'CourseKit'
+        ➜ Explicit dependency on target 'CourseKit' in project 'CourseKit'
+    Target 'CourseKit' in project 'CourseKit' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --print-asset-tag-combinations --output-format xml1 ~/Documents/ChatGPT/课表APP/App/Assets.xcassets
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/usr/bin/actool --version --output-format xml1
+
+Build description signature: b7f7ffa3f9e974c35dba74f7dfb8ac2f
+Build description path: /tmp/courseflow-time-build/Build/Intermediates.noindex/XCBuildData/b7f7ffa3f9e974c35dba74f7dfb8ac2f.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk /tmp/courseflow-time-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache
+    cd ~/Documents/ChatGPT/课表APP/CourseFlow.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -o /tmp/courseflow-time-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache
+
+WriteAuxiliaryFile /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources/Entitlements-Simulated.plist (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    write-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources/Entitlements-Simulated.plist
+
+WriteAuxiliaryFile /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.SwiftConstValuesFileList (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    write-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.LinkFileList (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    write-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.LinkFileList
+
+MkDir /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /bin/mkdir -p /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest
+
+WriteAuxiliaryFile /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.SwiftFileList (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    write-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.SwiftFileList
+
+WriteAuxiliaryFile /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests-OutputFileMap.json (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    write-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests-OutputFileMap.json
+
+WriteAuxiliaryFile /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/DerivedSources/Entitlements-Simulated.plist (in target 'CourseWidgets' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    write-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/DerivedSources/Entitlements-Simulated.plist
+
+WriteAuxiliaryFile /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources/Entitlements-Simulated.plist (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    write-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources/Entitlements-Simulated.plist
+
+MkDir /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation_ZIPFoundation.bundle (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /tmp/courseflow-time-build/SourcePackages/checkouts/ZIPFoundation
+    /bin/mkdir -p /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation_ZIPFoundation.bundle
+
+MkDir /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex (in target 'CourseWidgets' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /bin/mkdir -p /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex
+
+MkDir /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /bin/mkdir -p /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest
+
+ProcessInfoPlistFile /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation_ZIPFoundation.bundle/Info.plist /tmp/courseflow-time-build/Build/Intermediates.noindex/ZIPFoundation.build/Debug-iphonesimulator/ZIPFoundation_ZIPFoundation-b.build/empty-ZIPFoundation_ZIPFoundation.plist (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /tmp/courseflow-time-build/SourcePackages/checkouts/ZIPFoundation
+    builtin-infoPlistUtility /tmp/courseflow-time-build/Build/Intermediates.noindex/ZIPFoundation.build/Debug-iphonesimulator/ZIPFoundation_ZIPFoundation-b.build/empty-ZIPFoundation_ZIPFoundation.plist -producttype com.apple.product-type.bundle -expandbuildsettings -format binary -platform iphonesimulator -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation_ZIPFoundation.bundle/Info.plist
+
+CodeSign /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation_ZIPFoundation.bundle (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /tmp/courseflow-time-build/SourcePackages/checkouts/ZIPFoundation
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation_ZIPFoundation.bundle
+
+Ld /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/XMLCoder.o normal (in target 'XMLCoder' from project 'XMLCoder')
+    cd /tmp/courseflow-time-build/SourcePackages/checkouts/XMLCoder
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios15.0-simulator -r -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -O0 -w -Xlinker -no_warn_duplicate_libraries -F/tmp/courseflow-time-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -filelist /tmp/courseflow-time-build/Build/Intermediates.noindex/XMLCoder.build/Debug-iphonesimulator/XMLCoder-t.build/Objects-normal/arm64/XMLCoder.LinkFileList -nostdlib -Xlinker -object_path_lto -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/XMLCoder.build/Debug-iphonesimulator/XMLCoder-t.build/Objects-normal/arm64/XMLCoder_lto.o -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/XMLCoder.build/Debug-iphonesimulator/XMLCoder-t.build/Objects-normal/arm64/XMLCoder_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/XMLCoder.build/Debug-iphonesimulator/XMLCoder-t.build/Objects-normal/arm64/XMLCoder.swiftmodule -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/XMLCoder.o
+
+Ld /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseKit.o normal (in target 'CourseKit' from project 'CourseKit')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -r -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -O0 -Xlinker -no_warn_duplicate_libraries -F/tmp/courseflow-time-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -filelist /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseKit.build/Debug-iphonesimulator/CourseKit-t.build/Objects-normal/arm64/CourseKit.LinkFileList -nostdlib -Xlinker -object_path_lto -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseKit.build/Debug-iphonesimulator/CourseKit-t.build/Objects-normal/arm64/CourseKit_lto.o -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseKit.build/Debug-iphonesimulator/CourseKit-t.build/Objects-normal/arm64/CourseKit_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseKit.build/Debug-iphonesimulator/CourseKit-t.build/Objects-normal/arm64/CourseKit.swiftmodule -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseKit.o
+
+ProcessProductPackaging ~/Documents/ChatGPT/课表APP/Config/CourseWidgets.entitlements /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.appex.xcent (in target 'CourseWidgets' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Entitlements:
+    
+    {
+}
+    
+    builtin-productPackagingUtility ~/Documents/ChatGPT/课表APP/Config/CourseWidgets.entitlements -entitlements -format xml -o /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.appex.xcent
+
+ProcessProductPackaging ~/Documents/ChatGPT/课表APP/Config/CourseWidgets.entitlements /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.appex-Simulated.xcent (in target 'CourseWidgets' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Entitlements:
+    
+    {
+    "application-identifier" = "FAKETEAMID.com.courseflow.app.widgets";
+    "com.apple.security.application-groups" =     (
+        "group.com.courseflow.app"
+    );
+}
+    
+    builtin-productPackagingUtility ~/Documents/ChatGPT/课表APP/Config/CourseWidgets.entitlements -entitlements -format xml -o /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.appex-Simulated.xcent
+
+ProcessProductPackagingDER /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.appex.xcent /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.appex.xcent.der (in target 'CourseWidgets' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /usr/bin/derq query -f xml -i /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.appex.xcent -o /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.appex.xcent.der --raw
+
+ProcessProductPackagingDER /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.appex-Simulated.xcent /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.appex-Simulated.xcent.der (in target 'CourseWidgets' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /usr/bin/derq query -f xml -i /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.appex-Simulated.xcent -o /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.appex-Simulated.xcent.der --raw
+
+RegisterExecutionPolicyException /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation_ZIPFoundation.bundle (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /tmp/courseflow-time-build/SourcePackages/checkouts/ZIPFoundation
+    builtin-RegisterExecutionPolicyException /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation_ZIPFoundation.bundle
+
+ProcessProductPackaging ~/Documents/ChatGPT/课表APP/Config/CourseFlow.entitlements /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app.xcent (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Entitlements:
+    
+    {
+}
+    
+    builtin-productPackagingUtility ~/Documents/ChatGPT/课表APP/Config/CourseFlow.entitlements -entitlements -format xml -o /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app.xcent
+
+ProcessProductPackaging ~/Documents/ChatGPT/课表APP/Config/CourseFlow.entitlements /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app-Simulated.xcent (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Entitlements:
+    
+    {
+    "application-identifier" = "FAKETEAMID.com.courseflow.app";
+    "aps-environment" = development;
+    "com.apple.developer.icloud-container-identifiers" =     (
+        "iCloud.com.courseflow.app"
+    );
+    "com.apple.developer.icloud-services" =     (
+        CloudKit
+    );
+    "com.apple.security.application-groups" =     (
+        "group.com.courseflow.app"
+    );
+}
+    
+    builtin-productPackagingUtility ~/Documents/ChatGPT/课表APP/Config/CourseFlow.entitlements -entitlements -format xml -o /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app-Simulated.xcent
+
+ProcessProductPackagingDER /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app.xcent /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app.xcent.der (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /usr/bin/derq query -f xml -i /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app.xcent -o /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app.xcent.der --raw
+
+ProcessProductPackagingDER /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app-Simulated.xcent /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app-Simulated.xcent.der (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /usr/bin/derq query -f xml -i /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app-Simulated.xcent -o /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app-Simulated.xcent.der --raw
+
+SwiftDriver CourseFlow normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CourseFlow -Onone @/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.SwiftFileList -DDEBUG -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/courseflow-time-build/Index.noindex/DataStore -swift-version 6 -I /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -F /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64 -c -j14 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/courseflow-time-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/courseflow-time-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -sdk-module-cache-path /tmp/courseflow-time-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/courseflow-time-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-generated-files.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-own-target-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow-325aadb44cc2f77eb97a59b3aed8ef18-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-project-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources-normal/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-Swift.h -working-directory ~/Documents/ChatGPT/课表APP -experimental-emit-module-separately -disable-cmo
+
+Touch /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation_ZIPFoundation.bundle (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')
+    cd /tmp/courseflow-time-build/SourcePackages/checkouts/ZIPFoundation
+    /usr/bin/touch -c /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation_ZIPFoundation.bundle
+
+ExtractAppIntentsMetadata (in target 'CourseKit' from project 'CourseKit')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name CourseKit --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk --xcode-version 27A266a --platform-family iOS --deployment-target 26.0 --bundle-identifier --app.CourseKit --output /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseKit.appintents --target-triple arm64-apple-ios26.0-simulator --binary-file /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseKit.o --dependency-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseKit.build/Debug-iphonesimulator/CourseKit-t.build/Objects-normal/arm64/CourseKit_dependency_info.dat --stringsdata-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseKit.build/Debug-iphonesimulator/CourseKit-t.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseKit.build/Debug-iphonesimulator/CourseKit-t.build/Objects-normal/arm64/CourseKit.SwiftFileList --metadata-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseKit.build/Debug-iphonesimulator/CourseKit-t.build/CourseKit.DependencyMetadataFileList --static-metadata-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseKit.build/Debug-iphonesimulator/CourseKit-t.build/CourseKit.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseKit.build/Debug-iphonesimulator/CourseKit-t.build/Objects-normal/arm64/CourseKit.SwiftConstValuesFileList --force --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-01 23:47:22.604 appintentsmetadataprocessor[36156:1357292] Starting appintentsmetadataprocessor export
+2026-10-01 23:47:22.647 appintentsmetadataprocessor[36156:1357292] Extracted no relevant App Intents symbols, skipping writing output
+
+ExtractAppIntentsMetadata (in target 'XMLCoder' from project 'XMLCoder')
+    cd /tmp/courseflow-time-build/SourcePackages/checkouts/XMLCoder
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name XMLCoder --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk --xcode-version 27A266a --platform-family iOS --deployment-target 15.0 --bundle-identifier xmlcoder.XMLCoder --output /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/XMLCoder.appintents --target-triple arm64-apple-ios15.0-simulator --binary-file /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/XMLCoder.o --dependency-file /tmp/courseflow-time-build/Build/Intermediates.noindex/XMLCoder.build/Debug-iphonesimulator/XMLCoder-t.build/Objects-normal/arm64/XMLCoder_dependency_info.dat --stringsdata-file /tmp/courseflow-time-build/Build/Intermediates.noindex/XMLCoder.build/Debug-iphonesimulator/XMLCoder-t.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/XMLCoder.build/Debug-iphonesimulator/XMLCoder-t.build/Objects-normal/arm64/XMLCoder.SwiftFileList --metadata-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/XMLCoder.build/Debug-iphonesimulator/XMLCoder-t.build/XMLCoder.DependencyMetadataFileList --static-metadata-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/XMLCoder.build/Debug-iphonesimulator/XMLCoder-t.build/XMLCoder.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/courseflow-time-build/Build/Intermediates.noindex/XMLCoder.build/Debug-iphonesimulator/XMLCoder-t.build/Objects-normal/arm64/XMLCoder.SwiftConstValuesFileList --force --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-01 23:47:22.604 appintentsmetadataprocessor[36157:1357293] Starting appintentsmetadataprocessor export
+2026-10-01 23:47:22.653 appintentsmetadataprocessor[36157:1357293] Extracted no relevant App Intents symbols, skipping writing output
+
+Ld /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation.o normal (in target 'ZIPFoundation' from project 'ZIPFoundation')
+    cd /tmp/courseflow-time-build/SourcePackages/checkouts/ZIPFoundation
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios15.0-simulator -r -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -O0 -w -Xlinker -no_warn_duplicate_libraries -F/tmp/courseflow-time-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -filelist /tmp/courseflow-time-build/Build/Intermediates.noindex/ZIPFoundation.build/Debug-iphonesimulator/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.LinkFileList -nostdlib -Xlinker -object_path_lto -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/ZIPFoundation.build/Debug-iphonesimulator/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation_lto.o -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/ZIPFoundation.build/Debug-iphonesimulator/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/ZIPFoundation.build/Debug-iphonesimulator/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.swiftmodule -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation.o
+
+ExtractAppIntentsMetadata (in target 'ZIPFoundation' from project 'ZIPFoundation')
+    cd /tmp/courseflow-time-build/SourcePackages/checkouts/ZIPFoundation
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name ZIPFoundation --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk --xcode-version 27A266a --platform-family iOS --deployment-target 15.0 --bundle-identifier zipfoundation.ZIPFoundation --output /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation.appintents --target-triple arm64-apple-ios15.0-simulator --binary-file /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation.o --dependency-file /tmp/courseflow-time-build/Build/Intermediates.noindex/ZIPFoundation.build/Debug-iphonesimulator/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation_dependency_info.dat --stringsdata-file /tmp/courseflow-time-build/Build/Intermediates.noindex/ZIPFoundation.build/Debug-iphonesimulator/ZIPFoundation-t.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/ZIPFoundation.build/Debug-iphonesimulator/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.SwiftFileList --metadata-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/ZIPFoundation.build/Debug-iphonesimulator/ZIPFoundation-t.build/ZIPFoundation.DependencyMetadataFileList --static-metadata-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/ZIPFoundation.build/Debug-iphonesimulator/ZIPFoundation-t.build/ZIPFoundation.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/courseflow-time-build/Build/Intermediates.noindex/ZIPFoundation.build/Debug-iphonesimulator/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.SwiftConstValuesFileList --force --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-01 23:47:22.622 appintentsmetadataprocessor[36160:1357314] Starting appintentsmetadataprocessor export
+2026-10-01 23:47:22.665 appintentsmetadataprocessor[36160:1357314] Extracted no relevant App Intents symbols, skipping writing output
+
+CodeSign /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseKit.o (in target 'CourseKit' from project 'CourseKit')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseKit.o
+
+CodeSign /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/XMLCoder.o (in target 'XMLCoder' from project 'XMLCoder')
+    cd /tmp/courseflow-time-build/SourcePackages/checkouts/XMLCoder
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/XMLCoder.o
+
+Ld /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct normal (in target 'CourseKitdynamic-product' from project 'CourseKit')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -emit-library -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -Xlinker -no_warn_duplicate_libraries -L/tmp/courseflow-time-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/tmp/courseflow-time-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -Fsystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -Fsystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks @/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseKit.build/Debug-iphonesimulator/CourseKit-product-t.build/Objects-normal/arm64/CourseKit_58D975612C0BABA2_PackageProduct.LinkFileList -Xclang-linker -install_name -Xclang-linker @rpath/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseKit.build/Debug-iphonesimulator/CourseKit-product-t.build/Objects-normal/arm64/CourseKit_58D975612C0BABA2_PackageProduct_lto.o -Xclang-linker -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseKit.build/Debug-iphonesimulator/CourseKit-product-t.build/Objects-normal/arm64/CourseKit_58D975612C0BABA2_PackageProduct_dependency_info.dat -link-objc-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct
+
+CodeSign /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation.o (in target 'ZIPFoundation' from project 'ZIPFoundation')
+    cd /tmp/courseflow-time-build/SourcePackages/checkouts/ZIPFoundation
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation.o
+
+Ld /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CoreXLSX.o normal (in target 'CoreXLSX' from project 'CoreXLSX')
+    cd /tmp/courseflow-time-build/SourcePackages/checkouts/CoreXLSX
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios15.0-simulator -r -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -O0 -w -Xlinker -no_warn_duplicate_libraries -F/tmp/courseflow-time-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -filelist /tmp/courseflow-time-build/Build/Intermediates.noindex/CoreXLSX.build/Debug-iphonesimulator/CoreXLSX-t.build/Objects-normal/arm64/CoreXLSX.LinkFileList -nostdlib -Xlinker -object_path_lto -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CoreXLSX.build/Debug-iphonesimulator/CoreXLSX-t.build/Objects-normal/arm64/CoreXLSX_lto.o -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CoreXLSX.build/Debug-iphonesimulator/CoreXLSX-t.build/Objects-normal/arm64/CoreXLSX_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CoreXLSX.build/Debug-iphonesimulator/CoreXLSX-t.build/Objects-normal/arm64/CoreXLSX.swiftmodule -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CoreXLSX.o
+
+ExtractAppIntentsMetadata (in target 'CoreXLSX' from project 'CoreXLSX')
+    cd /tmp/courseflow-time-build/SourcePackages/checkouts/CoreXLSX
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name CoreXLSX --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk --xcode-version 27A266a --platform-family iOS --deployment-target 15.0 --bundle-identifier corexlsx.CoreXLSX --output /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CoreXLSX.appintents --target-triple arm64-apple-ios15.0-simulator --binary-file /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CoreXLSX.o --dependency-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CoreXLSX.build/Debug-iphonesimulator/CoreXLSX-t.build/Objects-normal/arm64/CoreXLSX_dependency_info.dat --stringsdata-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CoreXLSX.build/Debug-iphonesimulator/CoreXLSX-t.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CoreXLSX.build/Debug-iphonesimulator/CoreXLSX-t.build/Objects-normal/arm64/CoreXLSX.SwiftFileList --metadata-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CoreXLSX.build/Debug-iphonesimulator/CoreXLSX-t.build/CoreXLSX.DependencyMetadataFileList --static-metadata-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CoreXLSX.build/Debug-iphonesimulator/CoreXLSX-t.build/CoreXLSX.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CoreXLSX.build/Debug-iphonesimulator/CoreXLSX-t.build/Objects-normal/arm64/CoreXLSX.SwiftConstValuesFileList --force --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-01 23:47:22.719 appintentsmetadataprocessor[36167:1357346] Starting appintentsmetadataprocessor export
+2026-10-01 23:47:22.762 appintentsmetadataprocessor[36167:1357346] Extracted no relevant App Intents symbols, skipping writing output
+
+CodeSign /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CoreXLSX.o (in target 'CoreXLSX' from project 'CoreXLSX')
+    cd /tmp/courseflow-time-build/SourcePackages/checkouts/CoreXLSX
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CoreXLSX.o
+
+ProcessInfoPlistFile /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/Info.plist /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseKit.build/Debug-iphonesimulator/CourseKit-product-t.build/empty-CourseKit_58D975612C0BABA2_PackageProduct.plist (in target 'CourseKitdynamic-product' from project 'CourseKit')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-infoPlistUtility /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseKit.build/Debug-iphonesimulator/CourseKit-product-t.build/empty-CourseKit_58D975612C0BABA2_PackageProduct.plist -producttype com.apple.product-type.framework -expandbuildsettings -format binary -platform iphonesimulator -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/Info.plist
+
+GenerateTAPI /tmp/courseflow-time-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct.tbd (in target 'CourseKitdynamic-product' from project 'CourseKit')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/tapi stubify -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -L/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct -o /tmp/courseflow-time-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct.tbd
+
+Ld /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/__preview.dylib normal (in target 'CourseWidgets' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -install_name @rpath/CourseWidgets.debug.dylib -Xlinker -dead_strip -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/Objects-normal/arm64/CourseWidgets_dependency_info.dat -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.appex-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.appex-Simulated.xcent.der -Xlinker -no_adhoc_codesign -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/__preview.dylib
+
+ProcessInfoPlistFile /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/Info.plist ~/Documents/ChatGPT/课表APP/Config/Widgets-Info.plist (in target 'CourseWidgets' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-infoPlistUtility ~/Documents/ChatGPT/课表APP/Config/Widgets-Info.plist -producttype com.apple.product-type.app-extension -expandbuildsettings -format binary -platform iphonesimulator -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/Info.plist
+
+Ld /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/CourseWidgets.debug.dylib normal (in target 'CourseWidgets' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/tmp/courseflow-time-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -F/tmp/courseflow-time-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -filelist /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/Objects-normal/arm64/CourseWidgets.LinkFileList -install_name @rpath/CourseWidgets.debug.dylib -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/../../Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/Objects-normal/arm64/CourseWidgets_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/Objects-normal/arm64/CourseWidgets_dependency_info.dat -fapplication-extension -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/Objects-normal/arm64/CourseWidgets.swiftmodule -Xlinker -alias -Xlinker _NSExtensionMain -Xlinker ___debug_main_executable_dylib_entry_point /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct -Xlinker -no_adhoc_codesign -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/CourseWidgets.debug.dylib
+
+SwiftCompile normal arm64 Compiling\ CourseFlowApp.swift ~/Documents/ChatGPT/课表APP/App/CourseFlowApp.swift (in target 'CourseFlow' from project 'CourseFlow')
+
+SwiftCompile normal arm64 ~/Documents/ChatGPT/课表APP/App/CourseFlowApp.swift (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-SwiftPerFileCompile CourseFlowApp.swift
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ CourseFlow (in target 'CourseFlow' from project 'CourseFlow')
+
+SwiftCompile normal arm64 (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+
+ConstructStubExecutorLinkFileList /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets-ExecutorLinkFileList-normal-arm64.txt (in target 'CourseWidgets' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    construct-stub-executor-link-file-list /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/CourseWidgets.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets-ExecutorLinkFileList-normal-arm64.txt
+note: Using stub executor library with Swift entry point. (in target 'CourseWidgets' from project 'CourseFlow')
+
+Ld /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/CourseWidgets normal (in target 'CourseWidgets' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/../../Frameworks -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_entry -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets-DebugEntryPoint-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets-ExecutorLinkFileList-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.appex-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.appex-Simulated.xcent.der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/CourseWidgets.debug.dylib -Xlinker -no_adhoc_codesign -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/CourseWidgets
+
+ExtractAppIntentsMetadata (in target 'CourseWidgets' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name CourseWidgets --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk --xcode-version 27A266a --platform-family iOS --deployment-target 26.0 --bundle-identifier com.courseflow.app.widgets --output /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex --target-triple arm64-apple-ios26.0-simulator --binary-file /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/CourseWidgets --dependency-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/Objects-normal/arm64/CourseWidgets_dependency_info.dat --stringsdata-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/Objects-normal/arm64/CourseWidgets.SwiftFileList --metadata-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.DependencyMetadataFileList --static-metadata-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/Objects-normal/arm64/CourseWidgets.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-01 23:47:23.090 appintentsmetadataprocessor[36193:1357462] Starting appintentsmetadataprocessor export
+2026-10-01 23:47:23.131 appintentsmetadataprocessor[36193:1357462] Extracted no relevant App Intents symbols, skipping writing output
+
+CodeSign /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/CourseWidgets.debug.dylib (in target 'CourseWidgets' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/CourseWidgets.debug.dylib
+
+CodeSign /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/__preview.dylib (in target 'CourseWidgets' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/__preview.dylib
+
+CodeSign /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex (in target 'CourseWidgets' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --entitlements /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseWidgets.build/CourseWidgets.appex.xcent --timestamp\=none --generate-entitlement-der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex
+
+RegisterExecutionPolicyException /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex (in target 'CourseWidgets' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-RegisterExecutionPolicyException /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex
+
+Touch /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex (in target 'CourseWidgets' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /usr/bin/touch -c /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex
+
+Copy /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/ZIPFoundation_ZIPFoundation.bundle /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation_ZIPFoundation.bundle (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation_ZIPFoundation.bundle /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app
+
+Copy /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -remove-static-executable /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D -S -no_atom_info /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct
+
+Ld /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/__preview.dylib normal (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -install_name @rpath/CourseFlow.debug.dylib -Xlinker -dead_strip -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow_dependency_info.dat -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app-Simulated.xcent.der -Xlinker -no_adhoc_codesign -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/__preview.dylib
+
+CodeSign /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --preserve-metadata\=identifier,entitlements,flags --generate-entitlement-der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework
+/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework: replacing existing signature
+
+SwiftDriverJobDiscovery normal arm64 Compiling CourseFlowApp.swift (in target 'CourseFlow' from project 'CourseFlow')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for CourseFlow (in target 'CourseFlow' from project 'CourseFlow')
+
+SwiftDriver\ Compilation\ Requirements CourseFlow normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CourseFlow -Onone @/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.SwiftFileList -DDEBUG -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/courseflow-time-build/Index.noindex/DataStore -swift-version 6 -I /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -F /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64 -c -j14 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/courseflow-time-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/courseflow-time-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -sdk-module-cache-path /tmp/courseflow-time-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/courseflow-time-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-generated-files.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-own-target-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow-325aadb44cc2f77eb97a59b3aed8ef18-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-project-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources-normal/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-Swift.h -working-directory ~/Documents/ChatGPT/课表APP -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver\ Compilation CourseFlow normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CourseFlow -Onone @/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.SwiftFileList -DDEBUG -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/courseflow-time-build/Index.noindex/DataStore -swift-version 6 -I /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -F /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -emit-localized-strings -emit-localized-strings-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64 -c -j14 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/courseflow-time-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/courseflow-time-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -sdk-module-cache-path /tmp/courseflow-time-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/courseflow-time-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-generated-files.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-own-target-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow-325aadb44cc2f77eb97a59b3aed8ef18-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-project-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources-normal/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow-Swift.h -working-directory ~/Documents/ChatGPT/课表APP -experimental-emit-module-separately -disable-cmo
+
+Copy /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.swiftmodule/arm64-apple-ios-simulator.abi.json /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.abi.json (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.abi.json /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+Copy /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.swiftsourceinfo (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.swiftsourceinfo /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+ProcessProductPackaging "" /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests.xctest-Simulated.xcent (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Entitlements:
+    
+    {
+    "application-identifier" = "FAKETEAMID.com.courseflow.app.uitests.xctrunner";
+    "keychain-access-groups" =     (
+        "FAKETEAMID.com.courseflow.app.uitests.xctrunner"
+    );
+}
+    
+    builtin-productPackagingUtility -entitlements -format xml -o /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests.xctest-Simulated.xcent
+
+SwiftDriver CourseFlowTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CourseFlowTests -Onone @/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/courseflow-time-build/Index.noindex/DataStore -swift-version 6 -I /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -emit-localized-strings -emit-localized-strings-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64 -c -j14 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/courseflow-time-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/courseflow-time-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -sdk-module-cache-path /tmp/courseflow-time-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/courseflow-time-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/CourseFlowTests-generated-files.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/CourseFlowTests-own-target-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/CourseFlowTests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow-325aadb44cc2f77eb97a59b3aed8ef18-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/CourseFlowTests-project-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/DerivedSources/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests-Swift.h -working-directory ~/Documents/ChatGPT/课表APP -experimental-emit-module-separately -disable-cmo
+
+ProcessProductPackagingDER /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests.xctest-Simulated.xcent /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests.xctest-Simulated.xcent.der (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /usr/bin/derq query -f xml -i /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests.xctest-Simulated.xcent -o /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests.xctest-Simulated.xcent.der --raw
+
+SwiftDriver CourseFlowUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CourseFlowUITests -Onone @/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/courseflow-time-build/Index.noindex/DataStore -swift-version 6 -I /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -emit-localized-strings -emit-localized-strings-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64 -c -j14 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/courseflow-time-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/courseflow-time-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -sdk-module-cache-path /tmp/courseflow-time-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/courseflow-time-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-generated-files.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-own-target-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow-325aadb44cc2f77eb97a59b3aed8ef18-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-project-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-Swift.h -working-directory ~/Documents/ChatGPT/课表APP -experimental-emit-module-separately -disable-cmo
+
+Ld /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow.debug.dylib normal (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/tmp/courseflow-time-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -F/tmp/courseflow-time-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -filelist /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.LinkFileList -install_name @rpath/CourseFlow.debug.dylib -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.swiftmodule -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct -Xlinker -no_adhoc_codesign -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow.debug.dylib
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ CourseFlowUITests (in target 'CourseFlowUITests' from project 'CourseFlow')
+
+SwiftCompile normal arm64 (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+
+SwiftCompile normal arm64 Compiling\ TimeHolidayUITests.swift ~/Documents/ChatGPT/课表APP/UITests/TimeHolidayUITests.swift (in target 'CourseFlowUITests' from project 'CourseFlow')
+
+SwiftCompile normal arm64 ~/Documents/ChatGPT/课表APP/UITests/TimeHolidayUITests.swift (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-SwiftPerFileCompile TimeHolidayUITests.swift
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for CourseFlowUITests (in target 'CourseFlowUITests' from project 'CourseFlow')
+
+SwiftDriver\ Compilation\ Requirements CourseFlowUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CourseFlowUITests -Onone @/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/courseflow-time-build/Index.noindex/DataStore -swift-version 6 -I /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -emit-localized-strings -emit-localized-strings-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64 -c -j14 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/courseflow-time-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/courseflow-time-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -sdk-module-cache-path /tmp/courseflow-time-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/courseflow-time-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-generated-files.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-own-target-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow-325aadb44cc2f77eb97a59b3aed8ef18-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-project-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-Swift.h -working-directory ~/Documents/ChatGPT/课表APP -experimental-emit-module-separately -disable-cmo
+
+Copy /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests.swiftmodule/arm64-apple-ios-simulator.swiftmodule /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.swiftmodule (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.swiftmodule /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests.swiftmodule/arm64-apple-ios-simulator.swiftmodule
+
+Copy /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.swiftsourceinfo (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.swiftsourceinfo /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+Copy /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests.swiftmodule/arm64-apple-ios-simulator.abi.json /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.abi.json (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.abi.json /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ CourseFlowTests (in target 'CourseFlowTests' from project 'CourseFlow')
+
+SwiftCompile normal arm64 (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+
+SwiftCompile normal arm64 Compiling\ HolidaySystemIntegrationTests.swift ~/Documents/ChatGPT/课表APP/Tests/AppTests/HolidaySystemIntegrationTests.swift (in target 'CourseFlowTests' from project 'CourseFlow')
+
+SwiftCompile normal arm64 ~/Documents/ChatGPT/课表APP/Tests/AppTests/HolidaySystemIntegrationTests.swift (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-SwiftPerFileCompile HolidaySystemIntegrationTests.swift
+
+ConstructStubExecutorLinkFileList /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-ExecutorLinkFileList-normal-arm64.txt (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    construct-stub-executor-link-file-list /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-ExecutorLinkFileList-normal-arm64.txt
+note: Using stub executor library with Swift entry point. (in target 'CourseFlow' from project 'CourseFlow')
+
+Ld /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow normal (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow-ExecutorLinkFileList-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app-Simulated.xcent.der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow.debug.dylib -Xlinker -no_adhoc_codesign -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow
+
+Copy /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseWidgets.appex /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -exclude Headers -exclude PrivateHeaders -exclude Modules -exclude \*.tbd -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -remove-static-executable /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns
+warning: not stripping binary because it is signed: /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/CourseWidgets.debug.dylibwarning: not stripping binary because it is signed: /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/CourseWidgetswarning: not stripping binary because it is signed: /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseWidgets.appex/__preview.dylib (in target 'CourseFlow' from project 'CourseFlow')
+
+CopySwiftLibs /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow.debug.dylib --scan-folder /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks --scan-folder /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns --scan-folder /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/SystemExtensions --scan-folder /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Extensions --scan-folder /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ProcessInfoPlistFile /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Info.plist ~/Documents/ChatGPT/课表APP/Config/App-Info.plist (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-infoPlistUtility ~/Documents/ChatGPT/课表APP/Config/App-Info.plist -producttype com.apple.product-type.application -genpkginfo /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/assetcatalog_generated_info.plist -scanforprivacyfile /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework -scanforprivacyfile /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseWidgets.appex -scanforprivacyfile /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/ZIPFoundation_ZIPFoundation.bundle -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Info.plist
+
+ExtractAppIntentsMetadata (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name CourseFlow --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk --xcode-version 27A266a --platform-family iOS --deployment-target 26.0 --bundle-identifier com.courseflow.app --output /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app --target-triple arm64-apple-ios26.0-simulator --binary-file /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow --dependency-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow_dependency_info.dat --stringsdata-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.SwiftFileList --metadata-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.DependencyMetadataFileList --static-metadata-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/Objects-normal/arm64/CourseFlow.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-01 23:47:24.512 appintentsmetadataprocessor[36214:1357606] Starting appintentsmetadataprocessor export
+2026-10-01 23:47:24.558 appintentsmetadataprocessor[36214:1357606] Extracted no relevant App Intents symbols, skipping writing output
+
+SwiftDriverJobDiscovery normal arm64 Compiling TimeHolidayUITests.swift (in target 'CourseFlowUITests' from project 'CourseFlow')
+
+SwiftDriver\ Compilation CourseFlowUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CourseFlowUITests -Onone @/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/courseflow-time-build/Index.noindex/DataStore -swift-version 6 -I /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -emit-localized-strings -emit-localized-strings-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64 -c -j14 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/courseflow-time-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/courseflow-time-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -sdk-module-cache-path /tmp/courseflow-time-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/courseflow-time-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-generated-files.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-own-target-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow-325aadb44cc2f77eb97a59b3aed8ef18-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests-project-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests-Swift.h -working-directory ~/Documents/ChatGPT/课表APP -experimental-emit-module-separately -disable-cmo
+
+Copy /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/ZIPFoundation_ZIPFoundation.bundle /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation_ZIPFoundation.bundle (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/ZIPFoundation_ZIPFoundation.bundle /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest
+
+Copy /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -remove-static-executable /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Frameworks
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -D -S -no_atom_info /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct
+
+ProcessInfoPlistFile /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Info.plist /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/empty-CourseFlowTests.plist (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-infoPlistUtility /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/empty-CourseFlowTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -format binary -platform iphonesimulator -scanforprivacyfile /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/ZIPFoundation_ZIPFoundation.bundle -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Info.plist
+
+CodeSign /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --preserve-metadata\=identifier,entitlements,flags --generate-entitlement-der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework
+/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Frameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework: replacing existing signature
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for CourseFlowTests (in target 'CourseFlowTests' from project 'CourseFlow')
+
+SwiftDriver\ Compilation\ Requirements CourseFlowTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CourseFlowTests -Onone @/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/courseflow-time-build/Index.noindex/DataStore -swift-version 6 -I /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -emit-localized-strings -emit-localized-strings-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64 -c -j14 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/courseflow-time-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/courseflow-time-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -sdk-module-cache-path /tmp/courseflow-time-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/courseflow-time-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/CourseFlowTests-generated-files.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/CourseFlowTests-own-target-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/CourseFlowTests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow-325aadb44cc2f77eb97a59b3aed8ef18-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/CourseFlowTests-project-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/DerivedSources/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests-Swift.h -working-directory ~/Documents/ChatGPT/课表APP -experimental-emit-module-separately -disable-cmo
+
+Copy /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowTests.swiftmodule/arm64-apple-ios-simulator.abi.json /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.abi.json (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.abi.json /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowTests.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+Copy /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowTests.swiftmodule/arm64-apple-ios-simulator.swiftmodule /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.swiftmodule (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.swiftmodule /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowTests.swiftmodule/arm64-apple-ios-simulator.swiftmodule
+
+Copy /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowTests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.swiftsourceinfo (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.swiftsourceinfo /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowTests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+SwiftDriverJobDiscovery normal arm64 Compiling HolidaySystemIntegrationTests.swift (in target 'CourseFlowTests' from project 'CourseFlow')
+
+SwiftDriver\ Compilation CourseFlowTests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name CourseFlowTests -Onone @/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.SwiftFileList -DDEBUG -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios26.0-simulator -g -module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/courseflow-time-build/Index.noindex/DataStore -swift-version 6 -I /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -emit-localized-strings -emit-localized-strings-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64 -c -j14 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/courseflow-time-build/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/courseflow-time-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/courseflow-time-build/ModuleCache.noindex -sdk-module-cache-path /tmp/courseflow-time-build/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/courseflow-time-build/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/CourseFlowTests-generated-files.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/CourseFlowTests-own-target-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/CourseFlowTests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow-325aadb44cc2f77eb97a59b3aed8ef18-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/CourseFlowTests-project-headers.hmap -Xcc -I/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/DerivedSources/arm64 -Xcc -I/tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/DerivedSources -emit-objc-header -emit-objc-header-path /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests-Swift.h -working-directory ~/Documents/ChatGPT/课表APP -experimental-emit-module-separately -disable-cmo
+
+Ld /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/CourseFlowTests normal (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/tmp/courseflow-time-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/tmp/courseflow-time-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -filelist /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.LinkFileList -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -bundle_loader /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow -Xlinker -object_path_lto -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.swiftmodule -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework/CourseKit_58D975612C0BABA2_PackageProduct /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow.debug.dylib -Xlinker -no_adhoc_codesign -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/CourseFlowTests
+
+CopySwiftLibs /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/CourseFlowTests --scan-folder /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Frameworks --scan-folder /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/PlugIns --scan-folder /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/SystemExtensions --scan-folder /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Extensions --scan-folder /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/PackageFrameworks/CourseKit_58D975612C0BABA2_PackageProduct.framework --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ExtractAppIntentsMetadata (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name CourseFlowTests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk --xcode-version 27A266a --platform-family iOS --deployment-target 26.0 --bundle-identifier com.courseflow.app.tests --output /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest --target-triple arm64-apple-ios26.0-simulator --binary-file /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest/CourseFlowTests --dependency-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests_dependency_info.dat --stringsdata-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.SwiftFileList --metadata-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/CourseFlowTests.DependencyMetadataFileList --static-metadata-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/CourseFlowTests.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowTests.build/Objects-normal/arm64/CourseFlowTests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-01 23:47:24.899 appintentsmetadataprocessor[36219:1357648] Starting appintentsmetadataprocessor export
+2026-10-01 23:47:24.938 appintentsmetadataprocessor[36219:1357648] Extracted no relevant App Intents symbols, skipping writing output
+
+CodeSign /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest
+
+RegisterExecutionPolicyException /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-RegisterExecutionPolicyException /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest
+
+Touch /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest (in target 'CourseFlowTests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /usr/bin/touch -c /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseFlowTests.xctest
+
+CodeSign /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow.debug.dylib (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/CourseFlow.debug.dylib
+
+CodeSign /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/__preview.dylib (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/__preview.dylib
+
+CodeSign /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --entitlements /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlow.build/CourseFlow.app.xcent --timestamp\=none --generate-entitlement-der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app
+
+ValidateEmbeddedBinary /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseWidgets.appex (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/usr/bin/embeddedBinaryValidationUtility /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/PlugIns/CourseWidgets.appex -signing-cert - -info-plist-path /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app/Info.plist
+
+Validate /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app (in target 'CourseFlow' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-validationUtility /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlow.app -shallow-bundle -infoplist-subpath Info.plist
+
+ProcessInfoPlistFile /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/Info.plist /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/empty-CourseFlowUITests.plist (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-infoPlistUtility /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/empty-CourseFlowUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/ProductTypeInfoPlistAdditions.plist -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/Info.plist
+
+Ld /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/CourseFlowUITests normal (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios26.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/tmp/courseflow-time-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/tmp/courseflow-time-build/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -filelist /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.LinkFileList -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.swiftmodule -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __entitlements -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests.xctest-Simulated.xcent -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __ents_der -Xlinker /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests.xctest-Simulated.xcent.der -Xlinker -no_adhoc_codesign -o /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/CourseFlowUITests
+
+CopySwiftLibs /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-swiftStdLibTool --copy --verbose --sign - --scan-executable /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/CourseFlowUITests --scan-folder /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/Frameworks --scan-folder /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/PlugIns --scan-folder /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/SystemExtensions --scan-folder /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+
+ExtractAppIntentsMetadata (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name CourseFlowUITests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk --xcode-version 27A266a --platform-family iOS --deployment-target 26.0 --bundle-identifier com.courseflow.app.uitests --output /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest --target-triple arm64-apple-ios26.0-simulator --binary-file /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest/CourseFlowUITests --dependency-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests_dependency_info.dat --stringsdata-file /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.SwiftFileList --metadata-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests.DependencyMetadataFileList --static-metadata-file-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/CourseFlowUITests.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/courseflow-time-build/Build/Intermediates.noindex/CourseFlow.build/Debug-iphonesimulator/CourseFlowUITests.build/Objects-normal/arm64/CourseFlowUITests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-01 23:47:25.636 appintentsmetadataprocessor[36228:1357706] Starting appintentsmetadataprocessor export
+2026-10-01 23:47:25.637 appintentsmetadataprocessor[36228:1357706] warning: Metadata extraction skipped, no AppIntents.framework dependency found
+
+CopyAndPreserveArchs /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/CourseFlowUITests-Runner (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Xcode/Agents/XCTRunner.app/XCTRunner -output /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/CourseFlowUITests-Runner -extract arm64
+
+MkDir /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /bin/mkdir -p /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app
+
+CodeSign /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest
+
+CodeSign /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    
+    Signing Identity:     "Sign to Run Locally"
+    
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app
+/tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app: replacing existing signature
+
+RegisterExecutionPolicyException /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    builtin-RegisterExecutionPolicyException /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest
+
+Touch /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest (in target 'CourseFlowUITests' from project 'CourseFlow')
+    cd ~/Documents/ChatGPT/课表APP
+    /usr/bin/touch -c /tmp/courseflow-time-build/Build/Products/Debug-iphonesimulator/CourseFlowUITests-Runner.app/PlugIns/CourseFlowUITests.xctest
+
+PruneExplicitPrecompiledModules /tmp/courseflow-time-build/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/courseflow-time-build/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/courseflow-time-build/SDKExplicitPrecompiledModules
+
+2026-10-01 23:47:26.751663+0800 CourseFlowUITests-Runner[36233:1357901] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-01 23:47:29.241.
+Test Suite 'CourseFlowUITests.xctest' started at 2026-10-01 23:47:29.241.
+Test Suite 'TimeHolidayUITests' started at 2026-10-01 23:47:29.242.
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testEveningOutOfRangeAndEmptyTodayAgenda]' started.
+    t =     0.00s Start Test at 2026-10-01 23:47:29.243
+    t =     0.02s Set Up
+    t =     0.02s Open com.courseflow.app
+    t =     0.03s     Launch com.courseflow.app
+2026-10-01 23:47:29.328 xcodebuild[36125:1357005] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-01 23:47:29.328 xcodebuild[36125:1357005] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[36233]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x109d28398) and /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x109e1c310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     0.49s         Setting up automation session
+    t =     2.79s         Wait for com.courseflow.app to idle
+    t =     4.59s Waiting 15.0s for "week-picker" Button to exist
+    t =     5.67s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     5.67s         Checking existence of `"week-picker" Button`
+    t =     5.88s Swipe up Target Application 'com.courseflow.app'
+    t =     5.88s     Wait for com.courseflow.app to idle
+    t =     5.88s     Find the Target Application 'com.courseflow.app'
+    t =     5.95s     Check for interrupting elements affecting "课序" Application
+    t =     6.03s     Synthesize event
+    t =     6.45s     Wait for com.courseflow.app to idle
+    t =     8.56s Checking existence of `"有课待定，确认后显示学校课程" StaticText`
+    t =     8.67s Checking existence of `"now-marker" Other`
+    t =     8.76s Find the "now-marker" Any
+    t =     8.87s Find the Target Application 'com.courseflow.app'
+    t =     8.94s Swipe up Target Application 'com.courseflow.app'
+    t =     8.94s     Wait for com.courseflow.app to idle
+    t =     8.94s     Find the Target Application 'com.courseflow.app'
+    t =     9.01s     Check for interrupting elements affecting "课序" Application
+    t =     9.09s     Synthesize event
+    t =     9.58s     Wait for com.courseflow.app to idle
+    t =    10.16s Find the "now-marker" Other
+    t =    10.30s Find the Target Application 'com.courseflow.app'
+    t =    10.36s Find the Target Application 'com.courseflow.app'
+    t =    10.51s Added attachment named '夜间待定日程'
+    t =    10.51s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testEveningOutOfRangeAndEmptyTodayAgenda]' passed (10.776 seconds).
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testExportHasNoLiveTimeMarkers]' started.
+    t =     0.00s Start Test at 2026-10-01 23:47:40.023
+    t =     0.04s Set Up
+    t =     0.04s Open com.courseflow.app
+    t =     0.04s     Launch com.courseflow.app
+    t =     0.04s         Terminate com.courseflow.app:36239
+2026-10-01 23:47:41.169 xcodebuild[36125:1357005] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-01 23:47:41.169 xcodebuild[36125:1357005] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.36s         Setting up automation session
+    t =     3.58s         Wait for com.courseflow.app to idle
+    t =     5.48s Waiting 15.0s for "week-picker" Button to exist
+    t =     6.56s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     6.56s         Checking existence of `"week-picker" Button`
+    t =     6.83s Tap "课表显示与分享" Button
+    t =     6.83s     Wait for com.courseflow.app to idle
+    t =     6.83s     Find the "课表显示与分享" Button
+    t =     6.98s     Check for interrupting elements affecting "课表显示与分享" Button
+    t =     7.10s     Synthesize event
+    t =     7.41s     Wait for com.courseflow.app to idle
+    t =     8.30s Tap "分享本周图片" Button
+    t =     8.30s     Wait for com.courseflow.app to idle
+    t =     8.31s     Find the "分享本周图片" Button
+    t =     8.48s     Check for interrupting elements affecting "photo" Button
+    t =     8.59s     Synthesize event
+    t =     8.88s     Wait for com.courseflow.app to idle
+    t =    10.72s Waiting 5.0s for "关闭" Button to exist
+    t =    11.79s     Checking `Expect predicate `existsNoRetry == 1` for object "关闭" Button`
+    t =    11.79s         Checking existence of `"关闭" Button`
+    t =    12.02s Find the Target Application 'com.courseflow.app'
+    t =    12.23s Added attachment named '静态课表分享'
+    t =    12.23s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testExportHasNoLiveTimeMarkers]' passed (12.456 seconds).
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testGridAndListShowCurrentTime]' started.
+    t =     0.00s Start Test at 2026-10-01 23:47:52.479
+    t =     0.02s Set Up
+    t =     0.02s Open com.courseflow.app
+    t =     0.03s     Launch com.courseflow.app
+    t =     0.03s         Terminate com.courseflow.app:36244
+2026-10-01 23:47:53.521 xcodebuild[36125:1357005] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-01 23:47:53.521 xcodebuild[36125:1357005] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.26s         Setting up automation session
+    t =     3.37s         Wait for com.courseflow.app to idle
+    t =     5.27s Waiting 15.0s for "week-picker" Button to exist
+    t =     6.35s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     6.35s         Checking existence of `"week-picker" Button`
+    t =     6.61s Checking existence of `"grid-now-line" Other`
+    t =     6.76s Find the Target Application 'com.courseflow.app'
+    t =     6.94s Added attachment named '当前时间周课表'
+    t =     6.94s Tap "课表显示与分享" Button
+    t =     6.94s     Wait for com.courseflow.app to idle
+    t =     6.94s     Find the "课表显示与分享" Button
+    t =     7.09s     Check for interrupting elements affecting "课表显示与分享" Button
+    t =     7.21s     Synthesize event
+    t =     7.52s     Wait for com.courseflow.app to idle
+    t =     8.44s Tap "显示日程列表" Button
+    t =     8.45s     Wait for com.courseflow.app to idle
+    t =     8.45s     Find the "显示日程列表" Button
+    t =     8.62s     Check for interrupting elements affecting "list.bullet" Button
+    t =     8.74s     Synthesize event
+    t =     9.03s     Wait for com.courseflow.app to idle
+    t =    10.13s Checking existence of `"now-marker" Other`
+    t =    10.28s Checking existence of `"正在上课" StaticText`
+    t =    10.35s Find the "now-marker" Any
+    t =    10.45s Find the Target Application 'com.courseflow.app'
+    t =    10.52s Find the Target Application 'com.courseflow.app'
+    t =    10.67s Added attachment named '当前时间日程列表'
+    t =    10.68s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testGridAndListShowCurrentTime]' passed (10.924 seconds).
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testLargeTypeAutomaticallyUsesAgenda]' started.
+    t =     0.00s Start Test at 2026-10-01 23:48:03.405
+    t =     0.03s Set Up
+    t =     0.04s Open com.courseflow.app
+    t =     0.04s     Launch com.courseflow.app
+    t =     0.04s         Terminate com.courseflow.app:36255
+2026-10-01 23:48:04.539 xcodebuild[36125:1357005] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-01 23:48:04.539 xcodebuild[36125:1357005] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.35s         Setting up automation session
+    t =     3.47s         Wait for com.courseflow.app to idle
+    t =     5.33s Waiting 15.0s for "week-picker" Button to exist
+    t =     6.39s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     6.39s         Checking existence of `"week-picker" Button`
+    t =     6.60s Checking existence of `"now-marker" Any`
+    t =     6.70s Find the "now-marker" Any
+    t =     6.80s Find the Target Application 'com.courseflow.app'
+    t =     6.86s Swipe up Target Application 'com.courseflow.app'
+    t =     6.86s     Wait for com.courseflow.app to idle
+    t =     6.86s     Find the Target Application 'com.courseflow.app'
+    t =     6.93s     Check for interrupting elements affecting "课序" Application
+    t =     7.01s     Synthesize event
+    t =     7.50s     Wait for com.courseflow.app to idle
+    t =     9.43s Find the "now-marker" Other
+    t =     9.52s Find the Target Application 'com.courseflow.app'
+    t =     9.61s Swipe up Target Application 'com.courseflow.app'
+    t =     9.61s     Wait for com.courseflow.app to idle
+    t =     9.61s     Find the Target Application 'com.courseflow.app'
+    t =     9.70s     Check for interrupting elements affecting "课序" Application
+    t =     9.79s     Synthesize event
+    t =    10.29s     Wait for com.courseflow.app to idle
+    t =    12.25s Find the "now-marker" Other
+    t =    12.34s Find the Target Application 'com.courseflow.app'
+    t =    12.41s Find the Target Application 'com.courseflow.app'
+    t =    12.59s Added attachment named '深色大字号时间日程'
+    t =    12.59s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testLargeTypeAutomaticallyUsesAgenda]' passed (12.859 seconds).
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testPendingMakeupCanWaitThenConfirm]' started.
+    t =     0.00s Start Test at 2026-10-01 23:48:16.265
+    t =     0.03s Set Up
+    t =     0.03s Open com.courseflow.app
+    t =     0.03s     Launch com.courseflow.app
+    t =     0.03s         Terminate com.courseflow.app:36260
+2026-10-01 23:48:17.389 xcodebuild[36125:1357005] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-01 23:48:17.389 xcodebuild[36125:1357005] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.34s         Setting up automation session
+    t =     3.75s         Wait for com.courseflow.app to idle
+    t =     5.64s Waiting 15.0s for "week-picker" Button to exist
+    t =     6.68s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     6.68s         Checking existence of `"week-picker" Button`
+    t =     6.93s Waiting 5.0s for "holiday-prompt-2026-10-10" Button to exist
+    t =     7.99s     Checking `Expect predicate `existsNoRetry == 1` for object "holiday-prompt-2026-10-10" Button`
+    t =     7.99s         Checking existence of `"holiday-prompt-2026-10-10" Button`
+    t =     8.17s Tap "holiday-prompt-2026-10-10" Button
+    t =     8.17s     Wait for com.courseflow.app to idle
+    t =     8.17s     Find the "holiday-prompt-2026-10-10" Button
+    t =     8.32s     Check for interrupting elements affecting "holiday-prompt-2026-10-10" Button
+    t =     8.44s     Synthesize event
+    t =     8.79s     Wait for com.courseflow.app to idle
+    t =     8.95s Waiting 5.0s for "确认学校调休" NavigationBar to exist
+    t =    10.02s     Checking `Expect predicate `existsNoRetry == 1` for object "确认学校调休" NavigationBar`
+    t =    10.02s         Checking existence of `"确认学校调休" NavigationBar`
+    t =    10.33s Find the Target Application 'com.courseflow.app'
+    t =    11.19s Added attachment named '学校调休确认'
+    t =    11.20s Tap "稍后再说" Button
+    t =    11.20s     Wait for com.courseflow.app to idle
+    t =    11.21s     Find the "稍后再说" Button
+    t =    11.44s     Check for interrupting elements affecting "稍后再说" Button
+    t =    11.64s     Synthesize event
+    t =    11.94s     Wait for com.courseflow.app to idle
+    t =    12.35s Waiting 5.0s for "holiday-prompt-2026-10-10" Button to exist
+    t =    13.41s     Checking `Expect predicate `existsNoRetry == 1` for object "holiday-prompt-2026-10-10" Button`
+    t =    13.41s         Checking existence of `"holiday-prompt-2026-10-10" Button`
+    t =    13.55s Checking existence of `"调休课程待定" StaticText`
+    t =    13.69s Tap "holiday-prompt-2026-10-10" Button
+    t =    13.69s     Wait for com.courseflow.app to idle
+    t =    13.69s     Find the "holiday-prompt-2026-10-10" Button
+    t =    13.83s     Check for interrupting elements affecting "holiday-prompt-2026-10-10" Button
+    t =    13.97s     Synthesize event
+    t =    14.28s     Wait for com.courseflow.app to idle
+    t =    14.78s Swipe up Target Application 'com.courseflow.app'
+    t =    14.78s     Wait for com.courseflow.app to idle
+    t =    14.78s     Find the Target Application 'com.courseflow.app'
+    t =    14.96s     Check for interrupting elements affecting "课序" Application
+    t =    15.12s     Synthesize event
+    t =    15.55s     Wait for com.courseflow.app to idle
+    t =    16.14s Tap "holiday-confirm" Button
+    t =    16.14s     Wait for com.courseflow.app to idle
+    t =    16.14s     Find the "holiday-confirm" Button
+    t =    16.34s     Check for interrupting elements affecting "holiday-confirm" Button
+    t =    16.52s     Synthesize event
+    t =    16.84s     Wait for com.courseflow.app to idle
+    t =    17.29s Waiting 5.0s for "week-picker" Button to exist
+    t =    18.35s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =    18.35s         Checking existence of `"week-picker" Button`
+    t =    18.56s Checking existence of `"holiday-prompt-2026-10-10" Button`
+    t =    18.74s Find the Target Application 'com.courseflow.app'
+    t =    18.99s Added attachment named '调休确认后'
+    t =    18.99s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testPendingMakeupCanWaitThenConfirm]' passed (19.296 seconds).
+Test Suite 'TimeHolidayUITests' passed at 2026-10-01 23:48:35.561.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 66.312 (66.319) seconds
+Test Suite 'CourseFlowUITests.xctest' passed at 2026-10-01 23:48:35.561.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 66.312 (66.320) seconds
+Test Suite 'Selected tests' passed at 2026-10-01 23:48:35.561.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 66.312 (66.321) seconds
+2026-10-01 23:48:39.636473+0800 CourseFlow[36558:1363345] [Invalid Configuration] No symbol named 'checkmark.viewfinder' found in system symbol set
+2026-10-01 23:48:39.736676+0800 CourseFlow[36558:1363345] [XPCErrors] non-launching port is incompatible with service identifier "com.apple.PointerUI.pointeruid.default-service"
+2026-10-01 23:48:39.737100+0800 CourseFlow[36558:1363345] [API] cannot add handler to 0 from 0 - dropping
+2026-10-01 23:48:39.737265+0800 CourseFlow[36558:1363345] [API] cannot add handler to 0 from 0 - dropping
+2026-10-01 23:48:39.738280+0800 CourseFlow[36558:1363345] [API] cannot add handler to 0 from 0 - dropping
+2026-10-01 23:48:39.738340+0800 CourseFlow[36558:1363345] [API] cannot add handler to 0 from 0 - dropping
+2026-10-01 23:48:39.757719+0800 CourseFlow[36558:1363345] [Invalid Configuration] No symbol named 'checkmark.viewfinder' found in system symbol set
+Test Suite 'Selected tests' started at 2026-10-01 23:48:39.804.
+Test Suite 'CourseFlowTests.xctest' started at 2026-10-01 23:48:39.805.
+Test Suite 'HolidaySystemIntegrationTests' started at 2026-10-01 23:48:39.805.
+Test Case '-[CourseFlowTests.HolidaySystemIntegrationTests testConfirmationRemovesAndReplacesActualPendingNotifications]' started.
+Test Case '-[CourseFlowTests.HolidaySystemIntegrationTests testConfirmationRemovesAndReplacesActualPendingNotifications]' passed (0.091 seconds).
+Test Case '-[CourseFlowTests.HolidaySystemIntegrationTests testConfirmedRestAndMakeupUpdateActualCalendar]' started.
+Test Case '-[CourseFlowTests.HolidaySystemIntegrationTests testConfirmedRestAndMakeupUpdateActualCalendar]' passed (0.180 seconds).
+Test Suite 'HolidaySystemIntegrationTests' passed at 2026-10-01 23:48:40.077.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.270 (0.272) seconds
+Test Suite 'SystemIntegrationTests' started at 2026-10-01 23:48:40.077.
+Test Case '-[CourseFlowTests.SystemIntegrationTests testWidgetBridgeRoundTripInSharedAppGroupAndRestoreSnapshot]' started.
+Test Case '-[CourseFlowTests.SystemIntegrationTests testWidgetBridgeRoundTripInSharedAppGroupAndRestoreSnapshot]' passed (0.006 seconds).
+Test Suite 'SystemIntegrationTests' passed at 2026-10-01 23:48:40.084.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.006 (0.006) seconds
+Test Suite 'CourseFlowTests.xctest' passed at 2026-10-01 23:48:40.084.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.276 (0.279) seconds
+Test Suite 'Selected tests' passed at 2026-10-01 23:48:40.084.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.276 (0.280) seconds
+2026-10-01 23:48:40.410 xcodebuild[36125:1357005] [MT] IDETestOperationsObserverDebug: 74.737 elapsed -- Testing started completed.
+2026-10-01 23:48:40.410 xcodebuild[36125:1357005] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-01 23:48:40.410 xcodebuild[36125:1357005] [MT] IDETestOperationsObserverDebug: 74.737 sec, +74.737 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/courseflow-time-system-ui.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

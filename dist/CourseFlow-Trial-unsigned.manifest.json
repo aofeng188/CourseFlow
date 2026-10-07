@@ -1,0 +1,26 @@
+{
+  "artifact": "CourseFlow-Trial-unsigned.ipa",
+  "createdAt": "2026-09-11T06:22:47.797664+00:00",
+  "displayName": "课序",
+  "bundleIdentifier": "com.courseflow.app.trial",
+  "version": "1.0",
+  "build": "1",
+  "minimumOSVersion": "26.0",
+  "platform": "iPhoneOS",
+  "architectures": [
+    "arm64"
+  ],
+  "signingState": "unsigned-requires-device-provisioning",
+  "directlyInstallable": false,
+  "signingInstructions": "../docs/INSTALL-IPA.md",
+  "disabledFeatures": [
+    "CloudKit sync",
+    "App Groups",
+    "Widgets",
+    "Live Activities",
+    "Remote push"
+  ],
+  "sizeBytes": 4615354,
+  "sha256": "15b5d0168290ba258c59bd5bb801aed8be62d9b97a5129a2d4c82d890e1409e2",
+  "xcode": "Xcode 27.0\nBuild version 27A5209h"
+}

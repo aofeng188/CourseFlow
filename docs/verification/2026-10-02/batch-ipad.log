@@ -1,0 +1,378 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project CourseFlow.xcodeproj -scheme CourseFlow -configuration Debug -sdk iphonesimulator -destination "platform=iOS Simulator,id=11716F68-C2AE-42FE-976C-9044F560AEAA" -derivedDataPath /tmp/courseflow-batch-build -resultBundlePath /tmp/courseflow-batch-ipad.xcresult -parallel-testing-enabled NO "-only-testing:CourseFlowUITests/TimeHolidayUITests/testHolidayBatchCanExcludeOneDate" "-only-testing:CourseFlowUITests/TimeHolidayUITests/testHolidayGroupWorksWithLargeTypeAndDarkAppearance" "-only-testing:CourseFlowUITests/TimeHolidayUITests/testWholeHolidayCanConfirmWhileMakeupRemainsPending" test-without-building
+
+Build settings from command line:
+    SDKROOT = iphonesimulator27.0
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX.git @ 0.14.2
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation.git @ 0.9.20
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  CourseKit: ~/Documents/ChatGPT/课表APP @ local
+
+Writing result bundle at path:
+	/tmp/courseflow-batch-ipad.xcresult
+
+Resolve Package Graph
+
+2026-10-02 01:05:31.476147+0800 CourseFlowUITests-Runner[44020:1499689] [Default] Running tests...
+2026-10-02 01:05:31.520262+0800 CourseFlowUITests-Runner[44020:1499689] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-02 01:05:33.995.
+Test Suite 'CourseFlowUITests.xctest' started at 2026-10-02 01:05:33.996.
+Test Suite 'TimeHolidayUITests' started at 2026-10-02 01:05:33.996.
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testHolidayBatchCanExcludeOneDate]' started.
+    t =     0.00s Start Test at 2026-10-02 01:05:33.997
+    t =     0.03s Set Up
+    t =     0.03s Open com.courseflow.app
+    t =     0.03s     Launch com.courseflow.app
+2026-10-02 01:05:34.088 xcodebuild[44015:1499383] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-02 01:05:34.088 xcodebuild[44015:1499383] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[44020]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x105924398) and /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x105a18310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     0.71s         Setting up automation session
+    t =     2.90s         Wait for com.courseflow.app to idle
+    t =     5.04s Waiting 15.0s for "week-picker" Button to exist
+    t =     6.11s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     6.12s         Checking existence of `"week-picker" Button`
+    t =     6.46s Waiting 5.0s for "holiday-group-prompt-2026-国庆节" Button to exist
+    t =     7.55s     Checking `Expect predicate `existsNoRetry == 1` for object "holiday-group-prompt-2026-国庆节" Button`
+    t =     7.55s         Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =     7.73s Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =     7.88s Find the Target Application 'com.courseflow.app'
+    t =     7.98s Find the Target Application 'com.courseflow.app'
+    t =     8.08s Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     8.23s Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     8.39s Tap Target Application 'com.courseflow.app'[0.00, 0.00] -> (410.0, 246.8)
+    t =     8.39s     Wait for com.courseflow.app to idle
+    t =     8.39s     Find the Target Application 'com.courseflow.app'
+    t =     8.50s     Check for interrupting elements affecting "课序" Application
+    t =     8.61s         Wait for com.apple.springboard to idle
+    t =     8.64s     Synthesize event
+    t =     8.64s         Find the Target Application 'com.courseflow.app'
+    t =     8.74s         Find the Target Application 'com.courseflow.app'
+    t =     8.84s         Find the Target Application 'com.courseflow.app'
+    t =     9.23s     Wait for com.courseflow.app to idle
+    t =     9.41s Waiting 5.0s for "国庆节学校安排" NavigationBar to exist
+    t =    10.49s     Checking `Expect predicate `existsNoRetry == 1` for object "国庆节学校安排" NavigationBar`
+    t =    10.49s         Checking existence of `"国庆节学校安排" NavigationBar`
+    t =    10.72s Checking existence of `"holiday-batch-confirm" Button`
+    t =    10.89s Find the "holiday-batch-confirm" Button
+    t =    11.07s Checking existence of `"holiday-select-2026-10-03" Switch`
+    t =    11.25s Find the "holiday-select-2026-10-03" Switch
+    t =    11.42s Checking existence of `CollectionView (First Match)`
+    t =    11.44s Swipe up CollectionView (First Match)
+    t =    11.44s     Wait for com.courseflow.app to idle
+    t =    11.45s     Find the CollectionView (First Match)
+    t =    11.47s     Check for interrupting elements affecting CollectionView
+    t =    11.61s         Wait for com.apple.springboard to idle
+    t =    11.63s     Synthesize event
+    t =    12.14s     Wait for com.courseflow.app to idle
+    t =    14.21s Checking existence of `"holiday-batch-confirm" Button`
+    t =    14.47s Find the "holiday-batch-confirm" Button
+    t =    14.66s Checking existence of `"holiday-select-2026-10-03" Switch`
+    t =    14.84s Find the "holiday-select-2026-10-03" Switch
+    t =    15.03s Find the "holiday-select-2026-10-03" Switch
+    t =    15.28s Find the Target Application 'com.courseflow.app'
+    t =    15.52s Added attachment named '取消单日之前'
+    t =    15.52s Tap "holiday-select-2026-10-03" Switch[0.90, 0.50]
+    t =    15.52s     Wait for com.courseflow.app to idle
+    t =    15.52s     Find the "holiday-select-2026-10-03" Switch
+    t =    15.71s     Check for interrupting elements affecting "holiday-select-2026-10-03" Switch
+    t =    15.85s         Wait for com.apple.springboard to idle
+    t =    15.87s     Synthesize event
+    t =    15.87s         Find the "holiday-select-2026-10-03" Switch
+    t =    16.06s         Find the "holiday-select-2026-10-03" Switch
+    t =    16.24s         Find the "holiday-select-2026-10-03" Switch
+    t =    16.72s     Wait for com.courseflow.app to idle
+    t =    18.04s Find the Target Application 'com.courseflow.app'
+    t =    18.35s Added attachment named '取消单日之后'
+    t =    18.35s Find the "holiday-select-2026-10-03" Switch
+    t =    18.54s Find the "holiday-batch-confirm" Button
+    t =    18.72s Checking existence of `"holiday-batch-confirm" Button`
+    t =    18.91s Tap "holiday-batch-confirm" Button
+    t =    18.91s     Wait for com.courseflow.app to idle
+    t =    18.91s     Find the "holiday-batch-confirm" Button
+    t =    19.09s     Check for interrupting elements affecting "holiday-batch-confirm" Button
+    t =    19.24s         Wait for com.apple.springboard to idle
+    t =    19.25s     Synthesize event
+    t =    19.55s     Wait for com.courseflow.app to idle
+    t =    19.64s Waiting 5.0s for "week-picker" Button to exist
+    t =    20.73s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =    20.73s         Checking existence of `"week-picker" Button`
+    t =    20.86s Waiting 5.0s for "holiday-group-prompt-2026-国庆节" Button to exist
+    t =    21.94s     Checking `Expect predicate `existsNoRetry == 1` for object "holiday-group-prompt-2026-国庆节" Button`
+    t =    21.94s         Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    22.08s Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    22.18s Find the Target Application 'com.courseflow.app'
+    t =    22.27s Find the Target Application 'com.courseflow.app'
+    t =    22.36s Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    22.47s Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    22.58s Tap Target Application 'com.courseflow.app'[0.00, 0.00] -> (410.0, 246.8)
+    t =    22.58s     Wait for com.courseflow.app to idle
+    t =    22.59s     Find the Target Application 'com.courseflow.app'
+    t =    22.67s     Check for interrupting elements affecting "课序" Application
+    t =    22.77s         Wait for com.apple.springboard to idle
+    t =    22.79s     Synthesize event
+    t =    22.79s         Find the Target Application 'com.courseflow.app'
+    t =    22.87s         Find the Target Application 'com.courseflow.app'
+    t =    22.96s         Find the Target Application 'com.courseflow.app'
+    t =    23.34s     Wait for com.courseflow.app to idle
+    t =    23.80s Waiting 5.0s for "国庆节学校安排" NavigationBar to exist
+    t =    24.88s     Checking `Expect predicate `existsNoRetry == 1` for object "国庆节学校安排" NavigationBar`
+    t =    24.88s         Checking existence of `"国庆节学校安排" NavigationBar`
+    t =    25.06s Find the "holiday-batch-confirm" Button
+    t =    25.19s Checking existence of `"holiday-batch-confirm" Button`
+    t =    25.33s Find the "holiday-batch-confirm" Button
+    t =    25.46s Checking existence of `"holiday-select-2026-10-03" Switch`
+    t =    25.59s Find the "holiday-select-2026-10-03" Switch
+    t =    25.73s Checking existence of `CollectionView (First Match)`
+    t =    25.75s Swipe up CollectionView (First Match)
+    t =    25.75s     Wait for com.courseflow.app to idle
+    t =    25.75s     Find the CollectionView (First Match)
+    t =    25.78s     Check for interrupting elements affecting CollectionView
+    t =    25.90s         Wait for com.apple.springboard to idle
+    t =    25.92s     Synthesize event
+    t =    26.43s     Wait for com.courseflow.app to idle
+    t =    28.35s Checking existence of `"holiday-batch-confirm" Button`
+    t =    28.49s Find the "holiday-batch-confirm" Button
+    t =    28.63s Checking existence of `"holiday-select-2026-10-03" Switch`
+    t =    28.77s Find the "holiday-select-2026-10-03" Switch
+    t =    28.91s Find the "holiday-select-2026-10-03" Switch
+    t =    29.05s Find the "holiday-select-2026-10-03" Switch
+    t =    29.19s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testHolidayBatchCanExcludeOneDate]' passed (29.438 seconds).
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testHolidayGroupWorksWithLargeTypeAndDarkAppearance]' started.
+    t =     0.00s Start Test at 2026-10-02 01:06:03.438
+    t =     0.03s Set Up
+    t =     0.03s Open com.courseflow.app
+    t =     0.03s     Launch com.courseflow.app
+    t =     0.03s         Terminate com.courseflow.app:44037
+2026-10-02 01:06:04.555 xcodebuild[44015:1499383] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-02 01:06:04.555 xcodebuild[44015:1499383] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.33s         Setting up automation session
+    t =     3.46s         Wait for com.courseflow.app to idle
+    t =     5.47s Waiting 15.0s for "week-picker" Button to exist
+    t =     6.56s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     6.56s         Checking existence of `"week-picker" Button`
+    t =     6.88s Waiting 5.0s for "holiday-group-prompt-2026-国庆节" Button to exist
+    t =     7.95s     Checking `Expect predicate `existsNoRetry == 1` for object "holiday-group-prompt-2026-国庆节" Button`
+    t =     7.95s         Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =     8.10s Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =     8.20s Find the Target Application 'com.courseflow.app'
+    t =     8.27s Find the Target Application 'com.courseflow.app'
+    t =     8.33s Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     8.44s Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     8.56s Tap Target Application 'com.courseflow.app'[0.00, 0.00] -> (410.0, 376.8)
+    t =     8.56s     Wait for com.courseflow.app to idle
+    t =     8.56s     Find the Target Application 'com.courseflow.app'
+    t =     8.63s     Check for interrupting elements affecting "课序" Application
+    t =     8.70s         Wait for com.apple.springboard to idle
+    t =     8.72s     Synthesize event
+    t =     8.72s         Find the Target Application 'com.courseflow.app'
+    t =     8.78s         Find the Target Application 'com.courseflow.app'
+    t =     8.85s         Find the Target Application 'com.courseflow.app'
+    t =     9.20s     Wait for com.courseflow.app to idle
+    t =     9.33s Waiting 5.0s for "国庆节学校安排" NavigationBar to exist
+    t =    10.37s     Checking `Expect predicate `existsNoRetry == 1` for object "国庆节学校安排" NavigationBar`
+    t =    10.37s         Checking existence of `"国庆节学校安排" NavigationBar`
+    t =    10.56s Checking existence of `"holiday-batch-confirm" Button`
+    t =    10.69s Find the "holiday-batch-confirm" Button
+    t =    10.83s Checking existence of `"holiday-makeup-choice-2026-10-10" Any`
+    t =    11.17s Checking existence of `CollectionView (First Match)`
+    t =    11.19s Swipe up CollectionView (First Match)
+    t =    11.19s     Wait for com.courseflow.app to idle
+    t =    11.20s     Find the CollectionView (First Match)
+    t =    11.23s     Check for interrupting elements affecting CollectionView
+    t =    11.32s         Wait for com.apple.springboard to idle
+    t =    11.34s     Synthesize event
+    t =    11.85s     Wait for com.courseflow.app to idle
+    t =    13.82s Checking existence of `"holiday-batch-confirm" Button`
+    t =    13.99s Find the "holiday-batch-confirm" Button
+    t =    14.13s Checking existence of `"holiday-makeup-choice-2026-10-10" Any`
+    t =    14.32s Find the "holiday-makeup-choice-2026-10-10" Any
+    t =    14.51s Checking existence of `CollectionView (First Match)`
+    t =    14.53s Swipe up CollectionView (First Match)
+    t =    14.53s     Wait for com.courseflow.app to idle
+    t =    14.54s     Find the CollectionView (First Match)
+    t =    14.56s     Check for interrupting elements affecting CollectionView
+    t =    14.66s         Wait for com.apple.springboard to idle
+    t =    14.68s     Synthesize event
+    t =    15.19s     Wait for com.courseflow.app to idle
+    t =    16.21s Checking existence of `"holiday-batch-confirm" Button`
+    t =    16.37s Find the "holiday-batch-confirm" Button
+    t =    16.51s Checking existence of `"holiday-makeup-choice-2026-10-10" Button`
+    t =    16.66s Find the "holiday-makeup-choice-2026-10-10" Button
+    t =    16.81s Find the "holiday-makeup-choice-2026-10-10" Button
+    t =    16.96s Checking existence of `"holiday-makeup-choice-2026-10-10" Button`
+    t =    17.11s Find the Target Application 'com.courseflow.app'
+    t =    17.30s Added attachment named '深色大字号节日批量确认'
+    t =    17.30s Tap "稍后再说" Button
+    t =    17.30s     Wait for com.courseflow.app to idle
+    t =    17.45s     Find the "稍后再说" Button
+    t =    17.60s     Check for interrupting elements affecting "稍后再说" Button
+    t =    17.70s         Wait for com.apple.springboard to idle
+    t =    17.71s     Synthesize event
+    t =    18.01s     Wait for com.courseflow.app to idle
+    t =    18.48s Waiting 5.0s for "holiday-group-prompt-2026-国庆节" Button to exist
+    t =    19.52s     Checking `Expect predicate `existsNoRetry == 1` for object "holiday-group-prompt-2026-国庆节" Button`
+    t =    19.52s         Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    19.64s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testHolidayGroupWorksWithLargeTypeAndDarkAppearance]' passed (19.895 seconds).
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testWholeHolidayCanConfirmWhileMakeupRemainsPending]' started.
+    t =     0.00s Start Test at 2026-10-02 01:06:23.334
+    t =     0.04s Set Up
+    t =     0.04s Open com.courseflow.app
+    t =     0.04s     Launch com.courseflow.app
+    t =     0.04s         Terminate com.courseflow.app:44065
+2026-10-02 01:06:24.447 xcodebuild[44015:1499383] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-02 01:06:24.447 xcodebuild[44015:1499383] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.33s         Setting up automation session
+    t =     3.60s         Wait for com.courseflow.app to idle
+    t =     5.61s Waiting 15.0s for "week-picker" Button to exist
+Resolve Package Graph
+
+    t =     6.66s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =     6.66s         Checking existence of `"week-picker" Button`
+    t =     7.02s Waiting 5.0s for "holiday-group-prompt-2026-国庆节" Button to exist
+    t =     8.10s     Checking `Expect predicate `existsNoRetry == 1` for object "holiday-group-prompt-2026-国庆节" Button`
+    t =     8.10s         Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =     8.28s Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =     8.43s Find the Target Application 'com.courseflow.app'
+    t =     8.53s Find the Target Application 'com.courseflow.app'
+    t =     8.63s Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     8.78s Find the "holiday-group-prompt-2026-国庆节" Button
+    t =     8.94s Tap Target Application 'com.courseflow.app'[0.00, 0.00] -> (410.0, 246.8)
+    t =     8.94s     Wait for com.courseflow.app to idle
+    t =     8.94s     Find the Target Application 'com.courseflow.app'
+    t =     9.04s     Check for interrupting elements affecting "课序" Application
+    t =     9.15s         Wait for com.apple.springboard to idle
+    t =     9.17s     Synthesize event
+    t =     9.17s         Find the Target Application 'com.courseflow.app'
+    t =     9.27s         Find the Target Application 'com.courseflow.app'
+    t =     9.37s         Find the Target Application 'com.courseflow.app'
+    t =     9.76s     Wait for com.courseflow.app to idle
+    t =     9.93s Waiting 5.0s for "国庆节学校安排" NavigationBar to exist
+    t =    10.98s     Checking `Expect predicate `existsNoRetry == 1` for object "国庆节学校安排" NavigationBar`
+    t =    10.98s         Checking existence of `"国庆节学校安排" NavigationBar`
+    t =    11.21s Find the "holiday-batch-confirm" Button
+    t =    11.39s Checking existence of `"holiday-batch-confirm" Button`
+    t =    11.56s Find the "holiday-batch-confirm" Button
+    t =    11.73s Checking existence of `"holiday-select-2026-10-01" Switch`
+    t =    11.91s Find the "holiday-select-2026-10-01" Switch
+    t =    12.09s Find the "holiday-select-2026-10-01" Switch
+    t =    12.27s Find the "holiday-select-2026-10-01" Switch
+    t =    12.44s Checking existence of `"holiday-batch-confirm" Button`
+    t =    12.61s Find the "holiday-batch-confirm" Button
+    t =    12.79s Checking existence of `"holiday-select-2026-10-07" Switch`
+    t =    12.96s Checking existence of `CollectionView (First Match)`
+    t =    12.98s Swipe up CollectionView (First Match)
+    t =    12.98s     Wait for com.courseflow.app to idle
+    t =    12.99s     Find the CollectionView (First Match)
+    t =    13.02s     Check for interrupting elements affecting CollectionView
+    t =    13.15s         Wait for com.apple.springboard to idle
+    t =    13.17s     Synthesize event
+    t =    13.68s     Wait for com.courseflow.app to idle
+    t =    15.76s Checking existence of `"holiday-batch-confirm" Button`
+    t =    16.01s Find the "holiday-batch-confirm" Button
+    t =    16.20s Checking existence of `"holiday-select-2026-10-07" Switch`
+    t =    16.39s Find the "holiday-select-2026-10-07" Switch
+    t =    16.58s Find the "holiday-select-2026-10-07" Switch
+    t =    16.84s Find the "holiday-select-2026-10-07" Switch
+    t =    17.03s Checking existence of `"holiday-batch-confirm" Button`
+    t =    17.22s Tap "holiday-batch-confirm" Button
+    t =    17.22s     Wait for com.courseflow.app to idle
+    t =    17.22s     Find the "holiday-batch-confirm" Button
+    t =    17.40s     Check for interrupting elements affecting "holiday-batch-confirm" Button
+    t =    17.55s         Wait for com.apple.springboard to idle
+    t =    17.57s     Synthesize event
+    t =    17.86s     Wait for com.courseflow.app to idle
+    t =    17.96s Waiting 5.0s for "week-picker" Button to exist
+    t =    18.99s     Checking `Expect predicate `existsNoRetry == 1` for object "week-picker" Button`
+    t =    18.99s         Checking existence of `"week-picker" Button`
+    t =    19.13s Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    19.23s Waiting 5.0s for "holiday-group-prompt-2026-国庆节" Button to exist
+    t =    20.27s     Checking `Expect predicate `existsNoRetry == 1` for object "holiday-group-prompt-2026-国庆节" Button`
+    t =    20.27s         Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    20.40s Checking existence of `"holiday-group-prompt-2026-国庆节" Button`
+    t =    20.50s Find the Target Application 'com.courseflow.app'
+    t =    20.59s Find the Target Application 'com.courseflow.app'
+    t =    20.67s Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    20.78s Find the "holiday-group-prompt-2026-国庆节" Button
+    t =    20.90s Tap Target Application 'com.courseflow.app'[0.00, 0.00] -> (410.0, 246.8)
+    t =    20.90s     Wait for com.courseflow.app to idle
+    t =    20.90s     Find the Target Application 'com.courseflow.app'
+    t =    20.99s     Check for interrupting elements affecting "课序" Application
+    t =    21.08s         Wait for com.apple.springboard to idle
+    t =    21.09s     Synthesize event
+    t =    21.10s         Find the Target Application 'com.courseflow.app'
+    t =    21.18s         Find the Target Application 'com.courseflow.app'
+    t =    21.27s         Find the Target Application 'com.courseflow.app'
+    t =    21.64s     Wait for com.courseflow.app to idle
+    t =    22.09s Waiting 5.0s for "国庆节学校安排" NavigationBar to exist
+    t =    23.14s     Checking `Expect predicate `existsNoRetry == 1` for object "国庆节学校安排" NavigationBar`
+    t =    23.15s         Checking existence of `"国庆节学校安排" NavigationBar`
+    t =    23.30s Find the "holiday-batch-confirm" Button
+    t =    23.43s Checking existence of `"holiday-batch-confirm" Button`
+    t =    23.57s Find the "holiday-batch-confirm" Button
+    t =    23.70s Checking existence of `Button (First Match)`
+    t =    23.77s Find the Button (First Match)
+    t =    23.86s Find the "10月1日 · 修改或恢复待确认" Button
+    t =    23.94s Checking existence of `"10月1日 · 修改或恢复待确认" Button`
+    t =    24.02s Checking existence of `"holiday-batch-confirm" Button`
+    t =    24.15s Find the "holiday-batch-confirm" Button
+    t =    24.30s Checking existence of `Button (First Match)`
+    t =    24.40s Find the Button (First Match)
+    t =    24.49s Checking existence of `CollectionView (First Match)`
+    t =    24.52s Swipe up CollectionView (First Match)
+    t =    24.52s     Wait for com.courseflow.app to idle
+    t =    24.52s     Find the CollectionView (First Match)
+    t =    24.54s     Check for interrupting elements affecting CollectionView
+    t =    24.67s         Wait for com.apple.springboard to idle
+    t =    24.69s     Synthesize event
+    t =    25.20s     Wait for com.courseflow.app to idle
+    t =    27.14s Checking existence of `"holiday-batch-confirm" Button`
+    t =    27.30s Find the "holiday-batch-confirm" Button
+    t =    27.44s Checking existence of `"10月7日 · 修改或恢复待确认" Button`
+    t =    27.52s Find the "10月7日 · 修改或恢复待确认" Button
+    t =    27.61s Find the "10月7日 · 修改或恢复待确认" Button
+    t =    27.71s Checking existence of `"10月7日 · 修改或恢复待确认" Button`
+    t =    27.79s Checking existence of `"holiday-batch-confirm" Button`
+    t =    27.92s Find the "holiday-batch-confirm" Button
+    t =    28.06s Checking existence of `"holiday-makeup-choice-2026-10-10" Any`
+    t =    28.40s Checking existence of `CollectionView (First Match)`
+    t =    28.43s Swipe up CollectionView (First Match)
+    t =    28.43s     Wait for com.courseflow.app to idle
+    t =    28.69s     Find the CollectionView (First Match)
+    t =    28.73s     Check for interrupting elements affecting CollectionView
+    t =    28.86s         Wait for com.apple.springboard to idle
+    t =    28.88s     Synthesize event
+    t =    29.39s     Wait for com.courseflow.app to idle
+    t =    30.54s Checking existence of `"holiday-batch-confirm" Button`
+    t =    30.69s Find the "holiday-batch-confirm" Button
+    t =    30.82s Checking existence of `"holiday-makeup-choice-2026-10-10" Any`
+    t =    30.97s Find the "holiday-makeup-choice-2026-10-10" Any
+    t =    31.13s Find the "holiday-makeup-choice-2026-10-10" Button
+    t =    31.29s Checking existence of `"holiday-makeup-choice-2026-10-10" Any`
+    t =    31.44s Find the Target Application 'com.courseflow.app'
+    t =    31.65s Added attachment named '国庆整段确认后补班仍待定'
+    t =    31.65s Tear Down
+Test Case '-[CourseFlowUITests.TimeHolidayUITests testWholeHolidayCanConfirmWhileMakeupRemainsPending]' passed (31.917 seconds).
+Test Suite 'TimeHolidayUITests' passed at 2026-10-02 01:06:55.253.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 81.250 (81.257) seconds
+Test Suite 'CourseFlowUITests.xctest' passed at 2026-10-02 01:06:55.254.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 81.250 (81.258) seconds
+Test Suite 'Selected tests' passed at 2026-10-02 01:06:55.255.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 81.250 (81.261) seconds
+2026-10-02 01:06:55.583 xcodebuild[44015:1499383] [MT] IDETestOperationsObserverDebug: 85.315 elapsed -- Testing started completed.
+2026-10-02 01:06:55.583 xcodebuild[44015:1499383] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-02 01:06:55.583 xcodebuild[44015:1499383] [MT] IDETestOperationsObserverDebug: 85.315 sec, +85.315 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/courseflow-batch-ipad.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

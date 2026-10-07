@@ -1,0 +1,20 @@
+{
+  "format": "courseflow.ai",
+  "version": 1,
+  "kind": "bellSchedule",
+  "sourceName": "AI 导入练习作息表（虚构示例）",
+  "lessons": [],
+  "periods": [
+    { "number": 1, "start": "08:00", "end": "08:45" },
+    { "number": 2, "start": "08:55", "end": "09:40" },
+    { "number": 3, "start": "10:00", "end": "10:45" },
+    { "number": 4, "start": "10:55", "end": "11:40" },
+    { "number": 5, "start": "14:00", "end": "14:45" },
+    { "number": 6, "start": "14:55", "end": "15:40" },
+    { "number": 7, "start": "16:00", "end": "16:45" },
+    { "number": 8, "start": "16:55", "end": "17:40" }
+  ],
+  "warnings": [
+    "这是虚构的格式练习样本，请勿当作学校官方作息。"
+  ]
+}

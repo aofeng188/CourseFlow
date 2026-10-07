@@ -1,0 +1,65 @@
+{
+  "format": "courseflow.ai",
+  "version": 1,
+  "kind": "timetable",
+  "sourceName": "AI 导入练习课表（虚构示例）",
+  "lessons": [
+    {
+      "name": "高等数学",
+      "weekday": 1,
+      "weeks": "1-8",
+      "periods": "1-2",
+      "start": null,
+      "end": null,
+      "location": "主楼 A301",
+      "teacher": "张老师",
+      "source": "高等数学｜周一｜第1-2节｜1-8周｜主楼A301｜张老师",
+      "warnings": []
+    },
+    {
+      "name": "高等数学",
+      "weekday": 4,
+      "weeks": "1-8,10-16",
+      "periods": "3-4",
+      "start": null,
+      "end": null,
+      "location": "二教 B205",
+      "teacher": "张老师",
+      "source": "高等数学｜周四｜第3-4节｜1-8、10-16周｜二教B205｜张老师",
+      "warnings": []
+    },
+    {
+      "name": "大学体育",
+      "weekday": 3,
+      "weeks": "1-16周(单)，排除7周",
+      "periods": null,
+      "start": "16:00",
+      "end": "17:30",
+      "location": "体育馆",
+      "teacher": null,
+      "source": "大学体育｜周三｜16:00-17:30｜1-16单周，排除第7周｜体育馆",
+      "warnings": [
+        "原件没有标注教师。"
+      ]
+    },
+    {
+      "name": "大学英语",
+      "weekday": null,
+      "weeks": null,
+      "periods": null,
+      "start": null,
+      "end": null,
+      "location": "外语楼 201",
+      "teacher": "李老师",
+      "source": "大学英语｜外语楼201｜李老师；截图中的星期、周次和时间被裁掉。",
+      "warnings": [
+        "缺少星期、周次和时间，请对照完整原件补齐后再确认。"
+      ]
+    }
+  ],
+  "periods": [],
+  "warnings": [
+    "这是虚构的格式练习样本，请勿当作真实学校课表。",
+    "节次课程需先关联已确认的学校作息；大学英语故意保留缺失字段，供练习纠错。"
+  ]
+}

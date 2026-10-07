@@ -1,0 +1,52 @@
+{
+  "generator": "built-in imagegen",
+  "status": "user selected icon 01; remaining candidates preserved",
+  "selectedIconID": "01",
+  "selectedDate": "2026-09-11",
+  "appAsset": "../../../App/Assets.xcassets/AppIcon.appiconset/AppIcon-indigo.png",
+  "icons": [
+    {
+      "id": "01",
+      "name": "靛蓝网格",
+      "selected": true,
+      "prompt": "Use case: logo-brand. Create ONE premium iOS app icon for a Chinese university timetable app called CourseFlow, but include NO text. A bold, exceptionally simple abstract weekly timetable mark: three vertical lanes of staggered rounded rectangular course blocks, with a clean balanced rhythm and generous negative space. Ivory white blocks, ONE small apricot accent block, rich luminous indigo-to-cobalt full-bleed background. Flat precise geometric design with only very subtle depth, sophisticated editorial minimalism, readable at 32 pixels. The mark occupies about 58 percent of the canvas, centered. Deliver a square opaque full-bleed 1024x1024 artwork, background reaches all four edges; iOS will apply its own outer corner mask. No paper sheet, no calendar binding rings, no numbers, no letters, no labels, no outer frame, no mockup, no surrounding scene, no tiny UI details. Make it feel like a carefully crafted Apple Design Award productivity app, with an original strong silhouette.",
+      "source": "~/.codex/generated_images/01a089e0-123b-7dc3-a244-c398ea255ab9/exec-51357995-b749-4f13-8879-1bb6745bbd10.png",
+      "file": "01-靛蓝网格.png"
+    },
+    {
+      "id": "02",
+      "name": "冰蓝玻璃",
+      "prompt": "Use case: logo-brand. Create ONE high-end iOS timetable app icon, square opaque full-bleed 1024x1024 artwork. A remarkably clean symbol formed from FOUR large rounded optical-glass course tiles arranged as a compact offset 2x2 grid, one tall rectangular tile and three shorter modules, suggest a weekly schedule. Frosted ice-blue and translucent clear glass with exquisite refracted cyan edges and a single deep-blue core, floating very slightly above a luminous pale glacier-blue background. Restrained realistic glass material, front-on almost orthographic view, symmetric overall mass, very soft contact shadow. Bold and simple, strong readability when tiny, no decorative sparkles or scattered elements. Central mark occupies 60 percent of canvas. Background extends to all edges. No calendar paper, no binding rings, no text, no numbers, no app UI, no outside frame, no rounded-square border, no watermark. This is an original app icon asset, not a presentation.",
+      "source": "~/.codex/generated_images/01a089e0-123b-7dc3-a244-c398ea255ab9/exec-e1183378-1d54-4420-a893-0b1ec35341cd.png",
+      "file": "02-冰蓝玻璃.png"
+    },
+    {
+      "id": "03",
+      "name": "薄荷翻页",
+      "prompt": "Use case: logo-brand. Create ONE refined minimal iOS app icon for a university timetable app. Square opaque 1024x1024, full-bleed deep emerald background with a restrained fresh mint glow at upper left. Central bold ivory-white abstract folded page / bookmark mark: just one softly rounded vertical page whose lower-right portion folds upward into a beautiful simple mint diagonal, suggesting moving to the next class. Geometric flowing silhouette, one short recessed horizontal mint line on the upper page is enough to imply a schedule. Elegant flat-to-soft-depth design, modern and youthful, no realistic stationery texture. Plenty of negative space and excellent recognition at small size. Mark occupies about 60 percent, centered. Background fills entire square, no outer mask or outer border. No calendar binding rings, no traditional grid, no text, no letters, no numbers, no additional objects, no mockup, no watermark.",
+      "source": "~/.codex/generated_images/01a089e0-123b-7dc3-a244-c398ea255ab9/exec-fe54d510-d0ab-4ab4-ac38-470b2935693d.png",
+      "file": "03-薄荷翻页.png"
+    },
+    {
+      "id": "04",
+      "name": "暖橙时间环",
+      "prompt": "Use case: logo-brand. Design ONE iconic minimal iOS icon for a university class timetable app. Square opaque full-bleed 1024x1024. Warm persimmon orange background with subtle coral illumination. Center an oversized smooth ivory circular time-ring, deliberately open at the upper-right, with a short ivory clockwise diagonal hand inside and one tiny rounded golden rectangular class-block precisely aligned at the opening. The symbol suggests both the next class and the passage of time. Extremely clean 2D geometry with delicate soft dimensional edges, visually bold, warm and sophisticated, generous spacing, mark occupies 62 percent. No numerals, no tick marks, no small grid, no paper, no metallic fittings, no text, no logos of existing brands, no outer container/border, no surrounding presentation. Background reaches the square edges; system will apply rounded app corners.",
+      "source": "~/.codex/generated_images/01a089e0-123b-7dc3-a244-c398ea255ab9/exec-4287f8d5-9cbb-449c-821a-67b27492a776.png",
+      "file": "04-暖橙时间环.png"
+    },
+    {
+      "id": "05",
+      "name": "墨白字母",
+      "prompt": "Use case: logo-brand. Create ONE strikingly minimal monochrome iOS app icon for a Chinese university timetable app. Square opaque full-bleed 1024x1024, warm porcelain-white background. Center a custom bold abstract letter K monogram (initial of Chinese 'ke', class), constructed from exactly three chunky rounded geometric strokes: a tall vertical black-ink stem and two strong diagonal black-ink arms, with carefully engineered optical balance and subtle cut negative spaces like organized schedule blocks. Refined original typography, beautiful curves, flat design, a very small muted lime inset accent at the junction is allowed. Mark occupies 56 percent of canvas. Sophisticated timeless design, not generic outlined line art, not a standard typed font, no calendar, no paper texture, no shadow-heavy 3D. Only the K symbol, no other text, labels, numbers, border, outside mockup or watermark. Background extends fully to all four edges.",
+      "source": "~/.codex/generated_images/01a089e0-123b-7dc3-a244-c398ea255ab9/exec-627b9286-7eb0-4cdf-b6ed-c253570f4dfa.png",
+      "file": "05-墨白字母.png"
+    },
+    {
+      "id": "06",
+      "name": "暮紫丝带",
+      "prompt": "Use case: logo-brand. Create ONE beautiful native iOS app icon for a university timetable app named CourseFlow, no words. Square opaque full-bleed 1024x1024. Deep twilight-violet to periwinkle background. A single broad opalescent lilac-white glass ribbon forms an original open C-shaped loop, its two ends offset vertically like the start and end of a class; the ribbon gently folds once to suggest an orderly flow through the day. Bold sculptural silhouette, just one object, satin-glass material with restrained lavender refraction, soft studio light, front view with shallow depth. Centered and clean with generous negative space, mark takes 63 percent of canvas. Premium modern productivity app, readable at 32 pixels, no intricate knots, no infinity symbol, no starbursts, no calendar rings, no numbers, no extra text, no border or outside rounded-square frame, no device mockup. Fill background to the canvas edges.",
+      "source": "~/.codex/generated_images/01a089e0-123b-7dc3-a244-c398ea255ab9/exec-7602d7f8-5aad-4e96-ab34-36bd6700890a.png",
+      "file": "06-暮紫丝带.png"
+    }
+  ]
+}

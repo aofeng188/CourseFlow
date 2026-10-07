@@ -1,0 +1,4 @@
+// Copy to Local.xcconfig and choose your signing team in Xcode.
+DEVELOPMENT_TEAM = YOUR_TEAM_ID
+// Enable only after provisioning the CloudKit and App Group containers.
+COURSEFLOW_ICLOUD_ENABLED = NO

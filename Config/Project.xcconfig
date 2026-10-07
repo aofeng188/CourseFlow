@@ -1,0 +1,2 @@
+COURSEFLOW_ICLOUD_ENABLED = NO
+#include? "Local.xcconfig"

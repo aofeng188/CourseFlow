@@ -1,0 +1,12 @@
+.build/
+build/
+.DS_Store
+*.xcuserstate
+xcuserdata/
+.swiftpm/
+Config/Local.xcconfig
+.xcodebuildmcp/
+TestResults/
+
+# 安装包体积大且每次重新打包都会变，发布到 GitHub Releases，不进仓库
+dist/*.ipa

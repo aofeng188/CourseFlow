@@ -1,0 +1,26 @@
+请仔细阅读我随本提示词发送的图片，提取大学课程表，生成可粘贴到「课序」App 的 JSON 数据。
+
+先核对表头、星期列、节次行、合并单元格的跨度、图例、页脚说明和周次条件，再逐格读取。跨行或跨列不一定代表多个独立课程，应按实际表头对应关系判断；必须识别同格不同课程与单双周交替安排。多张图片按内容汇总，重叠截图的同一记录只保留一次，来源矛盾写入 warnings，不要擅自选择。课程名称保留原文，不要翻译或扩写。
+
+本次只输出课程：kind 必须是 "timetable"，lessons 包含所有上课安排，顶层 periods 必须为 []。
+同一课程在不同星期、不同周次、不同地点或教师有多个安排时，拆为多条 lessons；同一格有多门课程也分别输出。不要把同格的多门课程拼成一个课程名。
+每条 lesson 的字段：name（课程名，字符串或 null）、weekday（周一=1 至周日=7 的整数或 null）、weeks（如 "1-8周"、"1-16单周，排除7周"、"1-8,10-16周"，或 null）、periods（如 "1-2"、"1,3-4"，或 null）、start / end（"HH:mm" 或 null）、location / teacher（字符串或 null）、source（图片编号、行列位置及对应原文）、warnings（字符串数组）。
+图片有明确节次时保留节次，start 和 end 填 null，由 App 中用户确认的学校作息表提供各节时间，保留真实课间。不要将连堂课虚构成连续授课。只有没有节次且原图明确给出时钟时间时，才填写 start / end 并令 periods 为 null。
+不确定的课程信息保留该条记录，将不确定字段填 null，并在该条 warnings 写明待核对内容。不要自行默认星期、1-16周、整个学期或学校上课时间。仅有“单周 / 双周”但缺少范围时，weeks 填 null 并提示缺少周次范围。
+当前 App 学期设置为 20 周，这仅用于核对，不能用来补全图片未提供的周次。若图片明确写了超出该范围的周数，保留图片中的原值，在 warnings 提示我核对学期设置，不要截断周数。
+时间采用 24 小时制、冒号分隔；仅结束时刻可用 "24:00"。跨午夜的课程保留原图起止时间并在 warnings 提示需要在 App 中拆分核对，不要自行改变星期或周次。
+
+输出要求：只输出一个完整 JSON 对象，不输出 JavaScript / Python / Swift 代码，不输出注释、解释或省略号；最多 500 条课程或 40 个节次。根对象字段只能是 format、version、kind、sourceName、lessons、periods、warnings；format 必须为 "courseflow.ai"，version 必须为数字 1。未知值使用 JSON 的 null，warnings 没有问题时使用 []。sourceName 使用实际资料名称；若没写名称可填 "AI 图片识别"。资料模糊时明确说明并保留待核对信息，不要编造课程。
+
+下方仅演示 JSON 结构，所有示例课程、星期、周次、地点和时间都不能抄入识别结果。请用我发的图片内容替换：
+{
+  "format": "courseflow.ai",
+  "version": 1,
+  "kind": "timetable",
+  "sourceName": "我的课表",
+  "lessons": [
+    {"name": "示例课程（请替换）", "weekday": 1, "weeks": "1-8周", "periods": "1-2", "start": null, "end": null, "location": "示例教室（请替换）", "teacher": null, "source": "图片1，星期一，第1-2节；原文：示例课程", "warnings": []}
+  ],
+  "periods": [],
+  "warnings": []
+}
