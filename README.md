@@ -8,7 +8,7 @@
 
 没有付费开发者账号时，可选择独立的 `CourseFlowTrial` scheme，用普通 Apple 账号的 Personal Team 在自己的 iPhone 上免费签名试用。未签名试用 IPA（约 5 MiB，包含新版图标和 AI 文本导入）可在 [Releases](../../releases/latest) 下载，也可用 `Scripts/package_ipa.sh` 自行打包到 `dist/`；安装步骤见 [免费账号试用与 IPA 安装](docs/INSTALL-IPA.md)。IPA 仍须个人签名才能安装，试用版暂时停用 iCloud、小组件与实况活动。
 
-详见 [当前时间提示与学校调休](docs/OFFICIAL-HOLIDAYS.md)。最新版试用包为 1.0（3），SideStore 桌面名称为 `CourseFlow`。
+详见 [当前时间提示与学校调休](docs/OFFICIAL-HOLIDAYS.md)。最新版试用包为 1.0（4），SideStore 桌面名称为 `CourseFlow`。
 
 ## 已实现的功能
 
