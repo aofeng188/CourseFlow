@@ -14,6 +14,13 @@ struct CourseListView: View {
             query.isEmpty || ([course.name, course.notes] + store.snapshot.rules.filter { $0.courseID == course.id }.flatMap { [$0.teacher, $0.location] }).contains { $0.localizedStandardContains(query) }
         }
     }
+    private var now: Date { PreviewClock.now(.now) }
+    /// "周一、周四 · 1-18 周": the weekdays it meets, then every week it meets in.
+    private func schedule(_ rules: [MeetingRule]) -> String {
+        let days = Set(rules.map(\.weekday)).sorted().map { Display.weekdays[max(0, min(6, $0 - 1))] }
+        let weeks = rules.isEmpty ? nil : WeekSelection.summary(Array(Set(rules.flatMap(\.weeks))))
+        return ([days.isEmpty ? "尚未安排时间" : days.joined(separator: "、")] + (weeks.map { [$0] } ?? [])).joined(separator: " · ")
+    }
     var body: some View {
         List {
             if let semester = store.semester {
@@ -26,21 +33,23 @@ struct CourseListView: View {
                         }
                     }
                     ForEach(courses) { course in
+                        let rules = store.snapshot.rules.filter { $0.courseID == course.id }
                         Button { if selecting { if selected.contains(course.id) { selected.remove(course.id) } else { selected.insert(course.id) } } else { onCourse(course) } } label: {
-                            HStack(spacing: 12) {
+                            HStack(spacing: 14) {
                                 if selecting { Image(systemName: selected.contains(course.id) ? "checkmark.circle.fill" : "circle").foregroundStyle(selected.contains(course.id) ? Palette.accent : Color.secondary).font(.title3) }
-                                CourseDot(colorIndex: course.colorIndex)
-                                VStack(alignment: .leading, spacing: 6) {
+                                CourseAvatar(name: course.name, colorIndex: course.colorIndex, size: 44)
+                                VStack(alignment: .leading, spacing: 4) {
                                     Text(course.name).font(.headline).foregroundStyle(.primary)
-                                    let rules = store.snapshot.rules.filter { $0.courseID == course.id }
-                                    Text("\(rules.count) 条安排" + (rules.first.map { " · " + WeekSelection.summary($0.weeks) } ?? "")).font(.caption).foregroundStyle(.secondary)
-                                    if let next = store.occurrences.first(where: { $0.courseID == course.id && $0.end > .now }) {
-                                        Text("下次 \(Display.day(next.start, in: semester)) \(Display.time(next.start, zone: semester.timeZoneID)) · \(next.location.isEmpty ? "地点待补充" : next.location)").font(.caption).foregroundStyle(.secondary).lineLimit(2)
+                                    Text(schedule(rules)).font(.subheadline).foregroundStyle(.secondary).lineLimit(1)
+                                    if let next = store.occurrences.first(where: { $0.courseID == course.id && $0.end > now }) {
+                                        let when = next.start <= now ? "正在上课" : Display.relativeStart(next.start, now: now, in: semester)
+                                        Text("\(Image(systemName: next.start <= now ? "dot.radiowaves.left.and.right" : "clock")) \(when)\(next.location.isEmpty ? "" : " · \(next.location)")")
+                                            .font(.caption.weight(.medium)).foregroundStyle(Palette.color(course.colorIndex)).lineLimit(1)
                                     }
                                 }
                                 Spacer(minLength: 0)
-                                if !selecting { Image(systemName: "chevron.right").font(.caption).foregroundStyle(.tertiary) }
-                            }.padding(.vertical, 8).contentShape(Rectangle())
+                                if !selecting { Image(systemName: "chevron.right").font(.caption.weight(.semibold)).foregroundStyle(.tertiary) }
+                            }.padding(.vertical, 6).contentShape(Rectangle())
                         }.buttonStyle(.plain)
                     }
                 } header: { Text("\(semester.name) · \(courses.count) 门课程") }

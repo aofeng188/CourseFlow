@@ -21,7 +21,7 @@ struct CourseDetailView: View {
         let ruleIDs = Set(rules.map(\.id))
         return store.snapshot.exceptions.filter { ruleIDs.contains($0.ruleID) }.sorted { ($0.replacementDate ?? $0.originalDate) > ($1.replacementDate ?? $1.originalDate) }
     }
-    private var upcoming: [Occurrence] { store.occurrences.filter { $0.courseID == courseID && $0.end > .now }.sorted { $0.start < $1.start } }
+    private var upcoming: [Occurrence] { let now = PreviewClock.now(.now); return store.occurrences.filter { $0.courseID == courseID && $0.end > now }.sorted { $0.start < $1.start } }
     private var context: Occurrence? {
         if let selected = focused ?? (useInitialOccurrence ? occurrence : nil) { return store.occurrences.first { $0.id == selected.id } ?? selected }
         return upcoming.first
@@ -39,13 +39,8 @@ struct CourseDetailView: View {
                 if let course, let semester {
                     List {
                         Section {
-                            HStack(spacing: 14) {
-                                CourseDot(colorIndex: course.colorIndex)
-                                VStack(alignment: .leading, spacing: 6) {
-                                    Text(course.name).font(.title2.weight(.bold))
-                                    Text(semester.name).font(.subheadline).foregroundStyle(.secondary)
-                                }
-                            }.padding(.vertical, 9)
+                            header(course, semester: semester)
+                                .listRowBackground(LinearGradient(colors: [Palette.color(course.colorIndex).opacity(0.16), Color(.secondarySystemGroupedBackground)], startPoint: .topLeading, endPoint: .bottomTrailing))
                             if !course.notes.isEmpty { Text(course.notes).textSelection(.enabled) }
                             LabeledContent("课程提醒", value: reminderText(course))
                         }
@@ -119,6 +114,38 @@ struct CourseDetailView: View {
         }
     }
 
+    private func header(_ course: Course, semester: Semester) -> some View {
+        let teachers = Array(Set(rules.map(\.teacher).filter { !$0.isEmpty })).sorted()
+        let locations = Array(Set(rules.map(\.location).filter { !$0.isEmpty })).sorted()
+        let days = Set(rules.map(\.weekday)).sorted().map { Display.weekdays[max(0, min(6, $0 - 1))] }
+        let week = ScheduleEngine.weekNumber(on: PreviewClock.now(.now), semester: semester)
+        return VStack(alignment: .leading, spacing: 16) {
+            HStack(spacing: 14) {
+                CourseAvatar(name: course.name, colorIndex: course.colorIndex, size: 56)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(course.name).font(.title2.weight(.bold))
+                    Text(days.isEmpty ? semester.name : "\(semester.name) · 每\(days.joined(separator: "、"))").font(.subheadline).foregroundStyle(.secondary)
+                }
+            }
+            if !teachers.isEmpty || !locations.isEmpty {
+                ViewThatFits(in: .horizontal) {
+                    HStack(spacing: 8) { chips(teachers: teachers, locations: locations, color: Palette.color(course.colorIndex)) }
+                    VStack(alignment: .leading, spacing: 8) { chips(teachers: teachers, locations: locations, color: Palette.color(course.colorIndex)) }
+                }
+            }
+            WeekStrip(weeks: Set(rules.flatMap(\.weeks)), count: semester.weekCount, current: (1...semester.weekCount).contains(week) ? week : nil, color: Palette.color(course.colorIndex))
+        }.padding(.vertical, 8)
+    }
+    @ViewBuilder private func chips(teachers: [String], locations: [String], color: Color) -> some View {
+        ForEach(teachers, id: \.self) { chip($0, systemImage: "person.fill", color: color) }
+        ForEach(locations, id: \.self) { chip($0, systemImage: "mappin", color: color) }
+    }
+    private func chip(_ text: String, systemImage: String, color: Color) -> some View {
+        HStack(spacing: 4) { Image(systemName: systemImage).imageScale(.small); Text(text).lineLimit(1) }
+            .font(.footnote.weight(.medium)).fixedSize()
+            .foregroundStyle(color).padding(.horizontal, 10).padding(.vertical, 5)
+            .background(color.opacity(0.12), in: .capsule)
+    }
     private func reminderText(_ course: Course) -> String {
         guard let minutes = course.reminderMinutes else { return "跟随全局设置" }
         return minutes < 0 ? "本课程不提醒" : "提前 \(minutes) 分钟"
@@ -180,6 +207,35 @@ struct CourseDetailView: View {
             }
         }
         if store.apply("撤销单次调整", { $0.exceptions.removeAll { $0.id == existing.id } }) { pendingExceptionRemoval = nil }
+    }
+}
+
+/// Which teaching weeks a course meets, one cell per week, with the current week outlined.
+private struct WeekStrip: View {
+    let weeks: Set<Int>
+    let count: Int
+    let current: Int?
+    let color: Color
+    var body: some View {
+        let perRow = count <= 26 ? count : (count + 1) / 2
+        VStack(alignment: .leading, spacing: 7) {
+            HStack {
+                Text("上课周次").font(.caption.weight(.semibold)).foregroundStyle(.secondary)
+                Spacer()
+                Text(WeekSelection.summary(Array(weeks))).font(.caption).foregroundStyle(.secondary)
+            }
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 3), count: max(1, perRow)), spacing: 3) {
+                ForEach(1...max(1, count), id: \.self) { week in
+                    RoundedRectangle(cornerRadius: 3, style: .continuous)
+                        .fill(weeks.contains(week) ? AnyShapeStyle(color) : AnyShapeStyle(Color.secondary.opacity(0.15)))
+                        .frame(height: 16)
+                        .overlay { if week == current { RoundedRectangle(cornerRadius: 3, style: .continuous).strokeBorder(Color.primary.opacity(0.85), lineWidth: 1.5) } }
+                }
+            }
+            if let current { Text("第 \(current) 周\(weeks.contains(current) ? "有课" : "没有这门课")").font(.caption2).foregroundStyle(.tertiary) }
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("上课周次：\(WeekSelection.summary(Array(weeks)))")
     }
 }
 

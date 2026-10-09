@@ -12,20 +12,27 @@ struct HolidayBanner: View {
     var body: some View {
         ForEach(pending) { group in
             Button { onSelect(group) } label: {
-                VStack(alignment: .leading, spacing: 10) {
-                    HStack(alignment: .firstTextBaseline) {
-                        Label("\(group.name)学校安排待确认", systemImage: "calendar.badge.questionmark").font(.subheadline.weight(.semibold)).foregroundStyle(.orange)
-                        Spacer(minLength: 4)
-                        Image(systemName: "chevron.right").font(.caption).foregroundStyle(.secondary)
+                HStack(alignment: .top, spacing: 12) {
+                    SettingsIcon(systemImage: "calendar.badge.exclamationmark", color: .orange)
+                    VStack(alignment: .leading, spacing: 7) {
+                        HStack(alignment: .firstTextBaseline) {
+                            Text("\(group.name)学校安排待确认").font(.subheadline.weight(.semibold))
+                            Spacer(minLength: 4)
+                            Image(systemName: "chevron.right").font(.caption.weight(.semibold)).foregroundStyle(.tertiary)
+                        }
+                        Text("放假：\(HolidayPresentation.ranges(group.days.filter { $0.kind == .holiday }, semester: semester))").font(.subheadline).foregroundStyle(.secondary)
+                        ForEach(group.days.filter { $0.kind == .makeup }) { day in
+                            Text("\(HolidayPresentation.date(day, semester: semester))补班 · \(HolidayPresentation.status(day, semester: semester, snapshot: store.snapshot, now: now))")
+                                .font(.subheadline).foregroundStyle(.secondary).accessibilityIdentifier("holiday-group-day-\(day.dateKey)")
+                        }
+                        Text("整段放假可一次确认；补班日可以稍后决定。原课程和提醒继续保留。").font(.caption).foregroundStyle(.tertiary)
                     }
-                    Text("放假：\(HolidayPresentation.ranges(group.days.filter { $0.kind == .holiday }, semester: semester))").font(.subheadline)
-                    ForEach(group.days.filter { $0.kind == .makeup }) { day in
-                        Text("\(HolidayPresentation.date(day, semester: semester))补班 · \(HolidayPresentation.status(day, semester: semester, snapshot: store.snapshot, now: now))")
-                            .font(.subheadline).accessibilityIdentifier("holiday-group-day-\(day.dateKey)")
-                    }
-                    Text("整段放假可一次确认；补班日可以稍后决定。原课程和提醒继续保留。").font(.caption).foregroundStyle(.secondary)
                 }.multilineTextAlignment(.leading).frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(16).background(.orange.opacity(0.08), in: .rect(cornerRadius: 20))
+                    .padding(16)
+                    .background {
+                        RoundedRectangle(cornerRadius: Theme.cardRadius, style: .continuous).fill(Color(.secondarySystemGroupedBackground))
+                            .overlay(RoundedRectangle(cornerRadius: Theme.cardRadius, style: .continuous).fill(LinearGradient(colors: [Color.orange.opacity(0.14), Color.orange.opacity(0.03)], startPoint: .topLeading, endPoint: .bottomTrailing)))
+                    }
             }.buttonStyle(.plain).accessibilityIdentifier("holiday-group-prompt-\(group.id)")
         }
     }

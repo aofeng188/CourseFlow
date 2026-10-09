@@ -7,7 +7,7 @@ struct AppPreferences: Codable, Equatable {
     var reminderMinutes = 10
     var duplicateReminders = false
     var activitiesEnabled = false
-    var hideEmptyWeekends = false
+    var hideEmptyWeekends = true
 }
 
 @MainActor @Observable final class AppStore {

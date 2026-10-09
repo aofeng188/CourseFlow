@@ -42,6 +42,14 @@ struct CourseEntry: TimelineEntry {
         case .empty: "你的课表，随时可见"
         }
     }
+    /// When the current lesson segment or break began, for progress displays.
+    var phaseStart: Date? {
+        switch status.kind {
+        case .inClass: status.segment?.start
+        case .onBreak: status.current?.segments.last { $0.end <= date }?.end
+        default: nil
+        }
+    }
     var deadline: Date? {
         switch status.kind {
         case .inClass: status.segment?.end
@@ -85,12 +93,33 @@ private struct NextCourseWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: CourseProvider()) { entry in
             NextCourseView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
+                .containerBackground(for: .widget) { WidgetBackground(color: Palette.color(entry.lesson?.colorIndex ?? 0)) }
                 .widgetURL(URL(string: entry.lesson.map { "courseflow://course/\($0.courseID.uuidString)" } ?? "courseflow://today"))
         }
         .configurationDisplayName("下一节课")
         .description("课程、教室和倒计时，一眼就知道。")
         .supportedFamilies([.systemSmall, .accessoryRectangular, .accessoryInline, .accessoryCircular])
+    }
+}
+
+/// White (or black) with a soft wash of the course color from the top-left.
+struct WidgetBackground: View {
+    let color: Color
+    var body: some View {
+        ZStack {
+            Color(.systemBackground)
+            LinearGradient(colors: [color.opacity(0.2), color.opacity(0.02)], startPoint: .topLeading, endPoint: .bottomTrailing)
+        }
+    }
+}
+
+/// A bar that fills by itself over the interval, without timeline reloads.
+private struct LiveProgress: View {
+    let interval: ClosedRange<Date>
+    let color: Color
+    var body: some View {
+        ProgressView(timerInterval: interval, countsDown: false, label: { EmptyView() }, currentValueLabel: { EmptyView() })
+            .progressViewStyle(.linear).tint(color)
     }
 }
 
@@ -105,16 +134,21 @@ private struct NextCourseView: View {
                 Text("\(entry.clock(lesson.start)) \(lesson.courseName) · \(lesson.location)")
             } else { Label("今日无课", systemImage: "leaf") }
         case .accessoryCircular:
-            if let lesson = entry.lesson {
-                VStack(spacing: 2) {
-                    Image(systemName: entry.status.kind == .inClass ? "book.fill" : "clock")
-                        .font(.caption)
+            if let lesson = entry.lesson, let start = entry.phaseStart, let end = entry.deadline, start < end {
+                ProgressView(timerInterval: start...end, countsDown: true) {
+                    Image(systemName: entry.status.kind == .onBreak ? "cup.and.saucer.fill" : "book.fill")
+                } currentValueLabel: {
+                    Text(String(lesson.courseName.prefix(2))).font(.system(size: 12, weight: .semibold))
+                }.progressViewStyle(.circular)
+            } else if let lesson = entry.lesson {
+                VStack(spacing: 1) {
+                    Image(systemName: "clock").font(.caption2)
                     Text(entry.clock(lesson.start)).font(.system(.caption, design: .rounded, weight: .semibold))
                     Text(lesson.courseName).font(.system(size: 9)).lineLimit(1)
                 }
             } else { Image(systemName: "leaf").font(.title2) }
         case .accessoryRectangular:
-            VStack(alignment: .leading, spacing: 3) {
+            VStack(alignment: .leading, spacing: 2) {
                 Text(entry.statusTitle).font(.caption).foregroundStyle(.secondary)
                 Text(entry.lesson?.courseName ?? "打开课序导入课表").font(.headline).lineLimit(1)
                 if let lesson = entry.lesson {
@@ -123,15 +157,15 @@ private struct NextCourseView: View {
                 }
             }
         default:
-            VStack(alignment: .leading, spacing: 9) {
-                HStack {
-                    Image(systemName: entry.status.kind == .inClass ? "book.fill" : "calendar")
-                        .foregroundStyle(Palette.color(entry.lesson?.colorIndex ?? 0))
-                    Text(entry.statusTitle).font(.caption.weight(.medium)).foregroundStyle(.secondary)
-                }
+            let color = Palette.color(entry.lesson?.colorIndex ?? 0)
+            VStack(alignment: .leading, spacing: 6) {
+                HStack(spacing: 5) {
+                    Image(systemName: entry.status.kind == .inClass ? "book.fill" : (entry.status.kind == .onBreak ? "cup.and.saucer.fill" : "calendar"))
+                    Text(entry.statusTitle)
+                }.font(.caption.weight(.semibold)).foregroundStyle(color)
                 Spacer(minLength: 0)
                 Text(entry.lesson?.courseName ?? "从一张课表开始")
-                    .font(.system(.title3, design: .rounded, weight: .bold)).lineLimit(2).minimumScaleFactor(0.8)
+                    .font(.system(.title3, design: .rounded, weight: .bold)).lineLimit(entry.phaseStart == nil ? 2 : 1).minimumScaleFactor(0.8)
                 if let lesson = entry.lesson {
                     Label(lesson.location.isEmpty ? "地点待补充" : lesson.location, systemImage: "mappin")
                         .font(.caption).foregroundStyle(.secondary).lineLimit(1)
@@ -147,6 +181,7 @@ private struct NextCourseView: View {
                         Text(lesson.start.formatted(Date.FormatStyle(timeZone: entry.timeZone).weekday(.abbreviated).hour().minute()))
                             .font(.caption.weight(.medium))
                     }
+                    if let start = entry.phaseStart, let end = entry.deadline, start < end { LiveProgress(interval: start...end, color: color) }
                 } else {
                     Text("导入图片或表格，把新学期装进口袋。")
                         .font(.caption).foregroundStyle(.secondary)
@@ -161,7 +196,7 @@ private struct TodayCoursesWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: CourseProvider()) { entry in
             TodayCoursesView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
+                .containerBackground(for: .widget) { WidgetBackground(color: Palette.accent) }
                 .widgetURL(URL(string: "courseflow://today"))
         }
         .configurationDisplayName("今日课表")
@@ -174,13 +209,13 @@ private struct TodayCoursesView: View {
     let entry: CourseEntry
     @Environment(\.widgetFamily) private var family
     var body: some View {
-        VStack(alignment: .leading, spacing: family == .systemLarge ? 16 : 9) {
-            HStack {
-                Text("今天").font(.system(.headline, design: .rounded))
+        VStack(alignment: .leading, spacing: family == .systemLarge ? 12 : 7) {
+            HStack(alignment: .firstTextBaseline) {
+                Text("今天").font(.system(.headline, design: .rounded)).foregroundStyle(Palette.accent)
                 Text(entry.date.formatted(Date.FormatStyle(timeZone: entry.timeZone).month().day().weekday(.abbreviated)))
                     .font(.caption).foregroundStyle(.secondary)
                 Spacer()
-                Text("\(entry.today.count) 节课").font(.caption.weight(.medium)).foregroundStyle(.secondary)
+                Text(entry.today.isEmpty ? "无课" : "\(entry.today.count) 节课").font(.caption.weight(.medium)).foregroundStyle(.secondary)
             }
             if entry.today.isEmpty {
                 Spacer(minLength: 0)
@@ -188,12 +223,11 @@ private struct TodayCoursesView: View {
                     .font(.subheadline).foregroundStyle(.secondary)
                 Spacer(minLength: 0)
             } else {
-                let rows = visibleRows
-                ForEach(rows) { lesson in
+                ForEach(visibleRows) { lesson in
+                    let live = lesson.start <= entry.date && entry.date < lesson.end
+                    let color = Palette.color(lesson.colorIndex)
                     HStack(spacing: 10) {
-                        RoundedRectangle(cornerRadius: 2)
-                            .fill(Palette.color(lesson.colorIndex))
-                            .frame(width: 3)
+                        Capsule().fill(color).frame(width: 4)
                         VStack(alignment: .leading, spacing: 2) {
                             Text(lesson.courseName).font(.subheadline.weight(.semibold)).lineLimit(1)
                             Text(lesson.location.isEmpty ? "地点待补充" : lesson.location)
@@ -201,11 +235,13 @@ private struct TodayCoursesView: View {
                         }
                         Spacer(minLength: 5)
                         VStack(alignment: .trailing, spacing: 2) {
-                            Text(entry.clock(lesson.start)).font(.system(.subheadline, design: .rounded, weight: .medium)).monospacedDigit()
-                            Text(entry.clock(lesson.end)).font(.caption).foregroundStyle(.secondary).monospacedDigit()
+                            Text(entry.clock(lesson.start)).font(.system(.subheadline, design: .rounded, weight: .semibold)).monospacedDigit()
+                            Text(live ? "上课中" : entry.clock(lesson.end)).font(.caption.weight(live ? .semibold : .regular)).foregroundStyle(live ? color : .secondary).monospacedDigit()
                         }
                     }
-                    .opacity(lesson.end <= entry.date ? 0.5 : 1)
+                    .padding(.vertical, 4).padding(.horizontal, 6)
+                    .background(live ? Palette.fill(lesson.colorIndex) : .clear, in: .rect(cornerRadius: 10, style: .continuous))
+                    .opacity(lesson.end <= entry.date ? 0.45 : 1)
                 }
                 Spacer(minLength: 0)
             }
@@ -221,24 +257,31 @@ private struct TodayCoursesView: View {
 private struct CourseLiveActivityWidget: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: CourseActivityAttributes.self) { context in
-            HStack(spacing: 14) {
-                Image(systemName: context.isStale ? "calendar" : (context.state.phase == .onBreak ? "cup.and.saucer.fill" : "book.closed.fill"))
-                    .font(.title2).foregroundStyle(Palette.color(context.state.colorIndex))
-                VStack(alignment: .leading, spacing: 5) {
-                    Text(context.state.courseName).font(.headline).lineLimit(1)
-                    Label(context.state.location.isEmpty ? "地点待补充" : context.state.location, systemImage: "mappin")
-                        .font(.subheadline).foregroundStyle(.secondary).lineLimit(1)
-                }
-                Spacer()
-                VStack(alignment: .trailing, spacing: 4) {
-                    if context.isStale {
-                        Text(Date.now >= context.state.end ? "课程已结束" : "课程安排").font(.subheadline.weight(.medium))
-                        Text(context.state.start, style: .time).font(.caption).foregroundStyle(.secondary)
-                    } else {
-                        Text(timerInterval: context.state.phaseStart...context.state.phaseEnd, countsDown: true)
-                            .font(.system(.title3, design: .rounded, weight: .semibold)).monospacedDigit()
-                        Text(context.state.phase == .onBreak ? "后继续上课" : "后本节下课").font(.caption2).foregroundStyle(.secondary)
+            let color = Palette.color(context.state.colorIndex)
+            VStack(spacing: 12) {
+                HStack(spacing: 14) {
+                    Image(systemName: context.isStale ? "calendar" : (context.state.phase == .onBreak ? "cup.and.saucer.fill" : "book.closed.fill"))
+                        .font(.title3).foregroundStyle(.white)
+                        .frame(width: 44, height: 44).background(Palette.solid(context.state.colorIndex).gradient, in: .rect(cornerRadius: 12, style: .continuous))
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(context.state.courseName).font(.headline).lineLimit(1)
+                        Label(context.state.location.isEmpty ? "地点待补充" : context.state.location, systemImage: "mappin")
+                            .font(.subheadline).foregroundStyle(.secondary).lineLimit(1)
                     }
+                    Spacer()
+                    VStack(alignment: .trailing, spacing: 4) {
+                        if context.isStale {
+                            Text(Date.now >= context.state.end ? "课程已结束" : "课程安排").font(.subheadline.weight(.medium))
+                            Text(context.state.start, style: .time).font(.caption).foregroundStyle(.secondary)
+                        } else {
+                            Text(timerInterval: context.state.phaseStart...context.state.phaseEnd, countsDown: true)
+                                .font(.system(.title3, design: .rounded, weight: .semibold)).monospacedDigit()
+                            Text(context.state.phase == .onBreak ? "后继续上课" : "后本节下课").font(.caption2).foregroundStyle(.secondary)
+                        }
+                    }
+                }
+                if !context.isStale && context.state.phaseStart < context.state.phaseEnd {
+                    LiveProgress(interval: context.state.phaseStart...context.state.phaseEnd, color: color)
                 }
             }
             .padding(16)
@@ -247,7 +290,7 @@ private struct CourseLiveActivityWidget: Widget {
         } dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    Label(context.isStale ? "课序" : (context.state.phase == .onBreak ? "课间休息" : "正在上课"), systemImage: "book.closed.fill")
+                    Label(context.isStale ? "课序" : (context.state.phase == .onBreak ? "课间休息" : "正在上课"), systemImage: context.state.phase == .onBreak && !context.isStale ? "cup.and.saucer.fill" : "book.closed.fill")
                         .font(.caption.weight(.semibold)).foregroundStyle(Palette.color(context.state.colorIndex))
                 }
                 DynamicIslandExpandedRegion(.trailing) {
@@ -258,10 +301,13 @@ private struct CourseLiveActivityWidget: Widget {
                     }
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    VStack(alignment: .leading, spacing: 6) {
+                    VStack(alignment: .leading, spacing: 8) {
                         Text(context.state.courseName).font(.headline).lineLimit(1)
                         Label(context.state.location.isEmpty ? "地点待补充" : context.state.location, systemImage: "mappin")
                             .font(.subheadline).foregroundStyle(.secondary).lineLimit(1)
+                        if !context.isStale && context.state.phaseStart < context.state.phaseEnd {
+                            LiveProgress(interval: context.state.phaseStart...context.state.phaseEnd, color: Palette.color(context.state.colorIndex))
+                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
