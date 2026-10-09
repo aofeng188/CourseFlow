@@ -28,4 +28,4 @@ App 内置经过核对的 2026 年国务院节假日安排，不联网也可标�
 
 新备份使用 v2 格式，包含调休决定和学期提示设置。新版可读取旧 v1 备份；旧版不能读取 v2，请保留原备份直到确认迁移成功。
 
-新版 SideStore 包为 `dist/CourseFlow-Trial-SideStore-unsigned.ipa`，版本 1.0（5），桌面名称为 `CourseFlow`，避免中文签名名称错误。内部仍是中文界面。该 IPA 需要 SideStore 使用自己的 Apple 账号签名，免费签名名额包含 SideStore 本身。安装到原有 App 时使用同一账号及应用标识，先在 App 设置导出课表备份。
+新版 SideStore 包为 `dist/CourseFlow-Trial-SideStore-unsigned.ipa`，版本 1.0（6），桌面名称为 `CourseFlow`，避免中文签名名称错误。内部仍是中文界面。该 IPA 需要 SideStore 使用自己的 Apple 账号签名，免费签名名额包含 SideStore 本身。安装到原有 App 时使用同一账号及应用标识，先在 App 设置导出课表备份。
