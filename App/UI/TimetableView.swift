@@ -9,6 +9,8 @@ struct TimetableView: View {
     var onSetup: () -> Void
     var onCourse: (Occurrence) -> Void
     @State private var week = 1
+    /// The current teaching week when `week` was last synced to it; nil until first shown.
+    @State private var syncedCurrentWeek: Int?
     @State private var showWeeks = false
     @State private var listMode = false
     @State private var shareFile: SharedFile?
@@ -40,6 +42,7 @@ struct TimetableView: View {
                 .simultaneousGesture(DragGesture(minimumDistance: 40).onEnded { value in
                     if abs(value.translation.width) > abs(value.translation.height) * 1.8 { changeWeek(value.translation.width < 0 ? 1 : -1, semester: semester) }
                 })
+                .onChange(of: currentWeek(semester, at: now)) { followCurrentWeek() }
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
@@ -47,7 +50,7 @@ struct TimetableView: View {
                             Button(listMode ? "显示周课表" : "显示日程列表", systemImage: listMode ? "calendar" : "list.bullet") { listMode.toggle() }
                             Button("分享本周图片", systemImage: "photo") { exportWeek(semester, pdf: false) }
                             Button("分享本周 PDF", systemImage: "doc") { exportWeek(semester, pdf: true) }
-                            if store.canUndo { Button("撤销最近修改", systemImage: "arrow.uturn.backward") { store.undo() } }
+                            if let label = store.undoLabel { Button("撤销“\(label)”", systemImage: "arrow.uturn.backward") { store.undo() } }
                         } label: { Image(systemName: "ellipsis").accessibilityLabel("课表显示与分享") }
                     }
                 }
@@ -55,8 +58,9 @@ struct TimetableView: View {
         }
         .navigationTitle("课序")
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear { resetWeek(); if ProcessInfo.processInfo.arguments.contains("--uitesting") && ProcessInfo.processInfo.arguments.contains("--preview-agenda") { listMode = true } }
+        .onAppear { if syncedCurrentWeek == nil { resetWeek() } else { followCurrentWeek() }; if ProcessInfo.processInfo.arguments.contains("--uitesting") && ProcessInfo.processInfo.arguments.contains("--preview-agenda") { listMode = true } }
         .onChange(of: store.semester?.id) { resetWeek() }
+        .onChange(of: scenePhase) { _, phase in if phase == .active { followCurrentWeek() } }
         .sheet(isPresented: $showWeeks) {
             if let semester = store.semester {
                 NavigationStack {
@@ -96,7 +100,7 @@ struct TimetableView: View {
                     Spacer()
                     Button("下一周") { changeWeek(1, semester: semester) }.disabled(week == semester.weekCount)
                 }.font(.body)
-                if week != max(1, min(semester.weekCount, ScheduleEngine.weekNumber(on: PreviewClock.fixedDate ?? .now, semester: semester))) {
+                if week != currentWeek(semester) {
                     Button("回到本周") { resetWeek() }.font(.body)
                 }
             }.frame(maxWidth: .infinity, alignment: .leading)
@@ -108,7 +112,7 @@ struct TimetableView: View {
                 Button { changeWeek(1, semester: semester) } label: { Image(systemName: "chevron.right").frame(width: 34, height: 38) }.disabled(week == semester.weekCount).accessibilityLabel("下一周")
             }.buttonStyle(.plain).glassEffect()
             Spacer(minLength: 0)
-            if week != max(1, min(semester.weekCount, ScheduleEngine.weekNumber(on: PreviewClock.fixedDate ?? .now, semester: semester))) {
+            if week != currentWeek(semester) {
                 Button("本周") { resetWeek() }.font(.subheadline).buttonStyle(.glass)
             } else { Text("\(weekEvents.count) 次课").font(.caption).foregroundStyle(.secondary) }
         }
@@ -145,7 +149,21 @@ struct TimetableView: View {
             }.padding(26)
         }.background(Color(.systemGroupedBackground))
     }
-    private func resetWeek() { if let semester = store.semester { week = max(1, min(semester.weekCount, ScheduleEngine.weekNumber(on: PreviewClock.fixedDate ?? .now, semester: semester))) } }
+    private func currentWeek(_ semester: Semester, at date: Date = .now) -> Int {
+        max(1, min(semester.weekCount, ScheduleEngine.weekNumber(on: PreviewClock.now(date), semester: semester)))
+    }
+    private func resetWeek() {
+        guard let semester = store.semester else { return }
+        week = currentWeek(semester); syncedCurrentWeek = week
+    }
+    /// Advances to a new teaching week (e.g. after a weekend in the background) only if the
+    /// user was looking at the current week; a week they browsed to stays put.
+    private func followCurrentWeek() {
+        guard let semester = store.semester else { return }
+        let current = currentWeek(semester)
+        if week == syncedCurrentWeek { week = current }
+        syncedCurrentWeek = current
+    }
     private func changeWeek(_ offset: Int, semester: Semester) { withAnimation(reduceMotion ? nil : .snappy(duration: 0.24)) { week = max(1, min(semester.weekCount, week + offset)) } }
     private func exportWeek(_ semester: Semester, pdf: Bool) {
         let view = VStack(alignment: .leading, spacing: 20) {
@@ -175,7 +193,9 @@ struct CurrentCourseCard: View {
     var pendingMakeup = false
     let onCourse: (Occurrence) -> Void
     var body: some View {
-        TimelineView(.periodic(from: .now, by: 1)) { context in
+        // Lesson boundaries fall on whole minutes and the countdown text updates itself,
+        // so a per-minute timeline is exact without re-evaluating every second.
+        TimelineView(.everyMinute) { context in
             let now = PreviewClock.now(context.date)
             let status = ScheduleEngine.status(at: now, occurrences: occurrences, semester: semester)
             let event = status.current ?? status.next
@@ -198,7 +218,7 @@ struct CurrentCourseCard: View {
                         if let target = countdownTarget(status), target > now {
                             VStack(alignment: typeSize.isAccessibilitySize ? .leading : .trailing, spacing: 4) {
                                 if target.timeIntervalSince(now) < 86400 {
-                                    Text(timerInterval: now...target, countsDown: true).font(.system(.title2, design: .rounded, weight: .semibold)).monospacedDigit().lineLimit(1).minimumScaleFactor(0.7).multilineTextAlignment(typeSize.isAccessibilitySize ? .leading : .trailing)
+                                    countdown(to: target, from: now).font(.system(.title2, design: .rounded, weight: .semibold)).monospacedDigit().lineLimit(1).minimumScaleFactor(0.7).multilineTextAlignment(typeSize.isAccessibilitySize ? .leading : .trailing)
                                 } else { Text(target, format: .dateTime.month().day()).font(.title3.weight(.semibold)) }
                                 Text(status.kind == .inClass ? "本节剩余" : (status.kind == .onBreak ? "后继续上课" : "后开始上课")).font(.caption2).foregroundStyle(.secondary)
                             }.frame(maxWidth: typeSize.isAccessibilitySize ? .infinity : 116, alignment: typeSize.isAccessibilitySize ? .leading : .trailing)
@@ -234,6 +254,13 @@ struct CurrentCourseCard: View {
     private func title(_ kind: CurrentStatus.Kind) -> String {
         switch kind { case .inClass: "正在上课"; case .onBreak: "课间休息"; case .upcoming: "下一节课"; case .finishedToday: "今日课程已结束"; case .beforeSemester: "学期尚未开始"; case .afterSemester: "学期已结束"; case .empty: "今天，从容一点" }
     }
+    /// A fixed preview clock shows the remaining time at that moment, so screenshots do not depend
+    /// on the day the tests run; otherwise the system timer text counts down live.
+    private func countdown(to target: Date, from now: Date) -> Text {
+        guard PreviewClock.fixedDate != nil else { return Text(timerInterval: now...target, countsDown: true) }
+        let remaining = Duration.seconds(Int(target.timeIntervalSince(now)))
+        return Text(remaining.formatted(.time(pattern: remaining >= .seconds(3600) ? .hourMinuteSecond : .minuteSecond)))
+    }
     private func countdownTarget(_ status: CurrentStatus) -> Date? { status.kind == .inClass ? status.segment?.end : (status.kind == .onBreak ? status.nextSegment?.start : status.next?.start) }
 }
 
@@ -251,7 +278,16 @@ struct WeekGrid: View {
     private var periods: [Period] { ScheduleEngine.bellSchedule(on: ScheduleEngine.date(week: week, weekday: 1, semester: semester), semester: semester, schedules: bells)?.periods ?? [] }
     private var minMinute: Int { min(periods.map(\.startMinute).min() ?? 480, occurrences.map { Display.minutes($0.start, in: semester) }.min() ?? 480) }
     private var maxMinute: Int { max(periods.map(\.endMinute).max() ?? 1080, occurrences.map { semester.calendar.isDate($0.start, inSameDayAs: $0.end) ? Display.minutes($0.end, in: semester) : 1440 }.max() ?? 1080) }
-    private var days: [Int] { (1...7).filter { day in !hideEmptyWeekends || day < 6 || now.map { semester.calendar.isDate($0, inSameDayAs: ScheduleEngine.date(week: week, weekday: day, semester: semester)) } == true || pendingMakeupKeys.contains(HolidayCalendar.key(ScheduleEngine.date(week: week, weekday: day, semester: semester), calendar: semester.calendar)) || occurrences.contains { semester.calendar.isDate($0.start, inSameDayAs: ScheduleEngine.date(week: week, weekday: day, semester: semester)) } } }
+    private var days: [Int] {
+        guard hideEmptyWeekends else { return Array(1...7) }
+        return (1...7).filter { day in
+            guard day >= 6 else { return true }
+            let date = ScheduleEngine.date(week: week, weekday: day, semester: semester)
+            let isToday = now.map { semester.calendar.isDate($0, inSameDayAs: date) } ?? false
+            return isToday || pendingMakeupKeys.contains(HolidayCalendar.key(date, calendar: semester.calendar))
+                || occurrences.contains { semester.calendar.isDate($0.start, inSameDayAs: date) }
+        }
+    }
     private var todayIndex: Int? {
         guard let now else { return nil }
         return days.firstIndex { semester.calendar.isDate(now, inSameDayAs: ScheduleEngine.date(week: week, weekday: $0, semester: semester)) }
@@ -295,10 +331,11 @@ struct WeekGrid: View {
                     ForEach(Array(days.enumerated()), id: \.element) { index, day in
                         let date = ScheduleEngine.date(week: week, weekday: day, semester: semester)
                         let events = occurrences.filter { semester.calendar.isDate($0.start, inSameDayAs: date) }
+                        let placements = OccurrenceLayout.lanes(for: events)
                         ForEach(events) { event in
-                            let overlaps = events.filter { $0.start < event.end && event.start < $0.end }.sorted { $0.id < $1.id }
-                            let lane = overlaps.firstIndex(where: { $0.id == event.id }) ?? 0
-                            let laneWidth = column / CGFloat(max(1, overlaps.count))
+                            let placement = placements[event.id] ?? LanePlacement(lane: 0, laneCount: 1)
+                            let lane = placement.lane
+                            let laneWidth = column / CGFloat(max(1, placement.laneCount))
                             let height = max(40, CGFloat(event.end.timeIntervalSince(event.start) / 60) * scale - 4)
                             Button { onCourse(event) } label: {
                                 VStack(alignment: .leading, spacing: 5) {

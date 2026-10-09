@@ -11,6 +11,8 @@ struct AppPreferences: Codable, Equatable {
 }
 
 @MainActor @Observable final class AppStore {
+    /// The app's live store, for App Intents that run without a SwiftUI environment.
+    static var current: AppStore?
     let holidays = HolidayService()
     let persistence: Persistence
     private let systemIntegrationsEnabled: Bool
@@ -24,11 +26,15 @@ struct AppPreferences: Codable, Equatable {
     var notificationSummary = "尚未开启上课提醒"
     var calendarSummary = "尚未添加到日历"
     var selectedCourseID: UUID?
-    private var previous: ScheduleSnapshot?
-    private var previousLabel = ""
+    /// Most recent last. Any change that arrives from outside (sync, another window) clears it,
+    /// so an undo can never overwrite newer data.
+    private var undoStack: [(snapshot: ScheduleSnapshot, label: String)] = []
+    private let undoLimit = 20
+    private var reportedUnreadableCount = 0
     private var refreshTask: Task<Void, Never>?
     private var generation = 0
-    var canUndo: Bool { previous != nil }
+    var canUndo: Bool { !undoStack.isEmpty }
+    var undoLabel: String? { undoStack.last?.label }
     var semester: Semester? { snapshot.semesters.first { $0.id == selectedSemesterID } ?? snapshot.semesters.sorted { $0.firstMonday > $1.firstMonday }.first }
     var courses: [Course] { snapshot.courses.filter { $0.semesterID == semester?.id }.sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending } }
     var bells: [BellSchedule] { snapshot.bellSchedules.filter { $0.semesterID == semester?.id }.sorted { $0.effectiveFrom < $1.effectiveFrom } }
@@ -38,17 +44,31 @@ struct AppPreferences: Codable, Equatable {
         preferences = UserDefaults.standard.data(forKey: "preferences").flatMap { try? JSONDecoder().decode(AppPreferences.self, from: $0) } ?? AppPreferences()
         selectedSemesterID = UserDefaults.standard.string(forKey: "selectedSemesterID").flatMap(UUID.init(uuidString:))
         snapshot = try persistence.read()
+        reportUnreadableRecords()
         refresh()
     }
-    func reload() {
-        do { let value = try persistence.read(); if value != snapshot { snapshot = value; previous = nil }; refresh() }
+    /// Reloads stored data. System content (reminders, widgets, calendar) is rebuilt only when
+    /// the data changed, unless `forceRefresh` asks for it, e.g. when returning to the foreground.
+    func reload(forceRefresh: Bool = false) {
+        do {
+            let value = try persistence.read()
+            reportUnreadableRecords()
+            if value != snapshot { snapshot = value; undoStack.removeAll(); refresh() }
+            else if forceRefresh { refresh() }
+        }
         catch { errorMessage = "无法读取课表：\(error.localizedDescription)" }
+    }
+    private func reportUnreadableRecords() {
+        let count = persistence.unreadableRecordCount
+        defer { reportedUnreadableCount = count }
+        guard count > reportedUnreadableCount else { return }
+        errorMessage = "有 \(count) 条课表记录无法读取，已暂时跳过，原数据会继续保留。它们可能来自更新版本的课序，请更新 App 后再查看。"
     }
     func waitForRefresh() async { await refreshTask?.value }
     @discardableResult func apply(_ label: String, _ edit: (inout ScheduleSnapshot) -> Void) -> Bool {
         do {
             let latest = try persistence.read()
-            if latest != snapshot { snapshot = latest; previous = nil; refresh() }
+            if latest != snapshot { snapshot = latest; undoStack.removeAll(); refresh() }
         }
         catch { errorMessage = "未保存更改：无法读取最新资料"; return false }
         var changed = snapshot; edit(&changed)
@@ -56,19 +76,23 @@ struct AppPreferences: Codable, Equatable {
         do {
             try BackupCodec.validate(changed)
             try persistence.write(changed)
-            previous = snapshot; previousLabel = label; snapshot = (try? persistence.read()) ?? changed; refresh(); return true
+            pushUndo(snapshot, label: label); snapshot = (try? persistence.read()) ?? changed; refresh(); return true
         } catch { errorMessage = "未保存更改：\(error.localizedDescription)"; return false }
     }
+    private func pushUndo(_ value: ScheduleSnapshot, label: String) {
+        undoStack.append((value, label))
+        if undoStack.count > undoLimit { undoStack.removeFirst(undoStack.count - undoLimit) }
+    }
     func undo() {
-        guard let value = previous else { return }
+        guard let entry = undoStack.last else { return }
         do {
             let latest = try persistence.read()
             guard latest == snapshot else {
-                snapshot = latest; previous = nil; refresh()
+                snapshot = latest; undoStack.removeAll(); refresh()
                 errorMessage = "资料已有新的同步更改，已保留最新内容。请重新编辑需要调整的课程。"
                 return
             }
-            try persistence.write(value); snapshot = value; previous = nil; notice = "已撤销\(previousLabel)"; refresh()
+            try persistence.write(entry.snapshot); snapshot = entry.snapshot; undoStack.removeLast(); notice = "已撤销\(entry.label)"; refresh()
         }
         catch { errorMessage = error.localizedDescription }
     }
@@ -88,15 +112,19 @@ struct AppPreferences: Codable, Equatable {
             var covered = Set<String>()
             if let selected {
                 let calendarService = CalendarSyncService.shared
-                covered = calendarService.coveredIDs(for: selected, occurrences: events, defaultLeadMinutes: prefs.reminderMinutes)
-                if selected.calendarOwnerDeviceID == calendarService.deviceIdentifier, calendarService.hasExport(for: selected), calendarService.hasFullAccess {
-                    let report = await calendarService.sync(semester: selected, occurrences: events, defaultLeadMinutes: prefs.reminderMinutes)
+                let lead = prefs.reminderMinutes
+                if selected.calendarOwnerDeviceID == calendarService.deviceIdentifier, calendarService.hasFullAccess, await calendarService.hasExport(for: selected) {
+                    // A successful sync already verified coverage against the calendar it just wrote.
+                    let report = await calendarService.sync(semester: selected, occurrences: events, defaultLeadMinutes: lead)
                     calendarSummary = report.summary
-                    covered = calendarService.coveredIDs(for: selected, occurrences: events, defaultLeadMinutes: prefs.reminderMinutes)
+                    covered = report.errors.isEmpty ? report.coveredIDs : await calendarService.coveredIDs(for: selected, occurrences: events, defaultLeadMinutes: lead)
+                } else {
+                    covered = await calendarService.coveredIDs(for: selected, occurrences: events, defaultLeadMinutes: lead)
                 }
             }
             guard !Task.isCancelled else { return }
-            let report = await NotificationService.shared.refresh(occurrences: prefs.notificationsEnabled ? events : [], defaultLeadMinutes: prefs.reminderMinutes, calendarCoveredIDs: covered, allowDuplicates: prefs.duplicateReminders)
+            let schoolTimeZone = selected.flatMap { TimeZone(identifier: $0.timeZoneID) } ?? .current
+            let report = await NotificationService.shared.refresh(occurrences: prefs.notificationsEnabled ? events : [], defaultLeadMinutes: prefs.reminderMinutes, calendarCoveredIDs: covered, allowDuplicates: prefs.duplicateReminders, timeZone: schoolTimeZone)
             notificationSummary = prefs.notificationsEnabled ? report.summary : "尚未开启上课提醒"
             if !BuildFeatures.isTrial { await ActivityService.shared.refresh(occurrences: events, enabled: prefs.activitiesEnabled) }
         }
@@ -157,6 +185,6 @@ struct AppPreferences: Codable, Equatable {
         let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("Backups", isDirectory: true)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         try backup.write(to: directory.appendingPathComponent("恢复前-\(Int(Date.now.timeIntervalSince1970)).courseflow"), options: .atomic)
-        try persistence.write(value); previous = snapshot; previousLabel = "恢复备份"; snapshot = (try? persistence.read()) ?? value; selectedSemesterID = value.semesters.first?.id; refresh()
+        try persistence.write(value); pushUndo(snapshot, label: "恢复备份"); snapshot = (try? persistence.read()) ?? value; selectedSemesterID = value.semesters.first?.id
     }
 }

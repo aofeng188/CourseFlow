@@ -12,11 +12,12 @@ import CourseKit
             let hostedTest = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
             let value = try AppStore(persistence: persistence, systemIntegrationsEnabled: !hostedTest)
             ScheduleBackgroundRefresh.register {
-                await value.reload()
+                await value.reload(forceRefresh: true)
                 await value.waitForRefresh()
                 return true
             }
             if ProcessInfo.processInfo.arguments.contains("--demo") { value.loadExample(now: PreviewClock.fixedDate ?? .now) }
+            AppStore.current = value
             _store = State(initialValue: value)
         } catch { _startupError = State(initialValue: error.localizedDescription) }
     }
@@ -91,9 +92,9 @@ struct RootView: View {
         .task(id: store.semester?.id) {
             if !ProcessInfo.processInfo.arguments.contains("--uitesting"), let semester = store.semester { await store.holidays.refresh(for: semester) }
         }
-        .onChange(of: records.map(\.modifiedAt).sorted()) { store.reload() }
+        .onChange(of: recordsSignature) { store.reload() }
         .onChange(of: scenePhase) { _, phase in
-            if phase == .active { store.reload(); if !ProcessInfo.processInfo.arguments.contains("--uitesting"), let semester = store.semester { Task { await store.holidays.refresh(for: semester) } } }
+            if phase == .active { store.reload(forceRefresh: true); if !ProcessInfo.processInfo.arguments.contains("--uitesting"), let semester = store.semester { Task { await store.holidays.refresh(for: semester) } } }
             if phase == .background { try? ScheduleBackgroundRefresh.schedule() }
         }
         .onOpenURL { url in
@@ -109,6 +110,15 @@ struct RootView: View {
             Button("取消", role: .cancel) { incomingBackup = nil }
             Button("备份当前资料并恢复") { do { if let incomingBackup { try store.restore(incomingBackup) } } catch { store.errorMessage = error.localizedDescription }; incomingBackup = nil }
         } message: { Text("备份中包含 \(incomingBackup?.semesters.count ?? 0) 个学期、\(incomingBackup?.courses.count ?? 0) 门课程。当前资料会先自动备份。") }
+    }
+    /// Changes whenever any record is inserted, edited or deleted, locally or by sync.
+    /// Summing per-record hashes is order-independent, so the query result needs no sorting.
+    private var recordsSignature: Int {
+        records.reduce(records.count) { total, record in
+            var hasher = Hasher()
+            hasher.combine(record.entityID); hasher.combine(record.modifiedAt); hasher.combine(record.isDeleted)
+            return total &+ hasher.finalize()
+        }
     }
     private var addMenu: some View {
         Menu {

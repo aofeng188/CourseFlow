@@ -60,4 +60,26 @@ final class CourseFlowUITests: XCTestCase {
         app.staticTexts["验收测试课程"].tap()
         XCTAssertTrue(app.navigationBars["课程详情"].waitForExistence(timeout: 5))
     }
+
+    @MainActor func testTimeZonePickerSearchesByCity() throws {
+        let app = XCUIApplication(); app.launchArguments = ["--uitesting"]; app.launch()
+        app.buttons["setup-semester"].tap()
+        let zone = app.buttons["semester-time-zone"]
+        XCTAssertTrue(zone.waitForExistence(timeout: 5))
+        XCTAssertTrue(zone.label.contains("中国"), zone.label)
+        zone.tap()
+        XCTAssertTrue(app.navigationBars["学校时区"].waitForExistence(timeout: 5))
+        let picker = XCTAttachment(screenshot: app.screenshot()); picker.name = "Time zone picker"; picker.lifetime = .keepAlways; add(picker)
+        let search = app.searchFields.firstMatch
+        XCTAssertTrue(search.waitForExistence(timeout: 3))
+        search.tap(); search.typeText("香港")
+        let hongKong = app.buttons.containing(NSPredicate(format: "label CONTAINS 'Asia/Hong_Kong'")).firstMatch
+        XCTAssertTrue(hongKong.waitForExistence(timeout: 3))
+        hongKong.tap()
+        XCTAssertTrue(zone.waitForExistence(timeout: 5))
+        XCTAssertTrue(zone.label.contains("香港"), zone.label)
+        let editor = XCTAttachment(screenshot: app.screenshot()); editor.name = "Semester editor with picked zone"; editor.lifetime = .keepAlways; add(editor)
+        app.buttons["save-semester"].tap()
+        XCTAssertTrue(app.buttons["week-picker"].waitForExistence(timeout: 10))
+    }
 }

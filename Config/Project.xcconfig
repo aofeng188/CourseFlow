@@ -1,2 +1,4 @@
 COURSEFLOW_ICLOUD_ENABLED = NO
+// Siri's flexible phrase matching does not support Chinese App Shortcut phrases; exact phrases still work.
+APP_SHORTCUTS_ENABLE_FLEXIBLE_MATCHING = NO
 #include? "Local.xcconfig"

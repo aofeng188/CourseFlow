@@ -7,10 +7,11 @@ struct NotificationReport: Sendable {
     var coverageEnd: Date?
     var authorizationDescription: String = "尚未开启"
     var errors: [String] = []
+    var timeZone: TimeZone = .current
     var summary: String {
         if let error = errors.first { return "\(authorizationDescription) · \(error)" }
         guard scheduledCount > 0 else { return "\(authorizationDescription) · 暂无待提醒课程" }
-        return "已安排 \(scheduledCount) 条提醒" + (coverageEnd.map { "，覆盖至 " + $0.formatted(date: .abbreviated, time: .shortened) } ?? "")
+        return "已安排 \(scheduledCount) 条提醒" + (coverageEnd.map { "，覆盖至 " + Display.format($0, style: .dateTime.month().day().hour().minute(), zone: timeZone.identifier) } ?? "")
     }
 }
 
@@ -27,8 +28,9 @@ actor NotificationService {
         catch { return false }
     }
 
+    /// `timeZone` is the school's zone, so reminder text matches the times shown in the app.
     func refresh(occurrences: [Occurrence], defaultLeadMinutes: Int,
-                 calendarCoveredIDs: Set<String>, allowDuplicates: Bool) async -> NotificationReport {
+                 calendarCoveredIDs: Set<String>, allowDuplicates: Bool, timeZone: TimeZone = .current) async -> NotificationReport {
         // UNUserNotificationCenter calls suspend the actor. Serialize reconciliation so
         // an older add cannot land after a newer refresh removed that reminder.
         await acquireRefresh()
@@ -78,7 +80,7 @@ actor NotificationService {
             }
             let content = UNMutableNotificationContent()
             content.title = occurrence.courseName
-            content.body = notificationBody(for: occurrence)
+            content.body = notificationBody(for: occurrence, timeZone: timeZone)
             content.sound = .default
             content.threadIdentifier = "courseflow.classes"
             content.userInfo = ["occurrenceID": occurrence.id, "courseID": occurrence.courseID.uuidString,
@@ -104,7 +106,7 @@ actor NotificationService {
                   !trigger.repeats, let actualFireDate = trigger.nextTriggerDate(),
                   abs(actualFireDate.timeIntervalSince(fireDate)) < 1,
                   request.content.title == occurrence.courseName,
-                  request.content.body == notificationBody(for: occurrence),
+                  request.content.body == notificationBody(for: occurrence, timeZone: timeZone),
                   request.content.sound != nil else { return nil }
             return id
         })
@@ -121,15 +123,15 @@ actor NotificationService {
             coverageEnd = item.0.start
         }
         return NotificationReport(scheduledCount: accepted.count, coverageEnd: coverageEnd,
-                                  authorizationDescription: description, errors: errors)
+                                  authorizationDescription: description, errors: errors, timeZone: timeZone)
     }
 
     private func identifier(for occurrenceID: String, lead: Int) -> String {
         prefix + occurrenceID + "." + String(lead)
     }
 
-    private func notificationBody(for occurrence: Occurrence) -> String {
-        let time = occurrence.start.formatted(date: .omitted, time: .shortened)
+    private func notificationBody(for occurrence: Occurrence, timeZone: TimeZone) -> String {
+        let time = Display.time(occurrence.start, zone: timeZone.identifier)
         return "\(time) 上课 · \(occurrence.location.isEmpty ? "地点待补充" : occurrence.location)"
     }
 
