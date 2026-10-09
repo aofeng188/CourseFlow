@@ -17,90 +17,92 @@ struct SettingsView: View {
     @State private var deletingSemester = false
     @State private var deletingSemesterHasCalendar = false
     @State private var confirmCalendarTakeover = false
+    private var version: String { "\(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0") (\(Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "2"))" }
     var body: some View {
         @Bindable var store = store
         Form {
             Section {
                 HStack(spacing: 15) {
-                    Image(systemName: "calendar").font(.title.weight(.light)).foregroundStyle(Palette.accent).frame(width: 54, height: 54).background(Palette.accent.opacity(0.1), in: .rect(cornerRadius: 16))
-                    VStack(alignment: .leading, spacing: 3) { Text("课序").font(.title2.bold()); Text("把每一周，安排得刚刚好。").font(.caption).foregroundStyle(.secondary) }
-                }.padding(.vertical, 7)
+                    BrandMark(size: 60)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("课序").font(.title2.bold())
+                        Text("把每一周，安排得刚刚好。").font(.subheadline).foregroundStyle(.secondary)
+                    }
+                }.padding(.vertical, 6)
             }
             if BuildFeatures.isTrial {
                 Section {
-                    Label("个人试用版", systemImage: "iphone.badge.checkmark")
-                    Text("课程、导入、提醒和日历可正常试用。此版本不包含 iCloud、小组件与实况活动，课表保存在本机，可通过文件备份迁移。")
-                        .font(.footnote).foregroundStyle(.secondary)
-                }
+                    SettingsLabel(title: "个人试用版", systemImage: "iphone", color: .gray)
+                } footer: { Text("课程、导入、提醒和日历可正常试用。此版本不包含 iCloud、小组件与实况活动，课表保存在本机，可通过文件备份迁移。") }
             }
-            Section("学期与作息") {
+            Section {
                 if !store.snapshot.semesters.isEmpty {
-                    Picker("当前学期", selection: Binding(get: { store.semester?.id }, set: { store.selectedSemesterID = $0 })) {
+                    Picker(selection: Binding(get: { store.semester?.id }, set: { store.selectedSemesterID = $0 })) {
                         ForEach(store.snapshot.semesters.sorted { $0.firstMonday > $1.firstMonday }) { semester in Text(semester.name).tag(Optional(semester.id)) }
-                    }
+                    } label: { SettingsLabel(title: "当前学期", systemImage: "graduationcap.fill", color: Palette.solid(0)) }
                 }
                 if let semester = store.semester {
-                    Button { sheet = .semester(semester) } label: { Label("学期设置", systemImage: "calendar.badge.clock") }
+                    Button { sheet = .semester(semester) } label: { SettingsLabel(title: "学期设置", systemImage: "calendar", color: Palette.solid(1), value: "\(semester.weekCount) 周", showsChevron: true) }
                     ForEach(store.bells) { value in
-                        Button { sheet = .bells(value) } label: {
-                            HStack { Label(value.name, systemImage: "clock"); Spacer(); Text("\(value.periods.count) 节").foregroundStyle(.secondary) }
-                        }
+                        Button { sheet = .bells(value) } label: { SettingsLabel(title: value.name, systemImage: "clock.fill", color: Palette.solid(2), value: "\(value.periods.count) 节", showsChevron: true) }
                     }
-                    Button("添加作息方案", systemImage: "clock.badge") { sheet = .bells(nil) }
-                    NavigationLink("官方假期与学校调休") { HolidaySettingsView(semester: semester) }
-                    Button("学校调休 / 整日换课", systemImage: "arrow.left.arrow.right") { sheet = .reschedule }
+                    NavigationLink { HolidaySettingsView(semester: semester) } label: { SettingsLabel(title: "节假日与调休", systemImage: "flag.fill", color: Palette.solid(4)) }
+                    let overrides = store.snapshot.dayOverrides.filter { $0.semesterID == semester.id }.count
+                    Button { sheet = .reschedule } label: { SettingsLabel(title: "整日换课", systemImage: "arrow.left.arrow.right", color: Palette.solid(3), value: overrides > 0 ? "\(overrides) 天" : nil, showsChevron: true) }
+                    actionRow("添加作息方案") { sheet = .bells(nil) }
                 }
-                Button("添加新学期", systemImage: "plus") { sheet = .semester(nil) }
-            }
+                actionRow("添加新学期") { sheet = .semester(nil) }
+            } header: { Text("学期与作息") } footer: { if store.semester != nil { Text("「节假日与调休」跟随官方放假安排；「整日换课」用于学校临时让某天按另一天的课表上课。") } }
             Section {
-                Toggle("上课提醒", isOn: Binding(get: { store.preferences.notificationsEnabled }, set: { enabled in
+                Toggle(isOn: Binding(get: { store.preferences.notificationsEnabled }, set: { enabled in
                     if enabled { Task { if await NotificationService.shared.requestAuthorization() { store.preferences.notificationsEnabled = true } else { store.errorMessage = "通知权限未开启，请到系统设置中允许课序发送通知。" } } }
                     else { store.preferences.notificationsEnabled = false }
-                }))
-                Picker("默认提前", selection: $store.preferences.reminderMinutes) {
+                })) { SettingsLabel(title: "上课提醒", systemImage: "bell.fill", color: Palette.now) }
+                Picker(selection: $store.preferences.reminderMinutes) {
                     ForEach([0, 5, 10, 15, 20, 30, 60], id: \.self) { value in Text(value == 0 ? "上课时" : "\(value) 分钟").tag(value) }
-                }
-                Text(store.notificationSummary).font(.caption).foregroundStyle(.secondary)
-                if store.semester != nil { Button("添加到日历与同步", systemImage: "calendar.badge.plus") { sheet = .calendar } }
+                } label: { SettingsLabel(title: "默认提前", systemImage: "timer", color: Palette.solid(2)) }
+                if store.semester != nil { Button { sheet = .calendar } label: { SettingsLabel(title: "系统日历", systemImage: "calendar.badge.plus", color: Palette.solid(1), showsChevron: true) } }
                 if let semester = store.semester, let owner = semester.calendarOwnerDeviceID {
                     if owner == CalendarSyncService.shared.deviceIdentifier {
-                        Button("暂停本设备日历自动同步") { store.apply("暂停日历同步") { data in if let index = data.semesters.firstIndex(where: { $0.id == semester.id }) { data.semesters[index].calendarOwnerDeviceID = nil } } }
-                    } else { Button("在本设备接管日历同步") { confirmCalendarTakeover = true } }
+                        actionRow("暂停本设备日历自动同步", systemImage: "pause.circle") { store.apply("暂停日历同步") { data in if let index = data.semesters.firstIndex(where: { $0.id == semester.id }) { data.semesters[index].calendarOwnerDeviceID = nil } } }
+                    } else { actionRow("在本设备接管日历同步", systemImage: "arrow.triangle.2.circlepath") { confirmCalendarTakeover = true } }
                 }
-                Toggle("同时使用 App 和日历提醒", isOn: $store.preferences.duplicateReminders)
-            } header: { Text("提醒与日历") } footer: { Text("连堂课默认只提醒一次。App 安排最近的课程提醒并显示覆盖日期；整学期提醒可交给系统日历。专注模式等系统设置可能影响提醒呈现。") }
-            if !BuildFeatures.isTrial { Section {
-                Toggle("课程实况活动", isOn: $store.preferences.activitiesEnabled)
-                Text("在锁屏和灵动岛查看当前课程，或预约下一场课。预约启动时系统会发出提醒。").font(.caption).foregroundStyle(.secondary)
-                Label("桌面与锁屏小组件", systemImage: "rectangle.3.group")
-                Text("长按主屏幕或锁屏，添加“课序”小组件。小组件会使用当前选择的学期。").font(.caption).foregroundStyle(.secondary)
-            } header: { Text("随时看一眼") } footer: { Text("实况活动默认关闭，每次仅维护当前或下一场课。系统限制活动数量和后台执行，不保证整学期连续自动启动。") } }
-            Section("显示") { Toggle("隐藏没有课的周末", isOn: $store.preferences.hideEmptyWeekends) }
+                Toggle(isOn: $store.preferences.duplicateReminders) { SettingsLabel(title: "同时使用 App 和日历提醒", systemImage: "bell.badge.fill", color: .gray) }
+            } header: { Text("提醒与日历") } footer: { Text("\(store.notificationSummary)。连堂课只提醒一次；需要整学期提醒时，可交给系统日历。") }
+            if !BuildFeatures.isTrial {
+                Section {
+                    Toggle(isOn: $store.preferences.activitiesEnabled) { SettingsLabel(title: "课程实况活动", systemImage: "dot.radiowaves.left.and.right", color: Palette.solid(6)) }
+                } header: { Text("锁屏与灵动岛") } footer: { Text("在锁屏和灵动岛查看当前课程，或预约下一场课，预约启动时系统会提示。长按主屏幕或锁屏，可添加「课序」小组件。") }
+            }
+            Section("显示") {
+                Toggle(isOn: $store.preferences.hideEmptyWeekends) { SettingsLabel(title: "隐藏没有课的周末", systemImage: "calendar.day.timeline.left", color: Palette.solid(5)) }
+            }
             Section {
-                Button("识别增强设置", systemImage: "sparkles") { sheet = .cloud }
+                Button { sheet = .cloud } label: { SettingsLabel(title: "识别增强", systemImage: "sparkles", color: Palette.solid(3), showsChevron: true) }
                 if !BuildFeatures.isTrial {
-                    HStack { Label("iCloud 课表同步", systemImage: "icloud"); Spacer(); Text(store.persistence.cloudEnabled ? "已配置" : "待配置签名").font(.caption).foregroundStyle(.secondary) }
-                    Text(store.persistence.cloudEnabled ? "学期、课程和作息同步到同一 Apple 账户，离线修改会在联网后合并。" : "当前开发构建使用本地资料。配置开发者账户与 CloudKit 容器后，可启用 iCloud 同步。").font(.caption).foregroundStyle(.secondary)
+                    SettingsLabel(title: "iCloud 同步", systemImage: "icloud.fill", color: Palette.solid(1), value: store.persistence.cloudEnabled ? "已开启" : "未配置")
                 }
-                Button("导出完整备份", systemImage: "square.and.arrow.up") { exportBackup() }
-                Button("从备份恢复", systemImage: "arrow.counterclockwise.icloud") { showRestore = true }
-                if let semester = store.semester { Button("导出学期日历文件 (.ics)", systemImage: "calendar") { exportICS(semester) } }
-                if let label = store.undoLabel { Button("撤销“\(label)”", systemImage: "arrow.uturn.backward") { store.undo() } }
-            } header: { Text("识别与数据") } footer: { Text("备份不包含 API Key、设备提醒记录或原始识别图片。恢复前会自动保存当前资料。") }
+                Button { exportBackup() } label: { SettingsLabel(title: "导出完整备份", systemImage: "square.and.arrow.up", color: Palette.solid(5)) }
+                Button { showRestore = true } label: { SettingsLabel(title: "从备份恢复", systemImage: "arrow.counterclockwise", color: Palette.solid(2)) }
+                if let semester = store.semester { Button { exportICS(semester) } label: { SettingsLabel(title: "导出学期日历 (.ics)", systemImage: "calendar", color: Palette.now) } }
+                if let label = store.undoLabel { actionRow("撤销“\(label)”", systemImage: "arrow.uturn.backward") { store.undo() } }
+            } header: { Text("识别与数据") } footer: {
+                Text((BuildFeatures.isTrial ? "" : (store.persistence.cloudEnabled ? "学期、课程和作息同步到同一 Apple 账户。" : "配置开发者账户与 CloudKit 容器后，可启用 iCloud 同步。")) + "备份不含 API Key、设备提醒记录或识别原图；恢复前会自动保存当前资料。")
+            }
             if let semester = store.semester {
                 Section {
-                    Button("删除“\(semester.name)”", role: .destructive) {
+                    Button(role: .destructive) {
                         Task {
                             deletingSemesterHasCalendar = await CalendarSyncService.shared.hasExport(for: semester)
                             deletingSemester = true
                         }
-                    }
+                    } label: { Text("删除“\(semester.name)”").frame(maxWidth: .infinity) }
                 }
             }
             Section {
-                NavigationLink("隐私与数据说明") { PrivacyView() }
-                LabeledContent("版本", value: "\(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0") (\(Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "2"))")
-            }
+                NavigationLink { PrivacyView() } label: { SettingsLabel(title: "隐私与数据说明", systemImage: "hand.raised.fill", color: Palette.solid(1)) }
+                SettingsLabel(title: "版本", systemImage: "info", color: .gray, value: version)
+            } footer: { Text("课序 · 无广告，无追踪，课表属于你。").frame(maxWidth: .infinity).padding(.top, 8) }
         }.navigationTitle("设置")
         .sheet(item: $sheet) { value in
             switch value {
@@ -142,6 +144,15 @@ struct SettingsView: View {
                 }
             }
         } message: { Text("请先在原设备暂停日历自动同步。本设备将按课程标识查找已有事件，展示差异后再同步。其他设备需联网获取新的负责设备信息。") }
+    }
+    /// An add or one-off action: tinted text aligned with the titles of the icon rows above it.
+    private func actionRow(_ title: String, systemImage: String = "plus", action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack(spacing: 12) {
+                Image(systemName: systemImage).font(.body.weight(.semibold)).frame(width: 29).accessibilityHidden(true)
+                Text(title)
+            }
+        }
     }
     private func exportBackup() { do { let url = FileManager.default.temporaryDirectory.appendingPathComponent("课序备份-\(Int(Date.now.timeIntervalSince1970)).courseflow"); try BackupCodec.encode(store.snapshot).write(to: url, options: .atomic); shareFile = SharedFile(url: url) } catch { store.errorMessage = error.localizedDescription } }
     private func exportICS(_ semester: Semester) { do { let url = FileManager.default.temporaryDirectory.appendingPathComponent("课序-学期日历.ics"); try ICSExporter.export(occurrences: store.occurrences, semester: semester, defaultLeadMinutes: store.preferences.reminderMinutes).write(to: url, atomically: true, encoding: .utf8); shareFile = SharedFile(url: url) } catch { store.errorMessage = error.localizedDescription } }

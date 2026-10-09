@@ -78,9 +78,10 @@ struct CourseEditor: View {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 28), spacing: 12)], spacing: 4) {
                 ForEach(Palette.colors.indices, id: \.self) { index in
                     Button { course.colorIndex = index } label: {
-                        Circle().fill(Palette.color(index)).frame(width: 28, height: 28)
-                            .overlay { if course.colorIndex == index { Image(systemName: "checkmark").font(.caption.bold()).foregroundStyle(Color(.systemBackground)) } }
-                            .padding(.vertical, 6)
+                        Circle().fill(Palette.solid(index).gradient).frame(width: 28, height: 28)
+                            .overlay { if course.colorIndex == index { Image(systemName: "checkmark").font(.caption.bold()).foregroundStyle(.white) } }
+                            .overlay { if course.colorIndex == index { Circle().strokeBorder(Palette.solid(index), lineWidth: 2).padding(-4) } }
+                            .padding(.vertical, 8)
                     }.buttonStyle(.plain).accessibilityLabel("课程颜色 \(index + 1)")
                         .accessibilityAddTraits(course.colorIndex == index ? .isSelected : [])
                 }

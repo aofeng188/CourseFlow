@@ -7,7 +7,7 @@ struct WeekCoursesWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: WeekCourseProvider()) { entry in
             WeekCoursesView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
+                .containerBackground(for: .widget) { WidgetBackground(color: Palette.accent) }
                 .widgetURL(URL(string: "courseflow://today"))
         }
         .configurationDisplayName("本周课表")
@@ -81,12 +81,23 @@ private struct WeekGridContent: View {
         let parts = calendar.dateComponents([.hour, .minute], from: value)
         return (parts.hour ?? 0) * 60 + (parts.minute ?? 0)
     }
-    private var range: ClosedRange<Int> {
-        let starts = lessons.map { minute($0.start) }
-        let ends = lessons.map { calendar.isDate($0.start, inSameDayAs: $0.end) ? minute($0.end) : 1440 }
-        let low = (starts.min() ?? 480) / 60 * 60
-        let high = min(1440, ((ends.max() ?? 1080) + 59) / 60 * 60)
-        return low...max(high, low + 60)
+    private func span(_ lesson: Occurrence) -> Range<Int> {
+        let start = minute(lesson.start)
+        let end = calendar.isDate(lesson.start, inSameDayAs: lesson.end) ? minute(lesson.end) : 1440
+        return start..<max(end, start + 1)
+    }
+    /// The widget has no bell schedule, so the periods come from this week's lesson segments;
+    /// breaks then collapse the same way as in the app's week grid.
+    private var scale: TimelineScale {
+        var periods: [Int: Period] = [:]
+        for lesson in lessons {
+            for segment in lesson.segments {
+                if let number = segment.periodNumber, periods[number] == nil {
+                    periods[number] = Period(number: number, startMinute: minute(segment.start), endMinute: minute(segment.end))
+                }
+            }
+        }
+        return TimelineScale(periods: Array(periods.values), lessons: lessons.map(span), metrics: .init(periodHeight: 10, gapHeight: 0.6, longBreakHeight: 3, longBreakMinutes: 30))
     }
 
     var body: some View {
@@ -107,7 +118,7 @@ private struct WeekGridContent: View {
 
     private var header: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text("第 \(week) 周").font(.system(.headline, design: .rounded))
+            Text("第 \(week) 周").font(.system(.headline, design: .rounded)).foregroundStyle(Palette.accent)
             Text("\(day(date(1)))–\(day(date(7)))").font(.caption).foregroundStyle(.secondary)
             Spacer()
             Text(notStarted ? "即将开学" : "\(lessons.count) 节课").font(.caption.weight(.medium)).foregroundStyle(.secondary)
@@ -125,8 +136,8 @@ private struct WeekGridContent: View {
                     Text("\(calendar.component(.day, from: date(weekday)))").font(.system(size: 11, weight: today ? .bold : .regular, design: .rounded))
                 }
                 .frame(maxWidth: .infinity).padding(.vertical, 3)
-                .foregroundStyle(today ? Palette.accent : .secondary)
-                .background(today ? Palette.accent.opacity(0.14) : .clear, in: .rect(cornerRadius: 7))
+                .foregroundStyle(today ? Color.white : .secondary)
+                .background(today ? AnyShapeStyle(Palette.accentSolid.gradient) : AnyShapeStyle(.clear), in: .rect(cornerRadius: 7, style: .continuous))
                 .padding(.horizontal, 1)
             }
         }
@@ -134,14 +145,26 @@ private struct WeekGridContent: View {
 
     private var grid: some View {
         GeometryReader { geometry in
+            let scale = scale
             let columns = CGFloat(weekdays.count)
             let column = (geometry.size.width - labelWidth) / columns
-            let scale = geometry.size.height / CGFloat(range.upperBound - range.lowerBound)
+            let factor = geometry.size.height / CGFloat(max(1, scale.height))
             ZStack(alignment: .topLeading) {
-                ForEach(Array(stride(from: range.lowerBound, to: range.upperBound, by: 120)), id: \.self) { hourMinute in
-                    let y = CGFloat(hourMinute - range.lowerBound) * scale
-                    Text(Period.clock(hourMinute)).font(.system(size: 8)).foregroundStyle(.tertiary).offset(y: y - 1)
-                    Rectangle().fill(Color.primary.opacity(0.06)).frame(width: geometry.size.width - labelWidth, height: 0.5).offset(x: labelWidth, y: y)
+                ForEach(Array(scale.segments.enumerated()), id: \.offset) { _, segment in
+                    let y = CGFloat(segment.y) * factor
+                    switch segment.kind {
+                    case .period(let number):
+                        Text("\(number)").font(.system(size: 9, weight: .medium, design: .rounded)).foregroundStyle(.tertiary)
+                            .frame(width: labelWidth - 4, height: CGFloat(segment.height) * factor)
+                            .offset(y: y)
+                    case .hour:
+                        Text(Period.clock(segment.startMinute)).font(.system(size: 8)).foregroundStyle(.tertiary).offset(y: y - 1)
+                    case .longBreak:
+                        Rectangle().fill(Color.primary.opacity(0.07)).frame(width: geometry.size.width - labelWidth, height: 0.5)
+                            .offset(x: labelWidth, y: y + CGFloat(segment.height) * factor / 2)
+                    case .gap, .open:
+                        EmptyView()
+                    }
                 }
                 ForEach(Array(weekdays.enumerated()), id: \.element) { index, weekday in
                     let dayLessons = lessons.filter { calendar.isDate($0.start, inSameDayAs: date(weekday)) }
@@ -149,12 +172,12 @@ private struct WeekGridContent: View {
                     ForEach(dayLessons) { lesson in
                         let placement = placements[lesson.id] ?? LanePlacement(lane: 0, laneCount: 1)
                         let width = column / CGFloat(max(1, placement.laneCount))
-                        let endMinute = calendar.isDate(lesson.start, inSameDayAs: lesson.end) ? minute(lesson.end) : 1440
-                        let height = max(14, CGFloat(endMinute - minute(lesson.start)) * scale - 2)
+                        let range = span(lesson)
+                        let top = CGFloat(scale.y(at: range.lowerBound)) * factor
+                        let height = max(14, CGFloat(scale.y(at: range.upperBound)) * factor - top - 2)
                         block(lesson, height: height)
                             .frame(width: max(8, width - 2), height: height, alignment: .topLeading)
-                            .offset(x: labelWidth + CGFloat(index) * column + CGFloat(placement.lane) * width + 1,
-                                    y: CGFloat(minute(lesson.start) - range.lowerBound) * scale + 1)
+                            .offset(x: labelWidth + CGFloat(index) * column + CGFloat(placement.lane) * width + 1, y: top + 1)
                     }
                 }
             }
@@ -162,15 +185,22 @@ private struct WeekGridContent: View {
     }
 
     private func block(_ lesson: Occurrence, height: CGFloat) -> some View {
+        let live = lesson.start <= entry.date && entry.date < lesson.end
         let color = Palette.color(lesson.colorIndex)
         return VStack(alignment: .leading, spacing: 1) {
             Text(lesson.courseName).font(.system(size: 10, weight: .semibold)).lineLimit(height > 64 ? 3 : (height > 30 ? 2 : 1))
-            if height > 36 && !lesson.location.isEmpty { Text(lesson.location).font(.system(size: 8)).lineLimit(1).opacity(0.8) }
+            if height > 36 && !lesson.location.isEmpty { Text(lesson.location).font(.system(size: 8)).lineLimit(1).opacity(0.85) }
         }
-        .foregroundStyle(color)
-        .padding(.horizontal, 3).padding(.vertical, 2)
+        .foregroundStyle(live ? Color.white : color)
+        .padding(.leading, live ? 3 : 5).padding(.trailing, 2).padding(.vertical, 3)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(color.opacity(0.15), in: .rect(cornerRadius: 5))
+        .background {
+            if live { RoundedRectangle(cornerRadius: 6, style: .continuous).fill(Palette.solid(lesson.colorIndex)) }
+            else {
+                RoundedRectangle(cornerRadius: 6, style: .continuous).fill(Palette.fill(lesson.colorIndex))
+                    .overlay(alignment: .leading) { Capsule().fill(color).frame(width: 2).padding(.vertical, 3).padding(.leading, 1.5) }
+            }
+        }
         .opacity(lesson.end <= entry.date ? 0.5 : 1)
     }
 

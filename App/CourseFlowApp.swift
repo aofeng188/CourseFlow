@@ -65,7 +65,7 @@ struct RootView: View {
                         .toolbar { ToolbarItem(placement: .topBarTrailing) { addMenu } }
                 }
             }
-            Tab("设置", systemImage: "slider.horizontal.3", value: 2) {
+            Tab("设置", systemImage: "gearshape", value: 2) {
                 NavigationStack { SettingsView() }
             }
         }

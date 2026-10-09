@@ -25,43 +25,46 @@ enum ScheduleTime {
     }
 }
 
+/// "现在 10:20" with a rule, for the agenda list and for times outside the week grid.
 struct NowMarker: View {
     let now: Date
     let semester: Semester
     var note: String? = nil
     var body: some View {
-        HStack(spacing: 8) {
-            Circle().fill(.red).frame(width: 7, height: 7)
-            Text("现在 \(Display.time(now, zone: semester.timeZoneID))").font(.caption.weight(.semibold)).monospacedDigit().fixedSize()
-            Rectangle().fill(.red.opacity(0.55)).frame(height: 1)
-        }.foregroundStyle(.red)
-            .overlay(alignment: .bottomLeading) {
-                if let note { Text(note).font(.caption2).foregroundStyle(.secondary).offset(y: 17) }
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(spacing: 8) {
+                Text("现在 \(Display.time(now, zone: semester.timeZoneID))").font(.caption.weight(.semibold)).monospacedDigit().fixedSize()
+                    .foregroundStyle(.white).padding(.horizontal, 8).padding(.vertical, 3).background(Palette.now, in: .capsule)
+                Capsule().fill(Palette.now.opacity(0.6)).frame(height: 1.5)
             }
-            .padding(.vertical, note == nil ? 8 : 18)
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel("现在，\(Display.time(now, zone: semester.timeZoneID))，\(note ?? "")")
-            .accessibilityIdentifier("now-marker")
+            if let note { Text(note).font(.caption2).foregroundStyle(.secondary).padding(.leading, 2) }
+        }
+        .padding(.vertical, 6)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("现在，\(Display.time(now, zone: semester.timeZoneID))，\(note ?? "")")
+        .accessibilityIdentifier("now-marker")
     }
 }
 
+/// The current time across the week grid: faint in other days, solid in today's column.
+/// The matching period number on the time axis turns the same color, so no label is drawn over it.
 struct GridNowLine: View {
     let now: Date
     let semester: Semester
+    let axis: CGFloat
     let column: CGFloat
     let todayIndex: Int
     let width: CGFloat
     var body: some View {
+        let left = axis + CGFloat(todayIndex) * column
         ZStack(alignment: .topLeading) {
-            Path { p in p.move(to: CGPoint(x: 34, y: 0)); p.addLine(to: CGPoint(x: width, y: 0)) }
-                .stroke(.red.opacity(0.35), style: StrokeStyle(lineWidth: 1, dash: [4, 4]))
-            Rectangle().fill(.red).frame(width: column, height: 1.5).offset(x: 34 + CGFloat(todayIndex) * column, y: -0.75)
-            Circle().fill(.red).frame(width: 6, height: 6).offset(x: 31 + CGFloat(todayIndex) * column, y: -3)
-            Text("现在\n\(Display.time(now, zone: semester.timeZoneID))")
-                .font(.system(size: 9, weight: .semibold)).monospacedDigit().multilineTextAlignment(.center)
-                .foregroundStyle(.red).padding(.vertical, 2).frame(width: 32).fixedSize(horizontal: false, vertical: true)
-                .background(Color(.secondarySystemGroupedBackground), in: .rect(cornerRadius: 4)).offset(y: -13)
-        }.frame(width: width, height: 1).allowsHitTesting(false)
+            Path { p in p.move(to: CGPoint(x: axis, y: 0)); p.addLine(to: CGPoint(x: width, y: 0)) }
+                .stroke(Palette.now.opacity(0.35), style: StrokeStyle(lineWidth: 1, dash: [3, 4]))
+            Capsule().fill(Palette.now).frame(width: column, height: 2).offset(x: left, y: -1)
+            Circle().fill(Palette.now).frame(width: 9, height: 9)
+                .overlay(Circle().strokeBorder(Color(.secondarySystemGroupedBackground), lineWidth: 1.5))
+                .offset(x: left - 4.5, y: -4.5)
+        }.frame(width: width, height: 1, alignment: .topLeading).allowsHitTesting(false)
             .accessibilityElement(children: .ignore).accessibilityLabel("现在，\(Display.time(now, zone: semester.timeZoneID))")
             .accessibilityIdentifier("grid-now-line")
     }
@@ -88,32 +91,40 @@ struct AgendaView: View {
                 let pending = pendingMakeupKeys.contains(key)
                 if !events.isEmpty || today || holiday != nil {
                     VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Text("\(Display.weekdays[day - 1]) · \(Display.day(date, in: semester))\(today ? " · 今天" : "")").font(.subheadline.weight(.semibold)).foregroundStyle(today ? Palette.accent : .secondary)
-                            if let holiday { Text(holiday.kind == .makeup ? "调休" : holiday.name).font(.caption).foregroundStyle(.secondary) }
-                        }
+                        HStack(spacing: 8) {
+                            Text(Display.weekdays[day - 1]).font(.subheadline.weight(.semibold)).foregroundStyle(today ? Palette.accent : .primary)
+                            Text(Display.day(date, in: semester)).font(.subheadline).monospacedDigit().foregroundStyle(.secondary)
+                            if today { Text("今天").font(.caption2.weight(.bold)).foregroundStyle(.white).padding(.horizontal, 7).padding(.vertical, 2).background(Palette.accentSolid, in: .capsule) }
+                            if let holiday { Text(holiday.kind == .makeup ? "调休" : holiday.name).font(.caption2.weight(.medium)).foregroundStyle(holiday.kind == .makeup ? Color.secondary : Palette.now).padding(.horizontal, 7).padding(.vertical, 2).background((holiday.kind == .makeup ? Color.secondary : Palette.now).opacity(0.12), in: .capsule) }
+                            Spacer(minLength: 0)
+                            if !events.isEmpty { Text("\(events.count) 次课").font(.caption).foregroundStyle(.tertiary) }
+                        }.padding(.horizontal, 4)
                         VStack(spacing: 0) {
                             if pending { Label("调休课程待定 · 原课表待核对", systemImage: "calendar.badge.questionmark").font(.caption.weight(.semibold)).foregroundStyle(.orange).frame(maxWidth: .infinity, alignment: .leading).padding(.vertical, 10) }
                             let insertion = ScheduleTime.insertionIndex(events, now: now)
                             ForEach(Array(events.enumerated()), id: \.element.id) { index, event in
                                 if today && index == insertion { NowMarker(now: now, semester: semester) }
+                                let status = ScheduleTime.status(event, now: today ? now : nil)
                                 Button { onCourse(event) } label: {
                                     VStack(alignment: .leading, spacing: 2) {
                                         CourseRow(occurrence: event, timeZoneID: semester.timeZoneID)
-                                        HStack {
-                                            if let status = ScheduleTime.status(event, now: today ? now : nil) { Text(status).foregroundStyle(Palette.color(event.colorIndex)) }
-                                            if pending { Text("待核对").foregroundStyle(.orange) }
-                                        }.font(.caption.weight(.semibold)).padding(.bottom, 5)
+                                        if status != nil || pending {
+                                            HStack {
+                                                if let status { Text(status).foregroundStyle(Palette.color(event.colorIndex)) }
+                                                if pending { Text("待核对").foregroundStyle(.orange) }
+                                            }.font(.caption.weight(.semibold)).padding(.bottom, 6)
+                                        }
                                     }.frame(maxWidth: .infinity, alignment: .leading)
                                         .padding(.horizontal, 8)
-                                        .background(ScheduleTime.status(event, now: today ? now : nil) != nil ? Palette.color(event.colorIndex).opacity(0.08) : .clear, in: .rect(cornerRadius: 12))
+                                        .background(status != nil ? Palette.fill(event.colorIndex) : .clear, in: .rect(cornerRadius: Theme.innerRadius, style: .continuous))
+                                        .opacity(today && event.end <= now ? 0.55 : 1)
                                 }.buttonStyle(.plain)
-                                if index < events.count - 1 { Divider() }
+                                if index < events.count - 1 { Divider().padding(.leading, 70) }
                             }
                             if today && insertion == events.count { NowMarker(now: now, semester: semester) }
                             if events.isEmpty { Text(pending ? "有课待定，确认后显示学校课程" : (today ? "今天没有课程" : "当天没有课程")).font(.subheadline).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading).padding(.vertical, 12) }
                         }.padding(.horizontal, 12).padding(.vertical, 6)
-                            .background(Color(.secondarySystemGroupedBackground), in: .rect(cornerRadius: 20))
+                            .cardBackground()
                     }
                 }
             }

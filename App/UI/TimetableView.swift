@@ -26,23 +26,26 @@ struct TimetableView: View {
         Group {
             if let semester = store.semester {
                 TimelineView(.everyMinute) { context in
-                let now = PreviewClock.now(scenePhase == .active ? .now : context.date)
-                ScrollView {
-                    VStack(spacing: 22) {
-                        semesterHeading(semester, now: now)
-                        HolidayBanner(semester: semester, now: now) { holidaySheet = $0 }
-                        CurrentCourseCard(occurrences: store.occurrences, semester: semester, pendingMakeup: pendingMakeup(on: now, semester: semester), onCourse: onCourse)
-                        weekControls(semester)
-                        if listMode || typeSize.isAccessibilitySize { agenda(semester, now: now) }
-                        else { WeekGrid(semester: semester, week: week, occurrences: weekEvents, bells: store.bells, hideEmptyWeekends: store.preferences.hideEmptyWeekends, now: now, holidayDays: semester.holidayHintsEnabled == false ? [] : store.holidays.days(for: semester), pendingMakeupKeys: pendingKeys(semester), onCourse: onCourse) }
-                        Text("\(semester.name) · 学校时间 \(semester.timeZoneID)").font(.caption2).foregroundStyle(.tertiary).padding(.bottom, 20)
-                    }.padding(.horizontal, 16).padding(.top, 8)
-                }
-                .background(Color(.systemGroupedBackground))
-                .simultaneousGesture(DragGesture(minimumDistance: 40).onEnded { value in
-                    if abs(value.translation.width) > abs(value.translation.height) * 1.8 { changeWeek(value.translation.width < 0 ? 1 : -1, semester: semester) }
-                })
-                .onChange(of: currentWeek(semester, at: now)) { followCurrentWeek() }
+                    let now = PreviewClock.now(scenePhase == .active ? .now : context.date)
+                    ScrollView {
+                        VStack(spacing: 16) {
+                            HolidayBanner(semester: semester, now: now) { holidaySheet = $0 }
+                            CurrentCourseCard(occurrences: store.occurrences, semester: semester, pendingMakeup: pendingMakeup(on: now, semester: semester), onCourse: onCourse)
+                            weekControls(semester)
+                            if listMode || typeSize.isAccessibilitySize { agenda(semester, now: now) }
+                            else { WeekGrid(semester: semester, week: week, occurrences: weekEvents, bells: store.bells, hideEmptyWeekends: store.preferences.hideEmptyWeekends, now: now, holidayDays: semester.holidayHintsEnabled == false ? [] : store.holidays.days(for: semester), pendingMakeupKeys: pendingKeys(semester), onCourse: onCourse) }
+                            if semester.timeZoneID != TimeZone.current.identifier {
+                                Label("按学校时间显示 · \(TimeZonePicker.title(for: semester.timeZoneID))", systemImage: "globe.asia.australia").font(.caption2).foregroundStyle(.tertiary)
+                            }
+                        }.padding(.horizontal, 16).padding(.top, 4).padding(.bottom, 24)
+                    }
+                    .background(Color(.systemGroupedBackground))
+                    .simultaneousGesture(DragGesture(minimumDistance: 40).onEnded { value in
+                        if abs(value.translation.width) > abs(value.translation.height) * 1.8 { changeWeek(value.translation.width < 0 ? 1 : -1, semester: semester) }
+                    })
+                    .onChange(of: currentWeek(semester, at: now)) { followCurrentWeek() }
+                    .navigationTitle(Display.format(now, style: .dateTime.month(.wide).day().weekday(.wide), zone: semester.timeZoneID))
+                    .navigationSubtitle(subtitle(semester, now: now))
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
@@ -54,41 +57,21 @@ struct TimetableView: View {
                         } label: { Image(systemName: "ellipsis").accessibilityLabel("课表显示与分享") }
                     }
                 }
-            } else { welcome }
+            } else { welcome.navigationTitle("课序") }
         }
-        .navigationTitle("课序")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(store.semester == nil ? .inline : .large)
         .onAppear { if syncedCurrentWeek == nil { resetWeek() } else { followCurrentWeek() }; if ProcessInfo.processInfo.arguments.contains("--uitesting") && ProcessInfo.processInfo.arguments.contains("--preview-agenda") { listMode = true } }
         .onChange(of: store.semester?.id) { resetWeek() }
         .onChange(of: scenePhase) { _, phase in if phase == .active { followCurrentWeek() } }
-        .sheet(isPresented: $showWeeks) {
-            if let semester = store.semester {
-                NavigationStack {
-                    ScrollView {
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 84))], spacing: 12) {
-                            ForEach(1...semester.weekCount, id: \.self) { value in
-                                Button { week = value; showWeeks = false } label: {
-                                    VStack(spacing: 6) { Text("第 \(value) 周").font(.headline); Text(Display.day(ScheduleEngine.date(week: value, weekday: 1, semester: semester), in: semester)).font(.caption) }.frame(maxWidth: .infinity).padding(.vertical, 16).background(value == week ? Palette.accent.opacity(0.16) : Color(.secondarySystemGroupedBackground), in: .rect(cornerRadius: 18))
-                                }.buttonStyle(.plain)
-                            }
-                        }.padding()
-                    }.background(Color(.systemGroupedBackground)).navigationTitle("选择教学周").navigationBarTitleDisplayMode(.inline)
-                        .toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { showWeeks = false } } }
-                }.presentationDetents([.medium, .large])
-            }
-        }
+        .sheet(isPresented: $showWeeks) { if let semester = store.semester { weekPicker(semester) } }
         .sheet(item: $shareFile) { ShareSheet(items: [$0.url]) }
         .sheet(item: $holidaySheet) { group in if let semester = store.semester { HolidayGroupConfirmationView(semester: semester, group: group) } }
     }
-    private func semesterHeading(_ semester: Semester, now: Date) -> some View {
-        HStack(alignment: .center) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(Display.format(now, style: .dateTime.month(.wide).day().weekday(.wide), zone: semester.timeZoneID)).font(.title2.weight(.bold))
-                Text(semester.name).font(.subheadline).foregroundStyle(.secondary)
-            }
-            Spacer()
-            Image(systemName: ScheduleTime.symbol(now: now, semester: semester)).accessibilityIdentifier("day-night-icon").font(.title2.weight(.light)).foregroundStyle(Palette.accent).padding(12).background(Palette.accent.opacity(0.08), in: .circle).accessibilityHidden(true)
-        }.padding(.horizontal, 3)
+    private func subtitle(_ semester: Semester, now: Date) -> String {
+        let raw = ScheduleEngine.weekNumber(on: now, semester: semester)
+        if raw < 1 { return "\(semester.name) · 尚未开学" }
+        if raw > semester.weekCount { return "\(semester.name) · 已结束" }
+        return "第 \(raw) 周 · \(semester.name)"
     }
     @ViewBuilder private func weekControls(_ semester: Semester) -> some View {
         if typeSize.isAccessibilitySize {
@@ -105,18 +88,55 @@ struct TimetableView: View {
                 }
             }.frame(maxWidth: .infinity, alignment: .leading)
         } else {
-        HStack(spacing: 12) {
-            HStack(spacing: 3) {
-                Button { changeWeek(-1, semester: semester) } label: { Image(systemName: "chevron.left").frame(width: 34, height: 38) }.disabled(week == 1).accessibilityLabel("上一周")
-                Button { showWeeks = true } label: { HStack(spacing: 5) { Text("第 \(week) 周").font(.subheadline.weight(.semibold)); Image(systemName: "chevron.down").font(.caption2.weight(.semibold)) }.padding(.horizontal, 4).frame(height: 38) }.accessibilityIdentifier("week-picker")
-                Button { changeWeek(1, semester: semester) } label: { Image(systemName: "chevron.right").frame(width: 34, height: 38) }.disabled(week == semester.weekCount).accessibilityLabel("下一周")
-            }.buttonStyle(.plain).glassEffect()
-            Spacer(minLength: 0)
-            if week != currentWeek(semester) {
-                Button("本周") { resetWeek() }.font(.subheadline).buttonStyle(.glass)
-            } else { Text("\(weekEvents.count) 次课").font(.caption).foregroundStyle(.secondary) }
+            HStack(spacing: 12) {
+                HStack(spacing: 2) {
+                    Button { changeWeek(-1, semester: semester) } label: { Image(systemName: "chevron.left").fontWeight(.semibold).frame(width: 36, height: 38) }.disabled(week == 1).accessibilityLabel("上一周")
+                    Button { showWeeks = true } label: {
+                        HStack(spacing: 5) { Text("第 \(week) 周").font(.subheadline.weight(.semibold)).monospacedDigit(); Image(systemName: "chevron.down").font(.caption2.weight(.bold)).foregroundStyle(.secondary) }
+                            .padding(.horizontal, 4).frame(height: 38)
+                    }.accessibilityIdentifier("week-picker")
+                    Button { changeWeek(1, semester: semester) } label: { Image(systemName: "chevron.right").fontWeight(.semibold).frame(width: 36, height: 38) }.disabled(week == semester.weekCount).accessibilityLabel("下一周")
+                }.buttonStyle(.plain).glassEffect()
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(weekRange(semester)).font(.caption.weight(.medium)).monospacedDigit()
+                    Text(weekEvents.isEmpty ? "没有课" : "\(weekEvents.count) 次课").font(.caption2).foregroundStyle(.secondary)
+                }
+                Spacer(minLength: 0)
+                if week != currentWeek(semester) {
+                    Button("回到本周") { resetWeek() }.font(.subheadline.weight(.medium)).buttonStyle(.glass)
+                }
+            }
         }
-        }
+    }
+    private func weekRange(_ semester: Semester) -> String {
+        let start = ScheduleEngine.date(week: week, weekday: 1, semester: semester)
+        let end = semester.calendar.date(byAdding: .day, value: 6, to: start) ?? start
+        return "\(Display.day(start, in: semester)) – \(Display.day(end, in: semester))"
+    }
+    private func weekPicker(_ semester: Semester) -> some View {
+        let current = currentWeek(semester)
+        return NavigationStack {
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 84), spacing: 10)], spacing: 10) {
+                    ForEach(1...semester.weekCount, id: \.self) { value in
+                        let selected = value == week
+                        Button { week = value; showWeeks = false } label: {
+                            VStack(spacing: 5) {
+                                Text("第 \(value) 周").font(.headline).monospacedDigit()
+                                Text(value == current ? "本周" : Display.day(ScheduleEngine.date(week: value, weekday: 1, semester: semester), in: semester))
+                                    .font(.caption.weight(value == current ? .semibold : .regular)).monospacedDigit()
+                                    .foregroundStyle(selected ? AnyShapeStyle(.white.opacity(0.85)) : (value == current ? AnyShapeStyle(Palette.accent) : AnyShapeStyle(.secondary)))
+                            }
+                            .foregroundStyle(selected ? Color.white : Color.primary)
+                            .frame(maxWidth: .infinity).padding(.vertical, 14)
+                            .background { if selected { RoundedRectangle(cornerRadius: 16, style: .continuous).fill(Palette.accentSolid.gradient) } else { RoundedRectangle(cornerRadius: 16, style: .continuous).fill(Color(.secondarySystemGroupedBackground)) } }
+                            .overlay { if value == current && !selected { RoundedRectangle(cornerRadius: 16, style: .continuous).strokeBorder(Palette.accent.opacity(0.5), lineWidth: 1.5) } }
+                        }.buttonStyle(.plain).accessibilityAddTraits(selected ? .isSelected : [])
+                    }
+                }.padding()
+            }.background(Color(.systemGroupedBackground)).navigationTitle("选择教学周").navigationBarTitleDisplayMode(.inline)
+                .toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { showWeeks = false } } }
+        }.presentationDetents([.medium, .large])
     }
     private func pendingKeys(_ semester: Semester) -> Set<String> {
         Set(store.holidays.days(for: semester).filter { $0.kind == .makeup && HolidayCalendar.isPending($0, semester: semester, snapshot: store.snapshot) }.map(\.dateKey))
@@ -131,30 +151,38 @@ struct TimetableView: View {
     }
     private var welcome: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 28) {
-                Spacer().frame(height: 25)
-                Image(systemName: "calendar").font(.system(size: 48, weight: .light)).foregroundStyle(Palette.accent).padding(24).background(Palette.accent.opacity(0.09), in: .rect(cornerRadius: 30))
+            VStack(alignment: .leading, spacing: 30) {
+                BrandMark(size: 78).shadow(color: Palette.accent.opacity(0.28), radius: 18, y: 10).padding(.top, 20)
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("每一节课，\n都心中有数。").font(.system(size: 36, weight: .bold, design: .rounded))
-                    Text("把课表带进来，留更多时间给大学生活。\n上什么、在哪上、还有多久，一眼就知道。") .font(.body).foregroundStyle(.secondary).lineSpacing(5)
+                    Text("每一节课，\n都心中有数。").font(.system(.largeTitle, design: .rounded, weight: .bold))
+                    Text("把课表带进来，留更多时间给大学生活。上什么、在哪上、还有多久，一眼就知道。").font(.body).foregroundStyle(.secondary).lineSpacing(4)
                 }
-                VStack(alignment: .leading, spacing: 18) {
-                    Label("图片、PDF、Excel，多种方式导入", systemImage: "square.and.arrow.down")
-                    Label("先核对，再保存，时间由你确认", systemImage: "checkmark.viewfinder")
-                    Label("原生提醒与日历，安排好每一周", systemImage: "bell.badge")
-                }.font(.subheadline).foregroundStyle(.secondary)
-                Button(action: onSetup) { Text("设置我的第一个学期").font(.headline).frame(maxWidth: .infinity).padding(.vertical, 9) }.buttonStyle(.glassProminent).accessibilityIdentifier("setup-semester")
-                Button { store.loadExample() } label: { Text("先体验示例课表").frame(maxWidth: .infinity) }.font(.subheadline).accessibilityIdentifier("load-example")
-                Text("示例仅用于体验，你可以随时删除或添加自己的学期。").font(.caption).foregroundStyle(.tertiary).frame(maxWidth: .infinity)
-            }.padding(26)
-        }.background(Color(.systemGroupedBackground))
+                VStack(alignment: .leading, spacing: 16) {
+                    feature("图片、PDF、Excel，多种方式导入", systemImage: "square.and.arrow.down", color: Palette.color(0))
+                    feature("先核对，再保存，时间由你确认", systemImage: "checklist", color: Palette.color(1))
+                    feature("原生提醒与日历，安排好每一周", systemImage: "bell.badge", color: Palette.color(2))
+                }
+                VStack(spacing: 14) {
+                    Button(action: onSetup) { Text("设置我的第一个学期").font(.headline).frame(maxWidth: .infinity).padding(.vertical, 9) }.buttonStyle(.glassProminent).accessibilityIdentifier("setup-semester")
+                    Button { store.loadExample() } label: { Text("先体验示例课表").frame(maxWidth: .infinity) }.font(.subheadline.weight(.medium)).accessibilityIdentifier("load-example")
+                    Text("示例仅用于体验，你可以随时删除或添加自己的学期。").font(.caption).foregroundStyle(.tertiary)
+                }.frame(maxWidth: .infinity)
+            }.padding(26).frame(maxWidth: 560)
+        }.frame(maxWidth: .infinity).background(Color(.systemGroupedBackground))
+    }
+    private func feature(_ title: String, systemImage: String, color: Color) -> some View {
+        HStack(spacing: 14) {
+            SettingsIcon(systemImage: systemImage, color: color)
+            Text(title).font(.subheadline).foregroundStyle(.secondary)
+        }
     }
     private func currentWeek(_ semester: Semester, at date: Date = .now) -> Int {
         max(1, min(semester.weekCount, ScheduleEngine.weekNumber(on: PreviewClock.now(date), semester: semester)))
     }
     private func resetWeek() {
         guard let semester = store.semester else { return }
-        week = currentWeek(semester); syncedCurrentWeek = week
+        withAnimation(reduceMotion ? nil : .snappy(duration: 0.24)) { week = currentWeek(semester) }
+        syncedCurrentWeek = currentWeek(semester)
     }
     /// Advances to a new teaching week (e.g. after a weekend in the background) only if the
     /// user was looking at the current week; a week they browsed to stays put.
@@ -166,11 +194,15 @@ struct TimetableView: View {
     }
     private func changeWeek(_ offset: Int, semester: Semester) { withAnimation(reduceMotion ? nil : .snappy(duration: 0.24)) { week = max(1, min(semester.weekCount, week + offset)) } }
     private func exportWeek(_ semester: Semester, pdf: Bool) {
-        let view = VStack(alignment: .leading, spacing: 20) {
-            Text("\(semester.name) · 第 \(week) 周").font(.title.bold())
+        let view = VStack(alignment: .leading, spacing: 18) {
+            HStack(alignment: .firstTextBaseline) {
+                Text("\(semester.name) · 第 \(week) 周").font(.title.bold())
+                Spacer()
+                Text(weekRange(semester)).font(.title3).foregroundStyle(.secondary)
+            }
             WeekGrid(semester: semester, week: week, occurrences: weekEvents, bells: store.bells, hideEmptyWeekends: false, onCourse: { _ in })
             Text("课序 · \(semester.timeZoneID)").font(.caption).foregroundStyle(.secondary)
-        }.padding(28).frame(width: 900).background(.white).environment(\.colorScheme, .light)
+        }.padding(28).frame(width: 900).background(Color(.systemGroupedBackground)).environment(\.colorScheme, .light)
         let renderer = ImageRenderer(content: view); renderer.scale = 2
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("课表-第\(week)周.\(pdf ? "pdf" : "png")")
         do {
@@ -199,60 +231,90 @@ struct CurrentCourseCard: View {
             let now = PreviewClock.now(context.date)
             let status = ScheduleEngine.status(at: now, occurrences: occurrences, semester: semester)
             let event = status.current ?? status.next
-            let color = Palette.color(event?.colorIndex ?? 0)
-            VStack(alignment: .leading, spacing: 15) {
-                HStack {
-                    HStack(spacing: 6) { Circle().fill(color).frame(width: 6, height: 6); Text(pendingMakeup ? "调休课程待定" : title(status.kind)).font(.caption.weight(.semibold)) }.foregroundStyle(color)
-                    Spacer()
+            let color = event.map { Palette.color($0.colorIndex) } ?? Palette.accent
+            let active = [CurrentStatus.Kind.inClass, .onBreak, .upcoming].contains(status.kind)
+            VStack(alignment: .leading, spacing: 14) {
+                HStack(spacing: 8) {
+                    StatusPill(text: pendingMakeup ? "调休课程待定" : title(status.kind), color: pendingMakeup ? .orange : (active ? color : .secondary), live: status.kind == .inClass)
+                    Spacer(minLength: 0)
                     if let current = status.current { Text("\(Display.time(current.start, zone: semester.timeZoneID))–\(Display.time(current.end, zone: semester.timeZoneID))").font(.caption).foregroundStyle(.secondary).monospacedDigit() }
                 }
                 if pendingMakeup { Text("原课表待核对，确认学校安排后更新课程与提醒。").font(.caption).foregroundStyle(.orange) }
                 if let event {
-                    let layout = typeSize.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: 16)) : AnyLayout(HStackLayout(alignment: .center, spacing: 12))
-                    layout {
-                        VStack(alignment: .leading, spacing: 7) {
-                            Text(event.courseName).font(.title2.weight(.bold)).lineLimit(2)
-                            Label(event.location.isEmpty ? "地点待补充" : event.location, systemImage: "mappin.and.ellipse").font(.subheadline).foregroundStyle(.secondary)
-                        }
-                        if !typeSize.isAccessibilitySize { Spacer(minLength: 0) }
-                        if let target = countdownTarget(status), target > now {
-                            VStack(alignment: typeSize.isAccessibilitySize ? .leading : .trailing, spacing: 4) {
-                                if target.timeIntervalSince(now) < 86400 {
-                                    countdown(to: target, from: now).font(.system(.title2, design: .rounded, weight: .semibold)).monospacedDigit().lineLimit(1).minimumScaleFactor(0.7).multilineTextAlignment(typeSize.isAccessibilitySize ? .leading : .trailing)
-                                } else { Text(target, format: .dateTime.month().day()).font(.title3.weight(.semibold)) }
-                                Text(status.kind == .inClass ? "本节剩余" : (status.kind == .onBreak ? "后继续上课" : "后开始上课")).font(.caption2).foregroundStyle(.secondary)
-                            }.frame(maxWidth: typeSize.isAccessibilitySize ? .infinity : 116, alignment: typeSize.isAccessibilitySize ? .leading : .trailing)
-                        }
-                    }
+                    lesson(event, status: status, now: now)
+                    if let fraction = progress(status, now: now) { ClassProgressBar(fraction: fraction, color: color) }
                     if !status.conflicts.isEmpty { Label("此时还有重叠课程，请检查安排", systemImage: "exclamationmark.triangle").font(.caption).foregroundStyle(.orange) }
-                    if let next = status.next, status.current != nil {
-                        Divider().opacity(0.5)
-                        let nextLayout = typeSize.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: 6)) : AnyLayout(HStackLayout(alignment: .top, spacing: 7))
-                        nextLayout {
-                            Text("下一门").foregroundStyle(.secondary)
-                            Text(next.courseName).fontWeight(.medium)
-                            if !typeSize.isAccessibilitySize { Spacer(minLength: 0) }
-                            Text("\(Display.day(next.start, in: semester)) \(Display.time(next.start, zone: semester.timeZoneID))\n\(next.location)").multilineTextAlignment(typeSize.isAccessibilitySize ? .leading : .trailing).foregroundStyle(.secondary)
-                        }.font(.caption)
-                    } else if let nextSegment = status.nextSegment, status.kind == .inClass {
-                        Text("下一节 \(Display.time(nextSegment.start, zone: semester.timeZoneID)) · \(event.location)").font(.caption).foregroundStyle(.secondary)
-                    } else if status.current == nil {
-                        Text("\(Display.day(event.start, in: semester)) · \(Display.time(event.start, zone: semester.timeZoneID)) 开始").font(.caption).foregroundStyle(.secondary)
+                    footer(event, status: status, now: now)
+                } else { empty(status, now: now) }
+            }
+            .padding(Theme.cardPadding).frame(maxWidth: .infinity, alignment: .leading)
+            .background {
+                RoundedRectangle(cornerRadius: Theme.cardRadius, style: .continuous).fill(Color(.secondarySystemGroupedBackground))
+                    .overlay(RoundedRectangle(cornerRadius: Theme.cardRadius, style: .continuous).fill(LinearGradient(colors: [color.opacity(active ? 0.17 : 0.08), color.opacity(0.02)], startPoint: .topLeading, endPoint: .bottomTrailing)))
+            }
+            .contentShape(RoundedRectangle(cornerRadius: Theme.cardRadius, style: .continuous))
+            .onTapGesture { if let event { onCourse(event) } }
+            .accessibilityElement(children: .combine)
+        }
+    }
+    @ViewBuilder private func lesson(_ event: Occurrence, status: CurrentStatus, now: Date) -> some View {
+        let large = typeSize.isAccessibilitySize
+        let layout = large ? AnyLayout(VStackLayout(alignment: .leading, spacing: 14)) : AnyLayout(HStackLayout(alignment: .center, spacing: 12))
+        layout {
+            VStack(alignment: .leading, spacing: 6) {
+                Text(event.courseName).font(.title2.weight(.bold)).lineLimit(2)
+                HStack(spacing: 12) {
+                    Label(event.location.isEmpty ? "地点待补充" : event.location, systemImage: "mappin")
+                    if !event.teacher.isEmpty && !large { Label(event.teacher, systemImage: "person").lineLimit(1) }
+                }.font(.subheadline).foregroundStyle(.secondary).lineLimit(large ? nil : 1)
+            }
+            if !large { Spacer(minLength: 0) }
+            if let target = countdownTarget(status), target > now {
+                VStack(alignment: large ? .leading : .trailing, spacing: 3) {
+                    if status.current != nil || target.timeIntervalSince(now) < 4 * 3600 {
+                        countdown(to: target, from: now).font(.system(.title2, design: .rounded, weight: .semibold)).monospacedDigit().lineLimit(1).minimumScaleFactor(0.7).multilineTextAlignment(large ? .leading : .trailing)
+                        Text(status.kind == .inClass ? "本节剩余" : (status.kind == .onBreak ? "后继续上课" : "后开始上课")).font(.caption2).foregroundStyle(.secondary)
+                    } else {
+                        Text(Display.relativeDay(target, now: now, in: semester)).font(.caption.weight(.medium)).foregroundStyle(.secondary)
+                        Text(Display.time(target, zone: semester.timeZoneID)).font(.system(.title2, design: .rounded, weight: .semibold)).monospacedDigit()
                     }
-                } else {
-                    Text(status.kind == .afterSemester ? "这一学期，辛苦了。" : "把时间留给自己。").font(.title3.weight(.semibold))
-                    Text("添加课程后，这里会显示当前和下一节课。").font(.subheadline).foregroundStyle(.secondary)
+                }.frame(maxWidth: large ? .infinity : 120, alignment: large ? .leading : .trailing)
+            }
+        }
+    }
+    @ViewBuilder private func footer(_ event: Occurrence, status: CurrentStatus, now: Date) -> some View {
+        if let next = status.next, status.current != nil {
+            Divider().opacity(0.6)
+            let layout = typeSize.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: 6)) : AnyLayout(HStackLayout(alignment: .center, spacing: 10))
+            layout {
+                Text("接下来").foregroundStyle(.secondary)
+                CourseDot(colorIndex: next.colorIndex, height: 26)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(next.courseName).fontWeight(.semibold).lineLimit(1)
+                    if !next.location.isEmpty { Text(next.location).foregroundStyle(.secondary).lineLimit(1) }
                 }
-            }.padding(19).frame(maxWidth: .infinity, alignment: .leading)
-                .background(color.opacity(0.085), in: .rect(cornerRadius: 24))
-                .overlay(RoundedRectangle(cornerRadius: 24).strokeBorder(color.opacity(0.12), lineWidth: 1))
-                .contentShape(RoundedRectangle(cornerRadius: 24))
-                .onTapGesture { if let event { onCourse(event) } }
-                .accessibilityElement(children: .combine)
+                if !typeSize.isAccessibilitySize { Spacer(minLength: 4) }
+                Text(Display.relativeStart(next.start, now: now, in: semester)).fontWeight(.medium).monospacedDigit().foregroundStyle(.secondary)
+            }.font(.footnote)
+        } else if let nextSegment = status.nextSegment, status.kind == .inClass {
+            Text("本课下一节 \(Display.time(nextSegment.start, zone: semester.timeZoneID)) 开始").font(.footnote).foregroundStyle(.secondary)
+        } else if status.current == nil {
+            Text("\(Display.relativeStart(event.start, now: now, in: semester)) 开始 · 第 \(event.week) 周").font(.footnote).foregroundStyle(.secondary)
+        }
+    }
+    private func empty(_ status: CurrentStatus, now: Date) -> some View {
+        HStack(spacing: 14) {
+            Image(systemName: ScheduleTime.symbol(now: now, semester: semester)).font(.title2).foregroundStyle(Palette.accent)
+                .frame(width: 48, height: 48).background(Palette.accent.opacity(0.12), in: .circle)
+                .accessibilityIdentifier("day-night-icon").accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(status.kind == .afterSemester ? "这一学期，辛苦了。" : "把时间留给自己。").font(.title3.weight(.semibold))
+                Text(status.kind == .afterSemester ? "可以在设置中添加新学期。" : "添加课程后，这里会显示当前和下一节课。").font(.subheadline).foregroundStyle(.secondary)
+            }
         }
     }
     private func title(_ kind: CurrentStatus.Kind) -> String {
-        switch kind { case .inClass: "正在上课"; case .onBreak: "课间休息"; case .upcoming: "下一节课"; case .finishedToday: "今日课程已结束"; case .beforeSemester: "学期尚未开始"; case .afterSemester: "学期已结束"; case .empty: "今天，从容一点" }
+        switch kind { case .inClass: "正在上课"; case .onBreak: "课间休息"; case .upcoming: "下一节课"; case .finishedToday: "今天的课已结束"; case .beforeSemester: "学期尚未开始"; case .afterSemester: "学期已结束"; case .empty: "今天，从容一点" }
     }
     /// A fixed preview clock shows the remaining time at that moment, so screenshots do not depend
     /// on the day the tests run; otherwise the system timer text counts down live.
@@ -262,6 +324,18 @@ struct CurrentCourseCard: View {
         return Text(remaining.formatted(.time(pattern: remaining >= .seconds(3600) ? .hourMinuteSecond : .minuteSecond)))
     }
     private func countdownTarget(_ status: CurrentStatus) -> Date? { status.kind == .inClass ? status.segment?.end : (status.kind == .onBreak ? status.nextSegment?.start : status.next?.start) }
+    /// How far the current teaching segment, or the break between segments, has run.
+    private func progress(_ status: CurrentStatus, now: Date) -> Double? {
+        switch status.kind {
+        case .inClass:
+            guard let segment = status.segment, segment.end > segment.start else { return nil }
+            return now.timeIntervalSince(segment.start) / segment.end.timeIntervalSince(segment.start)
+        case .onBreak:
+            guard let resume = status.nextSegment?.start, let pause = status.current?.segments.last(where: { $0.end <= now })?.end, resume > pause else { return nil }
+            return now.timeIntervalSince(pause) / resume.timeIntervalSince(pause)
+        default: return nil
+        }
+    }
 }
 
 struct WeekGrid: View {
@@ -274,10 +348,21 @@ struct WeekGrid: View {
     var holidayDays: [OfficialHolidayDay] = []
     var pendingMakeupKeys: Set<String> = []
     var onCourse: (Occurrence) -> Void
-    private let scale: CGFloat = 1.1
+    @ScaledMetric(relativeTo: .caption) private var scaledRow: CGFloat = 54
+    @ScaledMetric(relativeTo: .caption) private var scaledName: CGFloat = 12.5
+    private let axis: CGFloat = 34
+    private var rowHeight: CGFloat { min(max(scaledRow, 48), 72) }
+    private var nameSize: CGFloat { min(max(scaledName, 11.5), 15) }
+    private var detailSize: CGFloat { max(10, nameSize - 2) }
     private var periods: [Period] { ScheduleEngine.bellSchedule(on: ScheduleEngine.date(week: week, weekday: 1, semester: semester), semester: semester, schedules: bells)?.periods ?? [] }
-    private var minMinute: Int { min(periods.map(\.startMinute).min() ?? 480, occurrences.map { Display.minutes($0.start, in: semester) }.min() ?? 480) }
-    private var maxMinute: Int { max(periods.map(\.endMinute).max() ?? 1080, occurrences.map { semester.calendar.isDate($0.start, inSameDayAs: $0.end) ? Display.minutes($0.end, in: semester) : 1440 }.max() ?? 1080) }
+    private func range(_ event: Occurrence) -> Range<Int> {
+        let start = Display.minutes(event.start, in: semester)
+        let end = semester.calendar.isDate(event.start, inSameDayAs: event.end) ? Display.minutes(event.end, in: semester) : 1440
+        return start..<max(end, start + 1)
+    }
+    private var scale: TimelineScale {
+        TimelineScale(periods: periods, lessons: occurrences.map(range), metrics: .init(periodHeight: Double(rowHeight), gapHeight: 4, longBreakHeight: 26, longBreakMinutes: 30))
+    }
     private var days: [Int] {
         guard hideEmptyWeekends else { return Array(1...7) }
         return (1...7).filter { day in
@@ -292,78 +377,140 @@ struct WeekGrid: View {
         guard let now else { return nil }
         return days.firstIndex { semester.calendar.isDate(now, inSameDayAs: ScheduleEngine.date(week: week, weekday: $0, semester: semester)) }
     }
-    private var inTimeRange: Bool { now.map { (minMinute...maxMinute).contains(Display.minutes($0, in: semester)) } ?? false }
     var body: some View {
-        VStack(spacing: 10) {
-            HStack(spacing: 3) {
-                Text("\(semester.calendar.component(.month, from: ScheduleEngine.date(week: week, weekday: 1, semester: semester)))\n月").font(.caption2).foregroundStyle(.secondary).frame(width: 31)
-                ForEach(days, id: \.self) { day in
-                    let date = ScheduleEngine.date(week: week, weekday: day, semester: semester)
-                    let today = now.map { semester.calendar.isDate($0, inSameDayAs: date) } ?? false
-                    let key = HolidayCalendar.key(date, calendar: semester.calendar)
-                    let holiday = holidayDays.first { $0.dateKey == key }
-                    VStack(spacing: 4) {
-                        Text(Display.weekdays[day - 1]).font(.system(size: 11, weight: .medium))
-                        Text("\(semester.calendar.component(.day, from: date))").font(.system(.subheadline, design: .rounded, weight: today ? .bold : .medium))
-                        if pendingMakeupKeys.contains(key) { Text("课待定").font(.system(size: 9, weight: .semibold)).foregroundStyle(.orange) }
-                        else if let holiday { Text(holiday.kind == .makeup ? "补班" : holiday.name).font(.system(size: 9)).foregroundStyle(.secondary) }
-                    }
-                        .frame(maxWidth: .infinity).padding(.vertical, 7).foregroundStyle(today ? Palette.accent : Color.secondary).background(today ? Palette.accent.opacity(0.11) : .clear, in: .rect(cornerRadius: 12))
-                }
-            }
-            if let now, todayIndex != nil, !inTimeRange, Display.minutes(now, in: semester) < minMinute {
-                NowMarker(now: now, semester: semester, note: "尚未进入课表时段").padding(.horizontal, 8)
+        let scale = scale
+        let nowMinute = now.map { Display.minutes($0, in: semester) }
+        let showsNow = todayIndex != nil && nowMinute != nil
+        VStack(spacing: 8) {
+            dayHeader
+            if let now, showsNow, let nowMinute, nowMinute < scale.startMinute {
+                NowMarker(now: now, semester: semester, note: "尚未进入课表时段").padding(.horizontal, 6)
             }
             GeometryReader { geometry in
-                let column = (geometry.size.width - 34) / CGFloat(days.count)
+                let column = (geometry.size.width - axis) / CGFloat(days.count)
                 ZStack(alignment: .topLeading) {
                     if let todayIndex {
-                        RoundedRectangle(cornerRadius: 8).fill(Palette.accent.opacity(0.035))
-                            .frame(width: column - 2, height: CGFloat(max(60, maxMinute - minMinute)) * scale)
-                            .offset(x: 34 + CGFloat(todayIndex) * column).allowsHitTesting(false)
+                        RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Palette.accent.opacity(0.06))
+                            .frame(width: column, height: CGFloat(scale.height))
+                            .offset(x: axis + CGFloat(todayIndex) * column).allowsHitTesting(false)
                     }
-                    ForEach(periods.isEmpty ? stride(from: minMinute, through: maxMinute, by: 60).map { Period(number: ($0 - minMinute) / 60 + 1, startMinute: $0, endMinute: $0 + 45) } : periods) { period in
-                        HStack(alignment: .top, spacing: 3) {
-                            VStack(spacing: 2) { Text("\(period.number)").font(.caption.weight(.medium)); Text(Period.clock(period.startMinute)).font(.system(size: 8)); Text(Period.clock(period.endMinute)).font(.system(size: 8)) }.foregroundStyle(.tertiary).frame(width: 31)
-                            Rectangle().fill(Color.primary.opacity(0.045)).frame(height: 0.5)
-                        }.offset(y: CGFloat(period.startMinute - minMinute) * scale)
+                    ForEach(Array(scale.segments.enumerated()), id: \.offset) { _, segment in
+                        rowDecoration(segment, width: geometry.size.width, nowMinute: showsNow ? nowMinute : nil)
+                    }
+                    // Behind the blocks: the lesson in progress is already marked, and the line never crosses its title.
+                    if let now, let todayIndex, let nowMinute, (scale.startMinute...scale.endMinute).contains(nowMinute) {
+                        GridNowLine(now: now, semester: semester, axis: axis, column: column, todayIndex: todayIndex, width: geometry.size.width)
+                            .offset(y: CGFloat(scale.y(at: nowMinute)))
                     }
                     ForEach(Array(days.enumerated()), id: \.element) { index, day in
                         let date = ScheduleEngine.date(week: week, weekday: day, semester: semester)
                         let events = occurrences.filter { semester.calendar.isDate($0.start, inSameDayAs: date) }
                         let placements = OccurrenceLayout.lanes(for: events)
+                        let pending = pendingMakeupKeys.contains(HolidayCalendar.key(date, calendar: semester.calendar))
                         ForEach(events) { event in
                             let placement = placements[event.id] ?? LanePlacement(lane: 0, laneCount: 1)
-                            let lane = placement.lane
                             let laneWidth = column / CGFloat(max(1, placement.laneCount))
-                            let height = max(40, CGFloat(event.end.timeIntervalSince(event.start) / 60) * scale - 4)
-                            Button { onCourse(event) } label: {
-                                VStack(alignment: .leading, spacing: 5) {
-                                    Text(event.courseName).font(.system(size: 12, weight: .semibold)).lineLimit(height > 75 ? 4 : 2)
-                                    if !event.location.isEmpty { Text(event.location).font(.system(size: 10)).lineLimit(2).opacity(0.8) }
-                                    if height > 110 && !event.teacher.isEmpty { Text(event.teacher).font(.system(size: 9)).lineLimit(1).opacity(0.65) }
-                                    if let state = ScheduleTime.status(event, now: now) { Text(state == "课间休息" ? "课间" : "上课中").font(.system(size: 9, weight: .bold)).lineLimit(1) }
-                                    if pendingMakeupKeys.contains(HolidayCalendar.key(date, calendar: semester.calendar)) { Text("待核对").font(.system(size: 9)).foregroundStyle(.orange) }
-                                    Spacer(minLength: 0)
-                                    if event.isException { Image(systemName: "arrow.triangle.2.circlepath").font(.system(size: 9)) }
-                                }.padding(.horizontal, 5).padding(.vertical, 8).frame(width: max(12, laneWidth - 3), height: height, alignment: .topLeading)
-                                    .foregroundStyle(Palette.color(event.colorIndex)).background(Palette.color(event.colorIndex).opacity(0.13), in: .rect(cornerRadius: 9))
-                                    .overlay(RoundedRectangle(cornerRadius: 9).strokeBorder(ScheduleTime.status(event, now: now) != nil ? Palette.color(event.colorIndex) : .clear, lineWidth: 1.5))
-                                    .overlay(alignment: .top) { RoundedRectangle(cornerRadius: 2).fill(Palette.color(event.colorIndex).opacity(0.7)).frame(height: 3).padding(.horizontal, 6) }
-                            }.buttonStyle(.plain)
-                                .offset(x: 34 + CGFloat(index) * column + CGFloat(lane) * laneWidth, y: CGFloat(Display.minutes(event.start, in: semester) - minMinute) * scale)
+                            let span = range(event)
+                            let top = CGFloat(scale.y(at: span.lowerBound))
+                            let height = max(26, CGFloat(scale.y(at: span.upperBound)) - top - 3)
+                            Button { onCourse(event) } label: { block(event, pending: pending, width: max(12, laneWidth - 3), height: height) }
+                                .buttonStyle(.plain)
+                                .offset(x: axis + CGFloat(index) * column + CGFloat(placement.lane) * laneWidth + 1.5, y: top + 1.5)
                                 .accessibilityLabel("\(event.courseName)，\(Display.weekdays[day - 1])，\(Display.time(event.start, zone: semester.timeZoneID))至\(Display.time(event.end, zone: semester.timeZoneID))，\(event.location)")
                         }
                     }
-                    if let now, let todayIndex, inTimeRange {
-                        GridNowLine(now: now, semester: semester, column: column, todayIndex: todayIndex, width: geometry.size.width)
-                            .offset(y: CGFloat(Display.minutes(now, in: semester) - minMinute) * scale)
-                    }
                 }
-            }.frame(height: CGFloat(max(60, maxMinute - minMinute)) * scale + 12)
-            if let now, todayIndex != nil, !inTimeRange, Display.minutes(now, in: semester) > maxMinute {
-                NowMarker(now: now, semester: semester, note: "已超出课表时段").padding(.horizontal, 8)
+            }.frame(height: CGFloat(scale.height) + 3)
+            if let now, showsNow, let nowMinute, nowMinute > scale.endMinute {
+                NowMarker(now: now, semester: semester, note: "已超出课表时段").padding(.horizontal, 6)
             }
-        }.padding(.vertical, 10).padding(.horizontal, 5).background(Color(.secondarySystemGroupedBackground), in: .rect(cornerRadius: 18))
+        }.padding(.vertical, 12).padding(.horizontal, 6).cardBackground()
+    }
+    private var dayHeader: some View {
+        HStack(alignment: .top, spacing: 0) {
+            Text("\(semester.calendar.component(.month, from: ScheduleEngine.date(week: week, weekday: 1, semester: semester)))\n月")
+                .font(.system(size: 10, weight: .medium)).multilineTextAlignment(.center).foregroundStyle(.secondary).frame(width: axis).padding(.top, 2)
+            ForEach(days, id: \.self) { day in
+                let date = ScheduleEngine.date(week: week, weekday: day, semester: semester)
+                let today = now.map { semester.calendar.isDate($0, inSameDayAs: date) } ?? false
+                let key = HolidayCalendar.key(date, calendar: semester.calendar)
+                let holiday = holidayDays.first { $0.dateKey == key }
+                VStack(spacing: 3) {
+                    Text(Display.weekdays[day - 1]).font(.system(size: 11, weight: today ? .semibold : .medium))
+                        .foregroundStyle(today ? Palette.accent : .secondary)
+                    Text("\(semester.calendar.component(.day, from: date))").font(.system(size: 15, weight: today ? .bold : .medium, design: .rounded)).monospacedDigit()
+                        .foregroundStyle(today ? Color.white : (day >= 6 ? Color.secondary : Color.primary))
+                        .frame(width: 28, height: 28)
+                        .background { if today { Circle().fill(Palette.accentSolid.gradient) } }
+                    if pendingMakeupKeys.contains(key) { Text("课待定").font(.system(size: 10, weight: .semibold)).foregroundStyle(.orange) }
+                    else if let holiday { Text(holiday.kind == .makeup ? "补班" : holiday.name).font(.system(size: 10)).foregroundStyle(holiday.kind == .makeup ? Color.secondary : Palette.now).lineLimit(1).minimumScaleFactor(0.8) }
+                }.frame(maxWidth: .infinity)
+            }
+        }
+    }
+    @ViewBuilder private func rowDecoration(_ segment: TimelineScale.Segment, width: CGFloat, nowMinute: Int?) -> some View {
+        let isNow = nowMinute.map { segment.startMinute <= $0 && $0 < segment.endMinute } ?? false
+        let labelColor: Color = isNow ? Palette.now : .secondary
+        switch segment.kind {
+        case .period(let number):
+            VStack(spacing: 1) {
+                Text("\(number)").font(.system(size: 13, weight: .semibold, design: .rounded))
+                Text(Period.clock(segment.startMinute)).font(.system(size: 10)).opacity(isNow ? 1 : 0.7)
+                Text(Period.clock(segment.endMinute)).font(.system(size: 10)).opacity(isNow ? 1 : 0.7)
+            }
+            .monospacedDigit().foregroundStyle(labelColor).frame(width: axis, height: CGFloat(segment.height))
+            .offset(y: CGFloat(segment.y)).accessibilityHidden(true)
+        case .hour:
+            Text(Period.clock(segment.startMinute)).font(.system(size: 10, weight: .medium)).monospacedDigit().foregroundStyle(labelColor)
+                .frame(width: axis).offset(y: CGFloat(segment.y)).accessibilityHidden(true)
+            Rectangle().fill(Color.primary.opacity(0.06)).frame(width: width - axis, height: 0.5).offset(x: axis, y: CGFloat(segment.y))
+        case .gap:
+            Rectangle().fill(Color.primary.opacity(0.06)).frame(width: width - axis, height: 0.5).offset(x: axis, y: CGFloat(segment.y + segment.height / 2))
+        case .longBreak:
+            RoundedRectangle(cornerRadius: 7, style: .continuous).fill(Color.primary.opacity(0.035))
+                .frame(width: width - axis, height: max(0, CGFloat(segment.height) - 8)).offset(x: axis, y: CGFloat(segment.y) + 4)
+            Text(breakName(segment.startMinute)).font(.system(size: 10, weight: isNow ? .semibold : .medium)).foregroundStyle(isNow ? Palette.now : Color.secondary.opacity(0.7))
+                .frame(width: axis, height: CGFloat(segment.height)).offset(y: CGFloat(segment.y)).accessibilityHidden(true)
+        case .open:
+            EmptyView()
+        }
+    }
+    private func breakName(_ minute: Int) -> String {
+        switch minute {
+        case 630..<840: "午休"
+        case 990..<1170: "晚饭"
+        default: "休息"
+        }
+    }
+    private func block(_ event: Occurrence, pending: Bool, width: CGFloat, height: CGFloat) -> some View {
+        let live = ScheduleTime.status(event, now: now)
+        let past = now.map { event.end <= $0 } ?? false
+        let shape = RoundedRectangle(cornerRadius: Theme.blockRadius, style: .continuous)
+        return VStack(alignment: .leading, spacing: 3) {
+            Text(event.courseName).font(.system(size: nameSize, weight: .semibold)).lineLimit(height > 96 ? 4 : (height > 60 ? 3 : 2))
+            if !event.location.isEmpty && height > 44 { Text(event.location).font(.system(size: detailSize)).lineLimit(height > 100 ? 3 : 2).opacity(0.85) }
+            if height > 150 && !event.teacher.isEmpty { Text(event.teacher).font(.system(size: detailSize)).lineLimit(1).opacity(0.7) }
+            Spacer(minLength: 0)
+            if live != nil || pending || event.isException {
+                HStack(spacing: 3) {
+                    if let live { Text(live == "课间休息" ? "课间" : "上课中").font(.system(size: 10, weight: .bold)).lineLimit(1) }
+                    if pending { Text("待核对").font(.system(size: 10, weight: .semibold)).foregroundStyle(live == nil ? Color.orange : Color.white) }
+                    if event.isException { Image(systemName: "arrow.triangle.2.circlepath").font(.system(size: 10, weight: .semibold)) }
+                }
+            }
+        }
+        .foregroundStyle(live != nil ? Color.white : Palette.color(event.colorIndex))
+        .padding(.leading, live != nil ? 6 : 8).padding(.trailing, 3).padding(.vertical, 6)
+        .frame(width: width, height: height, alignment: .topLeading)
+        .clipShape(shape)
+        .background {
+            if live != nil {
+                shape.fill(Palette.solid(event.colorIndex).gradient).shadow(color: Palette.solid(event.colorIndex).opacity(0.35), radius: 6, y: 3)
+            } else {
+                shape.fill(Palette.fill(event.colorIndex))
+                    .overlay(alignment: .leading) { Capsule().fill(Palette.color(event.colorIndex)).frame(width: 3).padding(.vertical, 6).padding(.leading, 2.5) }
+            }
+        }
+        .opacity(past ? 0.5 : 1)
     }
 }
