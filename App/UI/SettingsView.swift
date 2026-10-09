@@ -15,6 +15,7 @@ struct SettingsView: View {
     @State private var backup: ScheduleSnapshot?
     @State private var restoreConfirmation = false
     @State private var deletingSemester = false
+    @State private var deletingSemesterHasCalendar = false
     @State private var confirmCalendarTakeover = false
     var body: some View {
         @Bindable var store = store
@@ -84,10 +85,17 @@ struct SettingsView: View {
                 Button("导出完整备份", systemImage: "square.and.arrow.up") { exportBackup() }
                 Button("从备份恢复", systemImage: "arrow.counterclockwise.icloud") { showRestore = true }
                 if let semester = store.semester { Button("导出学期日历文件 (.ics)", systemImage: "calendar") { exportICS(semester) } }
-                if store.canUndo { Button("撤销最近一次修改", systemImage: "arrow.uturn.backward") { store.undo() } }
+                if let label = store.undoLabel { Button("撤销“\(label)”", systemImage: "arrow.uturn.backward") { store.undo() } }
             } header: { Text("识别与数据") } footer: { Text("备份不包含 API Key、设备提醒记录或原始识别图片。恢复前会自动保存当前资料。") }
             if let semester = store.semester {
-                Section { Button("删除“\(semester.name)”", role: .destructive) { deletingSemester = true } }
+                Section {
+                    Button("删除“\(semester.name)”", role: .destructive) {
+                        Task {
+                            deletingSemesterHasCalendar = await CalendarSyncService.shared.hasExport(for: semester)
+                            deletingSemester = true
+                        }
+                    }
+                }
             }
             Section {
                 NavigationLink("隐私与数据说明") { PrivacyView() }
@@ -120,7 +128,7 @@ struct SettingsView: View {
             Button("备份当前资料并恢复") { do { if let backup { try store.restore(backup); store.notice = "已恢复课表资料" } } catch { store.errorMessage = error.localizedDescription }; backup = nil }
         } message: { Text("将恢复 \(backup?.semesters.count ?? 0) 个学期、\(backup?.courses.count ?? 0) 门课程、\(backup?.rules.count ?? 0) 条上课安排。当前资料会先保存为恢复前备份。") }
         .confirmationDialog("删除当前学期及其课程？", isPresented: $deletingSemester, titleVisibility: .visible) {
-            if let semester = store.semester, CalendarSyncService.shared.hasExport(for: semester) {
+            if deletingSemesterHasCalendar {
                 Button("先管理已导出的日历") { sheet = .calendar }
                 Button("保留日历并删除学期", role: .destructive) { deleteSemester() }
             } else {
@@ -140,8 +148,15 @@ struct SettingsView: View {
     private func deleteSemester() {
         guard let semester = store.semester else { return }
         store.apply("删除学期") { data in
-            let courses = Set(data.courses.filter { $0.semesterID == semester.id }.map(\.id)); let rules = Set(data.rules.filter { courses.contains($0.courseID) }.map(\.id))
-            data.semesters.removeAll { $0.id == semester.id }; data.bellSchedules.removeAll { $0.semesterID == semester.id }; data.courses.removeAll { courses.contains($0.id) }; data.rules.removeAll { rules.contains($0.id) }; data.exceptions.removeAll { rules.contains($0.ruleID) }; data.dayOverrides.removeAll { $0.semesterID == semester.id }; data.holidayDecisions.removeAll { $0.semesterID == semester.id }
+            let courses = Set(data.courses.filter { $0.semesterID == semester.id }.map(\.id))
+            let rules = Set(data.rules.filter { courses.contains($0.courseID) }.map(\.id))
+            data.semesters.removeAll { $0.id == semester.id }
+            data.bellSchedules.removeAll { $0.semesterID == semester.id }
+            data.courses.removeAll { courses.contains($0.id) }
+            data.rules.removeAll { rules.contains($0.id) }
+            data.exceptions.removeAll { rules.contains($0.ruleID) }
+            data.dayOverrides.removeAll { $0.semesterID == semester.id }
+            data.holidayDecisions.removeAll { $0.semesterID == semester.id }
         }
         store.selectedSemesterID = store.snapshot.semesters.first?.id
     }
@@ -167,7 +182,11 @@ struct SemesterEditor: View {
                     TextField("学期名称", text: $value.name).accessibilityIdentifier("semester-name")
                     DatePicker("第 1 周的周一", selection: $value.firstMonday, displayedComponents: .date).environment(\.timeZone, value.calendar.timeZone)
                     Stepper("共 \(value.weekCount) 周", value: $value.weekCount, in: 1...52)
-                    TextField("学校时区", text: $value.timeZoneID).textInputAutocapitalization(.never).autocorrectionDisabled()
+                    NavigationLink {
+                        TimeZonePicker(selection: $value.timeZoneID)
+                    } label: {
+                        LabeledContent("学校时区", value: TimeZonePicker.title(for: value.timeZoneID))
+                    }.accessibilityIdentifier("semester-time-zone")
                 }
                 Section {
                     Stepper("今天是第 \(currentWeek) 周", value: $currentWeek, in: 1...max(1, value.weekCount))

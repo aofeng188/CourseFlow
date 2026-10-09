@@ -32,23 +32,24 @@ struct CalendarSyncReport: CustomStringConvertible {
     var description: String { summary }
 }
 
-@MainActor
-final class CalendarSyncService {
+/// EventKit lookups scale with every exported lesson, so all of them run on this
+/// actor instead of the main thread. EKEvent objects never leave the actor.
+actor CalendarSyncService {
     static let shared = CalendarSyncService()
-    let deviceIdentifier: String
+    nonisolated let deviceIdentifier: String
     private let eventStore = EKEventStore()
     private let verificationStore = EKEventStore()
     private var ledger: CalendarLedger
     private let ledgerURL: URL
     private var isSyncing = false
 
-    var hasFullAccess: Bool { EKEventStore.authorizationStatus(for: .event) == .fullAccess }
+    nonisolated var hasFullAccess: Bool { EKEventStore.authorizationStatus(for: .event) == .fullAccess }
 
     func hasExport(for semester: Semester) -> Bool {
         ledger.calendarIDs[semester.id.uuidString] != nil || (hasFullAccess && ownedCalendar(for: semester) != nil)
     }
 
-    func isOwnedByAnotherDevice(_ semester: Semester) -> Bool {
+    nonisolated func isOwnedByAnotherDevice(_ semester: Semester) -> Bool {
         if let owner = semester.calendarOwnerDeviceID { return owner != deviceIdentifier }
         return false
     }
@@ -68,48 +69,51 @@ final class CalendarSyncService {
         return try await eventStore.requestFullAccessToEvents()
     }
 
-    func hasManagedEvents(for semester: Semester) -> Bool { !managedOccurrenceIDs(for: semester).isEmpty }
-
-    private func managedOccurrenceIDs(for semester: Semester) -> Set<String> {
-        guard hasFullAccess else { return [] }
-        verificationStore.reset()
-        return Set(ledger.records.values.filter { record in
-            guard record.semesterID == semester.id.uuidString, let event = findEvent(record, in: verificationStore) else { return false }
-            return occurrenceID(of: event, semester: semester) == record.occurrenceID
-        }.map(\.occurrenceID))
-    }
+    func hasManagedEvents(for semester: Semester) -> Bool { !verify(semester: semester).managed.isEmpty }
 
     /// Calendar presence is not reminder coverage. Respect the current lesson time
     /// and alarm, including edits made outside the app, before suppressing an app alert.
     func coveredIDs(for semester: Semester, occurrences: [Occurrence]? = nil, defaultLeadMinutes: Int = 10) -> Set<String> {
-        guard hasFullAccess else { return [] }
+        verify(semester: semester, occurrences: occurrences, defaultLeadMinutes: defaultLeadMinutes).covered
+    }
+
+    /// One pass over the ledger: each record is looked up in EventKit only once.
+    private func verify(semester: Semester, occurrences: [Occurrence]? = nil, defaultLeadMinutes: Int = 10) -> (managed: Set<String>, covered: Set<String>) {
+        guard hasFullAccess else { return ([], []) }
         verificationStore.reset()
         let planned = occurrences.map { Dictionary($0.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first }) }
-        return Set(ledger.records.values.compactMap { record -> String? in
-            guard record.semesterID == semester.id.uuidString, let event = findEvent(record, in: verificationStore),
-                  occurrenceID(of: event, semester: semester) == record.occurrenceID, !event.isAllDay else { return nil }
-            let start: Date
-            let end: Date
-            let offset: TimeInterval
-            if let planned {
-                guard let occurrence = planned[record.occurrenceID] else { return nil }
-                let lead = occurrence.reminderMinutes ?? defaultLeadMinutes
-                guard lead >= 0 else { return nil }
-                start = occurrence.start; end = occurrence.end; offset = -Double(lead) * 60
-            } else {
-                guard let storedStart = record.plannedStart, let storedEnd = record.plannedEnd,
-                      let storedOffset = record.plannedAlarmOffset else { return nil }
-                start = storedStart; end = storedEnd; offset = storedOffset
-            }
-            guard let actualStart = event.startDate, let actualEnd = event.endDate,
-                  abs(actualStart.timeIntervalSince(start)) < 1, abs(actualEnd.timeIntervalSince(end)) < 1 else { return nil }
-            let expectedFire = start.addingTimeInterval(offset)
-            let covered = (event.alarms ?? []).contains { alarm in
-                if let absolute = alarm.absoluteDate { return abs(absolute.timeIntervalSince(expectedFire)) < 1 }
-                return abs(alarm.relativeOffset - offset) < 1
-            }
-            return covered ? record.occurrenceID : nil
-        })
+        var managed = Set<String>(), covered = Set<String>()
+        for record in ledger.records.values where record.semesterID == semester.id.uuidString {
+            guard let event = findEvent(record, in: verificationStore),
+                  occurrenceID(of: event, semester: semester) == record.occurrenceID else { continue }
+            managed.insert(record.occurrenceID)
+            if isCovered(record, event: event, planned: planned, defaultLeadMinutes: defaultLeadMinutes) { covered.insert(record.occurrenceID) }
+        }
+        return (managed, covered)
+    }
+
+    private func isCovered(_ record: CalendarRecord, event: EKEvent, planned: [String: Occurrence]?, defaultLeadMinutes: Int) -> Bool {
+        guard !event.isAllDay else { return false }
+        let start: Date
+        let end: Date
+        let offset: TimeInterval
+        if let planned {
+            guard let occurrence = planned[record.occurrenceID] else { return false }
+            let lead = occurrence.reminderMinutes ?? defaultLeadMinutes
+            guard lead >= 0 else { return false }
+            start = occurrence.start; end = occurrence.end; offset = -Double(lead) * 60
+        } else {
+            guard let storedStart = record.plannedStart, let storedEnd = record.plannedEnd,
+                  let storedOffset = record.plannedAlarmOffset else { return false }
+            start = storedStart; end = storedEnd; offset = storedOffset
+        }
+        guard let actualStart = event.startDate, let actualEnd = event.endDate,
+              abs(actualStart.timeIntervalSince(start)) < 1, abs(actualEnd.timeIntervalSince(end)) < 1 else { return false }
+        let expectedFire = start.addingTimeInterval(offset)
+        return (event.alarms ?? []).contains { alarm in
+            if let absolute = alarm.absoluteDate { return abs(absolute.timeIntervalSince(expectedFire)) < 1 }
+            return abs(alarm.relativeOffset - offset) < 1
+        }
     }
 
     func preview(semester: Semester, occurrences: [Occurrence], defaultLeadMinutes: Int = 10) -> CalendarSyncPreview {
@@ -143,8 +147,7 @@ final class CalendarSyncService {
             eventStore.reset()
             let calendar = try obtainCalendar(for: semester)
             let plan = makePlan(semester: semester, occurrences: occurrences, defaultLeadMinutes: defaultLeadMinutes, calendar: calendar)
-            var report = CalendarSyncReport(skippedCount: plan.conflicts.count, managedCount: managedOccurrenceIDs(for: semester).count,
-                                            coveredIDs: coveredIDs(for: semester, occurrences: occurrences, defaultLeadMinutes: defaultLeadMinutes), conflicts: plan.conflicts)
+            var report = CalendarSyncReport(skippedCount: plan.conflicts.count, conflicts: plan.conflicts)
             var saved: [(Occurrence, EKEvent)] = []
             do {
                 for occurrence in plan.create {
@@ -162,6 +165,7 @@ final class CalendarSyncService {
                 if !saved.isEmpty || !plan.remove.isEmpty { try eventStore.commit() }
             } catch {
                 eventStore.reset()
+                report.coveredIDs = coveredIDs(for: semester, occurrences: occurrences, defaultLeadMinutes: defaultLeadMinutes)
                 report.errors.append("日历写入未完成：\(error.localizedDescription)。可以安全重试。")
                 return report
             }
@@ -179,13 +183,17 @@ final class CalendarSyncService {
             report.savedCount = saved.count
             do { try persistLedger() }
             catch { report.errors.append("日历已写入，本机同步记录保存失败：\(error.localizedDescription)") }
-            report.coveredIDs = coveredIDs(for: semester, occurrences: occurrences, defaultLeadMinutes: defaultLeadMinutes)
-            report.managedCount = managedOccurrenceIDs(for: semester).count
+            (report.managedCount, report.coveredIDs) = verificationCounts(semester: semester, occurrences: occurrences, defaultLeadMinutes: defaultLeadMinutes)
             return report
         } catch {
             eventStore.reset()
             return CalendarSyncReport(coveredIDs: coveredIDs(for: semester), errors: [error.localizedDescription])
         }
+    }
+
+    private func verificationCounts(semester: Semester, occurrences: [Occurrence]? = nil, defaultLeadMinutes: Int = 10) -> (Int, Set<String>) {
+        let result = verify(semester: semester, occurrences: occurrences, defaultLeadMinutes: defaultLeadMinutes)
+        return (result.managed.count, result.covered)
     }
 
     /// Removes only unchanged events that still carry this app's ownership marker.
@@ -218,8 +226,7 @@ final class CalendarSyncService {
             report.removedCount = plan.remove.count
             do { try persistLedger() }
             catch { report.errors.append("课程已移除，同步记录保存失败：\(error.localizedDescription)") }
-            report.coveredIDs = coveredIDs(for: semester)
-            report.managedCount = managedOccurrenceIDs(for: semester).count
+            (report.managedCount, report.coveredIDs) = verificationCounts(semester: semester)
             return report
         } catch { return CalendarSyncReport(coveredIDs: coveredIDs(for: semester), errors: [error.localizedDescription]) }
     }

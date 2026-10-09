@@ -102,7 +102,7 @@ struct CalendarSettingsView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { dismiss() } } }
             .disabled(isBusy)
-            .task { reload() }
+            .task { await reload() }
             .confirmationDialog("移除本学期已导出的课程？", isPresented: $showRemoveConfirmation, titleVisibility: .visible) {
                 Button("移除课程", role: .destructive) { Task { await remove() } }
                 Button("取消", role: .cancel) { }
@@ -110,8 +110,8 @@ struct CalendarSettingsView: View {
         }
     }
 
-    private func reload() {
-        preview = CalendarSyncService.shared.preview(semester: semester, occurrences: occurrences, defaultLeadMinutes: defaultLeadMinutes)
+    private func reload() async {
+        preview = await CalendarSyncService.shared.preview(semester: semester, occurrences: occurrences, defaultLeadMinutes: defaultLeadMinutes)
     }
 
     private func authorize() async {
@@ -123,7 +123,7 @@ struct CalendarSettingsView: View {
                 return
             }
             report = nil
-            reload()
+            await reload()
         } catch { report = CalendarSyncReport(errors: [error.localizedDescription]) }
     }
 
@@ -133,7 +133,7 @@ struct CalendarSettingsView: View {
         let result = await CalendarSyncService.shared.sync(semester: semester, occurrences: occurrences, defaultLeadMinutes: defaultLeadMinutes)
         report = result
         if result.errors.isEmpty { onChange(result.coveredIDs, true) }
-        reload()
+        await reload()
     }
 
     private func remove() async {
@@ -142,6 +142,6 @@ struct CalendarSettingsView: View {
         let result = await CalendarSyncService.shared.remove(semester: semester)
         report = result
         if result.errors.isEmpty { onChange(result.coveredIDs, false) }
-        reload()
+        await reload()
     }
 }

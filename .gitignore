@@ -7,6 +7,8 @@ xcuserdata/
 Config/Local.xcconfig
 .xcodebuildmcp/
 TestResults/
+__pycache__/
+*.pyc
 
 # 安装包体积大且每次重新打包都会变，发布到 GitHub Releases，不进仓库
 dist/*.ipa

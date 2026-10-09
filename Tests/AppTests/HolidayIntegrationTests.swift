@@ -73,7 +73,7 @@ import CourseKit
         XCTAssertEqual(ScheduleEngine.occurrences(snapshot: restored, semesterID: semester.id), ScheduleEngine.occurrences(snapshot: saved, semesterID: semester.id))
         store.undo()
         XCTAssertEqual(try persistence.read(), before, store.errorMessage ?? "")
-        XCTAssertFalse(store.canUndo)
+        XCTAssertEqual(store.undoLabel, "示例", "一次撤销应完整撤回整批确认，只留下更早的修改")
     }
     func testBatchRejectsNewlySyncedDecisionsAndManualOverridesWithoutPartialSave() async throws {
         for manualOverride in [false, true] {

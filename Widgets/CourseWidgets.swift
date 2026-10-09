@@ -8,15 +8,19 @@ struct CourseWidgets: WidgetBundle {
     var body: some Widget {
         NextCourseWidget()
         TodayCoursesWidget()
+        WeekCoursesWidget()
         CourseLiveActivityWidget()
     }
 }
 
-private struct CourseEntry: TimelineEntry {
+struct CourseEntry: TimelineEntry {
     let date: Date
     let snapshot: WidgetSnapshot
-    var status: CurrentStatus {
-        ScheduleEngine.status(at: date, occurrences: snapshot.occurrences, semester: snapshot.semester)
+    /// Computed once per entry; views read it several times while rendering.
+    let status: CurrentStatus
+    init(date: Date, snapshot: WidgetSnapshot) {
+        self.date = date; self.snapshot = snapshot
+        status = ScheduleEngine.status(at: date, occurrences: snapshot.occurrences, semester: snapshot.semester)
     }
     var lesson: Occurrence? { status.current ?? status.next }
     var calendar: Calendar { snapshot.semester?.calendar ?? .current }
@@ -47,7 +51,7 @@ private struct CourseEntry: TimelineEntry {
     }
 }
 
-private struct CourseProvider: TimelineProvider {
+struct CourseProvider: TimelineProvider {
     func placeholder(in context: Context) -> CourseEntry { .preview }
 
     func getSnapshot(in context: Context, completion: @escaping (CourseEntry) -> Void) {
@@ -122,7 +126,7 @@ private struct NextCourseView: View {
             VStack(alignment: .leading, spacing: 9) {
                 HStack {
                     Image(systemName: entry.status.kind == .inClass ? "book.fill" : "calendar")
-                        .foregroundStyle(WidgetPalette.color(entry.lesson?.colorIndex ?? 0))
+                        .foregroundStyle(Palette.color(entry.lesson?.colorIndex ?? 0))
                     Text(entry.statusTitle).font(.caption.weight(.medium)).foregroundStyle(.secondary)
                 }
                 Spacer(minLength: 0)
@@ -188,7 +192,7 @@ private struct TodayCoursesView: View {
                 ForEach(rows) { lesson in
                     HStack(spacing: 10) {
                         RoundedRectangle(cornerRadius: 2)
-                            .fill(WidgetPalette.color(lesson.colorIndex))
+                            .fill(Palette.color(lesson.colorIndex))
                             .frame(width: 3)
                         VStack(alignment: .leading, spacing: 2) {
                             Text(lesson.courseName).font(.subheadline.weight(.semibold)).lineLimit(1)
@@ -219,7 +223,7 @@ private struct CourseLiveActivityWidget: Widget {
         ActivityConfiguration(for: CourseActivityAttributes.self) { context in
             HStack(spacing: 14) {
                 Image(systemName: context.isStale ? "calendar" : (context.state.phase == .onBreak ? "cup.and.saucer.fill" : "book.closed.fill"))
-                    .font(.title2).foregroundStyle(WidgetPalette.color(context.state.colorIndex))
+                    .font(.title2).foregroundStyle(Palette.color(context.state.colorIndex))
                 VStack(alignment: .leading, spacing: 5) {
                     Text(context.state.courseName).font(.headline).lineLimit(1)
                     Label(context.state.location.isEmpty ? "地点待补充" : context.state.location, systemImage: "mappin")
@@ -244,7 +248,7 @@ private struct CourseLiveActivityWidget: Widget {
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
                     Label(context.isStale ? "课序" : (context.state.phase == .onBreak ? "课间休息" : "正在上课"), systemImage: "book.closed.fill")
-                        .font(.caption.weight(.semibold)).foregroundStyle(WidgetPalette.color(context.state.colorIndex))
+                        .font(.caption.weight(.semibold)).foregroundStyle(Palette.color(context.state.colorIndex))
                 }
                 DynamicIslandExpandedRegion(.trailing) {
                     if context.isStale { Text(Date.now >= context.state.end ? "已结束" : "课程安排").font(.caption) }
@@ -263,7 +267,7 @@ private struct CourseLiveActivityWidget: Widget {
                 }
             } compactLeading: {
                 Image(systemName: context.state.phase == .onBreak && !context.isStale ? "cup.and.saucer.fill" : "book.closed.fill")
-                    .foregroundStyle(WidgetPalette.color(context.state.colorIndex))
+                    .foregroundStyle(Palette.color(context.state.colorIndex))
             } compactTrailing: {
                 if context.isStale { Image(systemName: Date.now >= context.state.end ? "checkmark" : "calendar") }
                 else {
@@ -272,21 +276,14 @@ private struct CourseLiveActivityWidget: Widget {
                 }
             } minimal: {
                 Image(systemName: context.isStale ? "calendar" : (context.state.phase == .onBreak ? "cup.and.saucer.fill" : "book.closed.fill"))
-                    .foregroundStyle(WidgetPalette.color(context.state.colorIndex))
+                    .foregroundStyle(Palette.color(context.state.colorIndex))
             }
             .widgetURL(URL(string: "courseflow://course/\(context.attributes.courseID)"))
         }
     }
 }
 
-private enum WidgetPalette {
-    static func color(_ index: Int) -> Color {
-        let colors: [Color] = [.teal, .blue, .purple, .orange, .pink, .indigo, .green, .cyan]
-        return colors[((index % colors.count) + colors.count) % colors.count]
-    }
-}
-
-private extension CourseEntry {
+extension CourseEntry {
     static var preview: CourseEntry {
         let now = Date()
         let semester = Semester(name: "秋季学期", firstMonday: now.addingTimeInterval(-14 * 86400))

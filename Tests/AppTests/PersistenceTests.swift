@@ -60,4 +60,99 @@ final class PersistenceTests: XCTestCase {
         XCTAssertFalse(store.canUndo)
         XCTAssertNotNil(store.errorMessage)
     }
+
+    @MainActor func testUnreadableRecordIsSkippedButNeverDeleted() throws {
+        let persistence = try Persistence(inMemory: true)
+        let store = try AppStore(persistence: persistence, systemIntegrationsEnabled: false)
+        XCTAssertTrue(store.apply("初始资料") { $0 = SampleData.make(now: .now) })
+        let context = persistence.container.mainContext
+        let broken = StoredRecord(entityID: UUID().uuidString, kind: "course", payload: Data("{\"future\":true}".utf8))
+        let future = StoredRecord(entityID: UUID().uuidString, kind: "exam", payload: Data("{}".utf8))
+        context.insert(broken); context.insert(future); try context.save()
+
+        let snapshot = try persistence.read()
+        XCTAssertEqual(snapshot, store.snapshot, "无法解码的记录不应阻止读取其余课表")
+        XCTAssertEqual(persistence.unreadableRecordCount, 2)
+        XCTAssertTrue(store.apply("本机编辑") { $0.semesters[0].name = "继续可编辑" })
+        let records = try persistence.records()
+        XCTAssertFalse(try XCTUnwrap(records.first { $0.entityID == broken.entityID }).isDeleted, "保存时不能把读不出的记录当作删除")
+        XCTAssertFalse(try XCTUnwrap(records.first { $0.entityID == future.entityID }).isDeleted, "新版本的记录类型必须原样保留")
+        store.reload()
+        XCTAssertNotNil(store.errorMessage, "应提示有记录暂时无法读取")
+    }
+
+    @MainActor func testOrphanedChildWaitsForParentInsteadOfBlockingEdits() throws {
+        let persistence = try Persistence(inMemory: true)
+        let store = try AppStore(persistence: persistence, systemIntegrationsEnabled: false)
+        let data = SampleData.make(now: .now)
+        XCTAssertTrue(store.apply("初始资料") { $0 = data })
+        // Models a sync that delivered a rule before its course.
+        let lateCourse = Course(semesterID: data.semesters[0].id, name: "尚未同步到达的课程")
+        let rule = MeetingRule(courseID: lateCourse.id, weekday: 3, weeks: [1, 2], periodNumbers: [1, 2])
+        let context = persistence.container.mainContext
+        context.insert(StoredRecord(entityID: rule.id.uuidString, kind: "rule", payload: try JSONEncoder().encode(rule)))
+        try context.save()
+
+        XCTAssertFalse(try persistence.read().rules.contains { $0.id == rule.id })
+        XCTAssertEqual(persistence.unreadableRecordCount, 0, "暂缺父记录不是解码错误，不应提示用户")
+        XCTAssertTrue(store.apply("本机编辑") { $0.semesters[0].name = "同步中仍可编辑" })
+        XCTAssertFalse(try XCTUnwrap(try persistence.records().first { $0.entityID == rule.id.uuidString }).isDeleted)
+
+        context.insert(StoredRecord(entityID: lateCourse.id.uuidString, kind: "course", payload: try JSONEncoder().encode(lateCourse)))
+        try context.save()
+        XCTAssertTrue(try persistence.read().rules.contains { $0.id == rule.id }, "父记录到达后子记录应恢复显示")
+    }
+
+    @MainActor func testOldTombstonesArePurgedWithTheirDuplicates() throws {
+        let persistence = try Persistence(inMemory: true)
+        let store = try AppStore(persistence: persistence, systemIntegrationsEnabled: false)
+        XCTAssertTrue(store.apply("初始资料") { $0 = SampleData.make(now: .now) })
+        let context = persistence.container.mainContext
+        let old = Date.now.addingTimeInterval(-Persistence.tombstoneRetention - 86400)
+        let staleID = UUID().uuidString, recentID = UUID().uuidString
+        context.insert(StoredRecord(entityID: staleID, kind: "course", payload: Data(), modifiedAt: old.addingTimeInterval(-60)))
+        context.insert(StoredRecord(entityID: staleID, kind: "course", payload: Data(), modifiedAt: old, isDeleted: true))
+        context.insert(StoredRecord(entityID: recentID, kind: "course", payload: Data(), modifiedAt: .now, isDeleted: true))
+        try context.save()
+
+        XCTAssertTrue(store.apply("本机编辑") { $0.semesters[0].name = "触发保存" })
+        let ids = try persistence.records().map(\.entityID)
+        XCTAssertFalse(ids.contains(staleID), "过期删除标记及其旧副本都应清理，避免旧副本复活")
+        XCTAssertTrue(ids.contains(recentID), "近期删除标记需保留以同步到其他设备")
+    }
+
+    @MainActor func testUndoStepsBackThroughSeveralEdits() throws {
+        let persistence = try Persistence(inMemory: true)
+        let store = try AppStore(persistence: persistence, systemIntegrationsEnabled: false)
+        XCTAssertTrue(store.apply("初始资料") { $0 = SampleData.make(now: .now) })
+        XCTAssertTrue(store.apply("第一次改名") { $0.semesters[0].name = "A" })
+        XCTAssertTrue(store.apply("第二次改名") { $0.semesters[0].name = "B" })
+        XCTAssertEqual(store.undoLabel, "第二次改名")
+        store.undo()
+        XCTAssertEqual(try persistence.read().semesters[0].name, "A")
+        XCTAssertEqual(store.undoLabel, "第一次改名")
+        store.undo()
+        XCTAssertEqual(try persistence.read().semesters[0].name, SampleData.make(now: .now).semesters[0].name)
+        XCTAssertEqual(store.undoLabel, "初始资料")
+        store.undo()
+        XCTAssertTrue(try persistence.read().semesters.isEmpty)
+        XCTAssertFalse(store.canUndo)
+    }
+
+    @MainActor func testReloadRebuildsSystemContentOnlyWhenNeeded() throws {
+        let persistence = try Persistence(inMemory: true)
+        let store = try AppStore(persistence: persistence, systemIntegrationsEnabled: false)
+        XCTAssertTrue(store.apply("初始资料") { $0 = SampleData.make(now: .now) })
+        let revision = store.revision
+        store.reload()
+        XCTAssertEqual(store.revision, revision, "资料未变化时，保存后的回读不应再次重建提醒和小组件")
+        store.reload(forceRefresh: true)
+        XCTAssertEqual(store.revision, revision + 1, "回到前台时需要重新核对提醒队列")
+        var remote = try persistence.read()
+        remote.semesters[0].name = "其他设备改名"
+        try persistence.write(remote)
+        store.reload()
+        XCTAssertEqual(store.revision, revision + 2)
+        XCTAssertEqual(store.snapshot.semesters[0].name, "其他设备改名")
+    }
 }

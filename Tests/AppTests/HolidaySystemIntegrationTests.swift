@@ -74,6 +74,7 @@ import CourseKit
         let report = await service.sync(semester: semester, occurrences: events, defaultLeadMinutes: 10)
         XCTAssertTrue(report.errors.isEmpty, report.summary)
         XCTAssertEqual(report.savedCount, 1)
-        XCTAssertEqual(service.coveredIDs(for: semester, occurrences: events, defaultLeadMinutes: 10), Set(events.map(\.id)))
+        let covered = await service.coveredIDs(for: semester, occurrences: events, defaultLeadMinutes: 10)
+        XCTAssertEqual(covered, Set(events.map(\.id)))
     }
 }

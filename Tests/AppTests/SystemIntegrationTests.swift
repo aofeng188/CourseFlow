@@ -78,12 +78,13 @@ final class SystemIntegrationTests: XCTestCase {
         let alarmEvent = try XCTUnwrap(alarmStore.calendarItem(withIdentifier: firstEvent.calendarItemIdentifier) as? EKEvent)
         alarmEvent.alarms = []
         try alarmStore.save(alarmEvent, span: .thisEvent, commit: true)
-        let withoutAlarm = service.coveredIDs(for: semester, occurrences: occurrences, defaultLeadMinutes: 10)
+        let withoutAlarm = await service.coveredIDs(for: semester, occurrences: occurrences, defaultLeadMinutes: 10)
         XCTAssertFalse(withoutAlarm.contains(occurrences[0].id), "无日历alarm不能抑制App提醒")
         XCTAssertTrue(withoutAlarm.contains(occurrences[1].id))
-        XCTAssertTrue(service.hasManagedEvents(for: semester), "无alarm也仍是已导出的课程")
-        XCTAssertTrue(service.coveredIDs(for: semester, occurrences: occurrences, defaultLeadMinutes: 30).isEmpty,
-                      "旧提前量不能当作新提前量已经覆盖")
+        let stillManaged = await service.hasManagedEvents(for: semester)
+        XCTAssertTrue(stillManaged, "无alarm也仍是已导出的课程")
+        let otherLead = await service.coveredIDs(for: semester, occurrences: occurrences, defaultLeadMinutes: 30)
+        XCTAssertTrue(otherLead.isEmpty, "旧提前量不能当作新提前量已经覆盖")
         alarmEvent.alarms = [EKAlarm(relativeOffset: -600)]
         try alarmStore.save(alarmEvent, span: .thisEvent, commit: true)
 
@@ -116,8 +117,8 @@ final class SystemIntegrationTests: XCTestCase {
         shiftedEvent.startDate = shiftedEvent.startDate.addingTimeInterval(30 * 60)
         shiftedEvent.endDate = shiftedEvent.endDate.addingTimeInterval(30 * 60)
         try externalStore.save(shiftedEvent, span: .thisEvent, commit: true)
-        XCTAssertFalse(service.coveredIDs(for: semester, occurrences: occurrences, defaultLeadMinutes: 10).contains(occurrences[0].id),
-                       "日历手动改时后，原计划仍需要App提醒")
+        let afterShift = await service.coveredIDs(for: semester, occurrences: occurrences, defaultLeadMinutes: 10)
+        XCTAssertFalse(afterShift.contains(occurrences[0].id), "日历手动改时后，原计划仍需要App提醒")
 
         let removed = await service.remove(semester: semester)
         XCTAssertTrue(removed.errors.isEmpty, removed.summary)
