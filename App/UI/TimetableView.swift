@@ -92,18 +92,18 @@ struct TimetableView: View {
                 HStack(spacing: 2) {
                     Button { changeWeek(-1, semester: semester) } label: { Image(systemName: "chevron.left").fontWeight(.semibold).frame(width: 36, height: 38) }.disabled(week == 1).accessibilityLabel("上一周")
                     Button { showWeeks = true } label: {
-                        HStack(spacing: 5) { Text("第 \(week) 周").font(.subheadline.weight(.semibold)).monospacedDigit(); Image(systemName: "chevron.down").font(.caption2.weight(.bold)).foregroundStyle(.secondary) }
+                        HStack(spacing: 5) { Text("第 \(week) 周").font(.subheadline.weight(.semibold)).monospacedDigit().lineLimit(1); Image(systemName: "chevron.down").font(.caption2.weight(.bold)).foregroundStyle(.secondary) }
                             .padding(.horizontal, 4).frame(height: 38)
                     }.accessibilityIdentifier("week-picker")
                     Button { changeWeek(1, semester: semester) } label: { Image(systemName: "chevron.right").fontWeight(.semibold).frame(width: 36, height: 38) }.disabled(week == semester.weekCount).accessibilityLabel("下一周")
-                }.buttonStyle(.plain).glassEffect()
+                }.buttonStyle(.plain).glassEffect().fixedSize().layoutPriority(2)
                 VStack(alignment: .leading, spacing: 1) {
                     Text(weekRange(semester)).font(.caption.weight(.medium)).monospacedDigit()
                     Text(weekEvents.isEmpty ? "没有课" : "\(weekEvents.count) 次课").font(.caption2).foregroundStyle(.secondary)
-                }
+                }.lineLimit(1).minimumScaleFactor(0.7)
                 Spacer(minLength: 0)
                 if week != currentWeek(semester) {
-                    Button("回到本周") { resetWeek() }.font(.subheadline.weight(.medium)).buttonStyle(.glass)
+                    Button("回到本周") { resetWeek() }.font(.subheadline.weight(.medium)).buttonStyle(.glass).fixedSize().layoutPriority(1)
                 }
             }
         }
