@@ -36,7 +36,8 @@ final class ActivityService {
         let phaseEnd = segment?.end ?? target.segments.first(where: { $0.start > phaseDate })?.start ?? target.end
         let state = CourseActivityAttributes.ContentState(courseName: target.courseName, location: target.location,
                                                           start: target.start, end: target.end, colorIndex: target.colorIndex,
-                                                          phase: segment == nil ? .onBreak : .inClass, phaseStart: phaseStart, phaseEnd: phaseEnd)
+                                                          phase: segment == nil ? .onBreak : .inClass, phaseStart: phaseStart, phaseEnd: phaseEnd,
+                                                          segments: target.segments.map { .init(start: $0.start, end: $0.end) })
         // If the app is suspended at a phase boundary, the system marks this content stale.
         // The widget then shows the lesson's fixed schedule instead of a false live phase.
         let content = ActivityContent(state: state, staleDate: phaseEnd)

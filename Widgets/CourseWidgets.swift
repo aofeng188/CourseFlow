@@ -50,6 +50,10 @@ struct CourseEntry: TimelineEntry {
         default: nil
         }
     }
+    /// Every teaching segment of the lesson in session, so a bar can span a back-to-back lesson.
+    var lessonSpans: [ClosedRange<Date>] {
+        status.current?.segments.filter { $0.start < $0.end }.map { $0.start...$0.end } ?? []
+    }
     var deadline: Date? {
         switch status.kind {
         case .inClass: status.segment?.end
@@ -113,13 +117,26 @@ struct WidgetBackground: View {
     }
 }
 
-/// A bar that fills by itself over the interval, without timeline reloads.
+/// One bar per teaching segment, with a gap where each break falls. Every bar fills by itself
+/// over its own interval, so the whole lesson stays current without timeline reloads.
 private struct LiveProgress: View {
-    let interval: ClosedRange<Date>
+    let spans: [ClosedRange<Date>]
     let color: Color
     var body: some View {
-        ProgressView(timerInterval: interval, countsDown: false, label: { EmptyView() }, currentValueLabel: { EmptyView() })
-            .progressViewStyle(.linear).tint(color)
+        WeightedRow(weights: spans.map { $0.upperBound.timeIntervalSince($0.lowerBound) }) {
+            ForEach(spans, id: \.lowerBound) { span in
+                ProgressView(timerInterval: span, countsDown: false, label: { EmptyView() }, currentValueLabel: { EmptyView() })
+                    .progressViewStyle(.linear).tint(color)
+            }
+        }
+    }
+}
+
+extension CourseActivityAttributes.ContentState {
+    /// The whole lesson's segments; content from an older app version only knows the current phase.
+    var lessonSpans: [ClosedRange<Date>] {
+        if let segments, !segments.isEmpty { return segments.filter { $0.start < $0.end }.map { $0.start...$0.end } }
+        return phaseStart < phaseEnd ? [phaseStart...phaseEnd] : []
     }
 }
 
@@ -181,7 +198,7 @@ private struct NextCourseView: View {
                         Text(lesson.start.formatted(Date.FormatStyle(timeZone: entry.timeZone).weekday(.abbreviated).hour().minute()))
                             .font(.caption.weight(.medium))
                     }
-                    if let start = entry.phaseStart, let end = entry.deadline, start < end { LiveProgress(interval: start...end, color: color) }
+                    if !entry.lessonSpans.isEmpty { LiveProgress(spans: entry.lessonSpans, color: color) }
                 } else {
                     Text("导入图片或表格，把新学期装进口袋。")
                         .font(.caption).foregroundStyle(.secondary)
@@ -280,8 +297,9 @@ private struct CourseLiveActivityWidget: Widget {
                         }
                     }
                 }
-                if !context.isStale && context.state.phaseStart < context.state.phaseEnd {
-                    LiveProgress(interval: context.state.phaseStart...context.state.phaseEnd, color: color)
+                // The bars run on their own timers, so they stay right even after the phase text goes stale.
+                if !context.state.lessonSpans.isEmpty && (!context.isStale || (context.state.segments != nil && Date.now < context.state.end)) {
+                    LiveProgress(spans: context.state.lessonSpans, color: color)
                 }
             }
             .padding(16)
@@ -305,8 +323,8 @@ private struct CourseLiveActivityWidget: Widget {
                         Text(context.state.courseName).font(.headline).lineLimit(1)
                         Label(context.state.location.isEmpty ? "地点待补充" : context.state.location, systemImage: "mappin")
                             .font(.subheadline).foregroundStyle(.secondary).lineLimit(1)
-                        if !context.isStale && context.state.phaseStart < context.state.phaseEnd {
-                            LiveProgress(interval: context.state.phaseStart...context.state.phaseEnd, color: Palette.color(context.state.colorIndex))
+                        if !context.state.lessonSpans.isEmpty && (!context.isStale || (context.state.segments != nil && Date.now < context.state.end)) {
+                            LiveProgress(spans: context.state.lessonSpans, color: Palette.color(context.state.colorIndex))
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)

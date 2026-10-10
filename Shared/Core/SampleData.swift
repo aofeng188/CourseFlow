@@ -23,8 +23,8 @@ public enum SampleData {
         let math = Course(semesterID: semester.id, name: "高等数学", colorIndex: 0)
         let english = Course(semesterID: semester.id, name: "大学英语", colorIndex: 1)
         let physics = Course(semesterID: semester.id, name: "大学物理", colorIndex: 2)
-        let code = Course(semesterID: semester.id, name: "程序设计", colorIndex: 3)
-        let sports = Course(semesterID: semester.id, name: "体育", colorIndex: 4, reminderMinutes: 20)
+        let code = Course(semesterID: semester.id, name: "程序设计", colorIndex: 3, avatar: CourseAvatarStyle(symbol: "chevron.left.forwardslash.chevron.right"))
+        let sports = Course(semesterID: semester.id, name: "体育", colorIndex: 4, reminderMinutes: 20, avatar: CourseAvatarStyle(symbol: "figure.run"))
         let art = Course(semesterID: semester.id, name: "艺术鉴赏", colorIndex: 5)
         let all = Array(1...18)
         let rules = [

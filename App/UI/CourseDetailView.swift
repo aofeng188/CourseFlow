@@ -121,7 +121,7 @@ struct CourseDetailView: View {
         let week = ScheduleEngine.weekNumber(on: PreviewClock.now(.now), semester: semester)
         return VStack(alignment: .leading, spacing: 16) {
             HStack(spacing: 14) {
-                CourseAvatar(name: course.name, colorIndex: course.colorIndex, size: 56)
+                CourseAvatar(course: course, size: 56)
                 VStack(alignment: .leading, spacing: 4) {
                     Text(course.name).font(.title2.weight(.bold))
                     Text(days.isEmpty ? semester.name : "\(semester.name) · 每\(days.joined(separator: "、"))").font(.subheadline).foregroundStyle(.secondary)

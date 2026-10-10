@@ -1,0 +1,3 @@
+/* The home screen name. Info.plist keeps an ASCII CFBundleDisplayName in the trial build:
+   SideStore registers the App ID under that raw name and rejects non-ASCII characters. */
+"CFBundleDisplayName" = "课序";

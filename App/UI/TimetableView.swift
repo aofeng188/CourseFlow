@@ -242,7 +242,7 @@ struct CurrentCourseCard: View {
                 if pendingMakeup { Text("原课表待核对，确认学校安排后更新课程与提醒。").font(.caption).foregroundStyle(.orange) }
                 if let event {
                     lesson(event, status: status, now: now)
-                    if let fraction = progress(status, now: now) { ClassProgressBar(fraction: fraction, color: color) }
+                    if let progress = status.current?.progress(at: now) { lessonProgress(progress, status: status, color: color, now: now) }
                     if !status.conflicts.isEmpty { Label("此时还有重叠课程，请检查安排", systemImage: "exclamationmark.triangle").font(.caption).foregroundStyle(.orange) }
                     footer(event, status: status, now: now)
                 } else { empty(status, now: now) }
@@ -279,6 +279,22 @@ struct CurrentCourseCard: View {
                         Text(Display.time(target, zone: semester.timeZoneID)).font(.system(.title2, design: .rounded, weight: .semibold)).monospacedDigit()
                     }
                 }.frame(maxWidth: large ? .infinity : 120, alignment: large ? .leading : .trailing)
+            }
+        }
+    }
+    /// The whole lesson's bar; a back-to-back lesson also says which period this is and when it all ends.
+    @ViewBuilder private func lessonProgress(_ progress: LessonProgress, status: CurrentStatus, color: Color, now: Date) -> some View {
+        VStack(alignment: .leading, spacing: 7) {
+            ClassProgressBar(progress: progress, color: color)
+            if progress.parts.count > 1 {
+                let done = progress.parts.filter { $0.fraction >= 1 }.count
+                let minutes = Int((progress.end.timeIntervalSince(now) / 60).rounded(.up))
+                let layout = typeSize.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: 3)) : AnyLayout(HStackLayout(spacing: 8))
+                layout {
+                    Text(status.kind == .onBreak ? "已上 \(done)/\(progress.parts.count) 节" : "第 \(progress.position)/\(progress.parts.count) 节").fontWeight(.semibold).foregroundStyle(color)
+                    if !typeSize.isAccessibilitySize { Spacer(minLength: 0) }
+                    if minutes > 0 { Text("距全部下课 " + (minutes >= 60 ? "\(minutes / 60) 小时" + (minutes % 60 > 0 ? " \(minutes % 60) 分" : "") : "\(minutes) 分钟")).foregroundStyle(.secondary) }
+                }.font(.caption).monospacedDigit()
             }
         }
     }
@@ -324,18 +340,6 @@ struct CurrentCourseCard: View {
         return Text(remaining.formatted(.time(pattern: remaining >= .seconds(3600) ? .hourMinuteSecond : .minuteSecond)))
     }
     private func countdownTarget(_ status: CurrentStatus) -> Date? { status.kind == .inClass ? status.segment?.end : (status.kind == .onBreak ? status.nextSegment?.start : status.next?.start) }
-    /// How far the current teaching segment, or the break between segments, has run.
-    private func progress(_ status: CurrentStatus, now: Date) -> Double? {
-        switch status.kind {
-        case .inClass:
-            guard let segment = status.segment, segment.end > segment.start else { return nil }
-            return now.timeIntervalSince(segment.start) / segment.end.timeIntervalSince(segment.start)
-        case .onBreak:
-            guard let resume = status.nextSegment?.start, let pause = status.current?.segments.last(where: { $0.end <= now })?.end, resume > pause else { return nil }
-            return now.timeIntervalSince(pause) / resume.timeIntervalSince(pause)
-        default: return nil
-        }
-    }
 }
 
 struct WeekGrid: View {

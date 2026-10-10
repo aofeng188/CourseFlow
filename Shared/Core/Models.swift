@@ -40,6 +40,19 @@ public struct BellSchedule: Codable, Hashable, Identifiable, Sendable {
     }
 }
 
+/// A custom look for a course's avatar tile. The first field that is set wins: image, symbol, text.
+public struct CourseAvatarStyle: Codable, Hashable, Sendable {
+    public static let maxTextLength = 2
+    public static let maxImageBytes = 96 * 1024
+    /// One or two characters, or an emoji.
+    public var text: String?
+    /// An SF Symbol name.
+    public var symbol: String?
+    /// A small square JPEG, kept inline so it travels with sync and backups.
+    public var image: Data?
+    public init(text: String? = nil, symbol: String? = nil, image: Data? = nil) { self.text = text; self.symbol = symbol; self.image = image }
+}
+
 public struct Course: Codable, Hashable, Identifiable, Sendable {
     public var id: UUID
     public var semesterID: UUID
@@ -48,8 +61,10 @@ public struct Course: Codable, Hashable, Identifiable, Sendable {
     public var notes: String
     /// nil inherits the global lead time; -1 disables reminders.
     public var reminderMinutes: Int?
-    public init(id: UUID = UUID(), semesterID: UUID, name: String, colorIndex: Int = 0, notes: String = "", reminderMinutes: Int? = nil) {
-        self.id = id; self.semesterID = semesterID; self.name = name; self.colorIndex = colorIndex; self.notes = notes; self.reminderMinutes = reminderMinutes
+    /// nil shows the first character of the name.
+    public var avatar: CourseAvatarStyle?
+    public init(id: UUID = UUID(), semesterID: UUID, name: String, colorIndex: Int = 0, notes: String = "", reminderMinutes: Int? = nil, avatar: CourseAvatarStyle? = nil) {
+        self.id = id; self.semesterID = semesterID; self.name = name; self.colorIndex = colorIndex; self.notes = notes; self.reminderMinutes = reminderMinutes; self.avatar = avatar
     }
 }
 

@@ -73,6 +73,7 @@ public enum BackupCodec {
             if course.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { issues.append("课程名称为空") }
             if course.colorIndex < 0 { issues.append("\(course.name)：课程颜色编号无效") }
             if let lead = course.reminderMinutes, !(-1...10080).contains(lead) { issues.append("\(course.name)：提醒提前量无效") }
+            if let avatar = course.avatar, (avatar.text?.count ?? 0) > CourseAvatarStyle.maxTextLength || (avatar.image?.count ?? 0) > CourseAvatarStyle.maxImageBytes { issues.append("\(course.name)：课程头像的文字过长或图片过大") }
         }
         for rule in snapshot.rules {
             guard let course = courses[rule.courseID], let semester = semesters[course.semesterID] else { issues.append("上课安排关联的课程不存在"); continue }

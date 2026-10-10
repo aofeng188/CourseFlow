@@ -37,7 +37,7 @@ struct CourseListView: View {
                         Button { if selecting { if selected.contains(course.id) { selected.remove(course.id) } else { selected.insert(course.id) } } else { onCourse(course) } } label: {
                             HStack(spacing: 14) {
                                 if selecting { Image(systemName: selected.contains(course.id) ? "checkmark.circle.fill" : "circle").foregroundStyle(selected.contains(course.id) ? Palette.accent : Color.secondary).font(.title3) }
-                                CourseAvatar(name: course.name, colorIndex: course.colorIndex, size: 44)
+                                CourseAvatar(course: course, size: 44)
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(course.name).font(.headline).foregroundStyle(.primary)
                                     Text(schedule(rules)).font(.subheadline).foregroundStyle(.secondary).lineLimit(1)

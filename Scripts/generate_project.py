@@ -7,7 +7,9 @@ root = Path(__file__).resolve().parent.parent
 # Keep the personal-device trial in sync with the main app's permission strings.
 # It deliberately has no app extension, App Group, CloudKit or push entitlement.
 trial_info = plistlib.loads((root/'Config/App-Info.plist').read_bytes())
-trial_info.update({'TrialBuild': True, 'CloudSyncEnabled': 'NO',
+# SideStore registers the App ID under the raw display name and rejects non-ASCII characters;
+# the home screen still shows 课序 from App/zh-Hans.lproj/InfoPlist.strings.
+trial_info.update({'CFBundleDisplayName': 'CourseFlow', 'TrialBuild': True, 'CloudSyncEnabled': 'NO',
                    'NSSupportsLiveActivities': False, 'UIBackgroundModes': ['fetch']})
 trial_info['CFBundleURLTypes'] = [{'CFBundleURLName': 'com.courseflow.app.trial',
                                   'CFBundleURLSchemes': ['courseflow-trial']}]
