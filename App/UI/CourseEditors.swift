@@ -35,6 +35,7 @@ struct CourseEditor: View {
                     Section("课程资料") {
                         TextField("课程名称", text: $course.name).accessibilityIdentifier("course-name")
                         colorChoices
+                        CourseAvatarChoices(course: $course)
                         TextField("备注、教材或其他说明", text: $course.notes, axis: .vertical).lineLimit(3...6)
                     }
                     reminderSection

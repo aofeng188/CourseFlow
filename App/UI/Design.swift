@@ -54,19 +54,34 @@ struct BrandMark: View {
     }
 }
 
-/// A course's color as a rounded tile with its first character, like a contact avatar.
+/// A course's color as a rounded tile like a contact avatar: its first character by default,
+/// or the custom text, icon or photo chosen for the course.
 struct CourseAvatar: View {
     let name: String
     let colorIndex: Int
+    var style: CourseAvatarStyle? = nil
     var size: CGFloat = 40
     var body: some View {
-        Text(name.first.map(String.init) ?? "课")
-            .font(.system(size: size * 0.44, weight: .semibold, design: .rounded))
-            .foregroundStyle(.white)
-            .frame(width: size, height: size)
-            .background(Palette.solid(colorIndex).gradient, in: .rect(cornerRadius: size * 0.3, style: .continuous))
-            .accessibilityHidden(true)
+        Group {
+            if let data = style?.image, let image = UIImage(data: data) {
+                Image(uiImage: image).resizable().scaledToFill()
+            } else if let symbol = style?.symbol, UIImage(systemName: symbol) != nil {
+                Image(systemName: symbol).font(.system(size: size * 0.42, weight: .semibold))
+            } else {
+                let text = style?.text.flatMap { $0.isEmpty ? nil : $0 } ?? name.first.map(String.init) ?? "课"
+                Text(text).font(.system(size: size * (text.count > 1 ? 0.34 : 0.44), weight: .semibold, design: .rounded)).lineLimit(1).minimumScaleFactor(0.6)
+            }
+        }
+        .foregroundStyle(.white)
+        .frame(width: size, height: size)
+        .background(Palette.solid(colorIndex).gradient)
+        .clipShape(.rect(cornerRadius: size * 0.3, style: .continuous))
+        .accessibilityHidden(true)
     }
+}
+
+extension CourseAvatar {
+    init(course: Course, size: CGFloat = 40) { self.init(name: course.name, colorIndex: course.colorIndex, style: course.avatar, size: size) }
 }
 
 struct CourseDot: View {
@@ -91,21 +106,26 @@ struct StatusPill: View {
     }
 }
 
-/// How far the current lesson or break has run.
+/// How far a lesson has run: one bar per teaching segment, with a gap where each break falls,
+/// so a back-to-back lesson shows its whole length instead of only the current period.
 struct ClassProgressBar: View {
-    var fraction: Double
+    var progress: LessonProgress
     var color: Color
     var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .leading) {
-                Capsule().fill(color.opacity(0.15))
-                Capsule().fill(color.gradient).frame(width: max(6, geometry.size.width * min(1, max(0, fraction))))
+        WeightedRow(weights: progress.parts.map(\.weight)) {
+            ForEach(Array(progress.parts.enumerated()), id: \.offset) { _, part in
+                GeometryReader { geometry in
+                    ZStack(alignment: .leading) {
+                        Capsule().fill(color.opacity(0.15))
+                        if part.fraction > 0 { Capsule().fill(color.gradient).frame(width: max(6, geometry.size.width * part.fraction)) }
+                    }
+                }
+                .frame(height: 6)
             }
         }
-        .frame(height: 6)
         .accessibilityElement()
-        .accessibilityLabel("进度")
-        .accessibilityValue("\(Int((min(1, max(0, fraction)) * 100).rounded()))%")
+        .accessibilityLabel("课程进度")
+        .accessibilityValue((progress.parts.count > 1 ? "第 \(progress.position) 节，共 \(progress.parts.count) 节，" : "") + "\(Int((progress.overall * 100).rounded()))%")
     }
 }
 

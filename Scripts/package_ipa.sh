@@ -39,6 +39,8 @@ import plistlib, subprocess, sys
 app = Path(sys.argv[1])
 info = plistlib.loads((app/'Info.plist').read_bytes())
 assert info['CFBundleDisplayName'] == 'CourseFlow', 'SideStore requires an ASCII display name'
+localized = app/'zh-Hans.lproj/InfoPlist.strings'
+assert localized.exists() and plistlib.loads(localized.read_bytes()).get('CFBundleDisplayName') == '课序', 'Missing localized home screen name'
 assert info['TrialBuild'] is True, 'Missing TrialBuild flag'
 assert info['CloudSyncEnabled'] == 'NO', 'Cloud must be disabled'
 assert info.get('NSSupportsLiveActivities') is False, 'Trial has no live-activity extension'
@@ -70,6 +72,7 @@ manifest = {
     'artifact': ipa.name,
     'createdAt': datetime.now(timezone.utc).isoformat(),
     'displayName': info['CFBundleDisplayName'],
+    'homeScreenName': plistlib.loads((app/'zh-Hans.lproj/InfoPlist.strings').read_bytes())['CFBundleDisplayName'],
     'bundleIdentifier': info['CFBundleIdentifier'],
     'version': info['CFBundleShortVersionString'],
     'build': info['CFBundleVersion'],
