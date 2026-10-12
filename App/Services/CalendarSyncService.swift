@@ -355,14 +355,19 @@ actor CalendarSyncService {
     private func configure(_ event: EKEvent, from occurrence: Occurrence, semester: Semester,
                            calendar: EKCalendar, defaultLeadMinutes: Int) {
         event.calendar = calendar
-        event.title = occurrence.courseName
-        event.location = occurrence.location
+        // Calendar runs a map search on any location text and pins whatever it finds to the
+        // event, with a Time to Leave alert. A room number only ever matches an unrelated
+        // place, so the room goes in the title and notes and the location stays empty.
+        let room = occurrence.location.trimmingCharacters(in: .whitespacesAndNewlines)
+        event.title = room.isEmpty ? occurrence.courseName : "\(occurrence.courseName) · \(room)"
+        event.structuredLocation = nil
         event.startDate = occurrence.start
         event.endDate = occurrence.end
         event.timeZone = TimeZone(identifier: semester.timeZoneID)
         event.isAllDay = false
         event.url = markerURL(semester: semester, occurrenceID: occurrence.id)
         var notes = ["由课序管理 · 第 \(occurrence.week) 周"]
+        if !room.isEmpty { notes.append("地点：\(room)") }
         if !occurrence.teacher.isEmpty { notes.append("教师：\(occurrence.teacher)") }
         if occurrence.isException { notes.append("这是一节调整后的课程。") }
         notes.append("在课序中修改后，可重新同步更新此课程。")

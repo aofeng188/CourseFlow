@@ -65,7 +65,12 @@ final class SystemIntegrationTests: XCTestCase {
         XCTAssertTrue(first.errors.isEmpty, first.summary)
         XCTAssertEqual(first.savedCount, 2)
         XCTAssertEqual(first.coveredIDs, Set(occurrences.map(\.id)))
-        XCTAssertEqual(try calendarEvents(semester).count, 2)
+        let exported = try calendarEvents(semester)
+        XCTAssertEqual(exported.count, 2)
+        XCTAssertEqual(Set(exported.compactMap(\.title)), Set(occurrences.map { "\($0.courseName) · \($0.location)" }))
+        XCTAssertTrue(exported.allSatisfy { $0.structuredLocation == nil && ($0.location ?? "").isEmpty },
+                      "教室写在标题里；位置必须留空，否则系统日历会自动匹配无关的地图地点")
+        XCTAssertTrue(exported.allSatisfy { $0.notes?.contains("地点：\(occurrences[0].location)") == true })
 
         let repeated = await service.sync(semester: semester, occurrences: occurrences, defaultLeadMinutes: 10)
         XCTAssertTrue(repeated.errors.isEmpty, repeated.summary)
@@ -74,7 +79,7 @@ final class SystemIntegrationTests: XCTestCase {
 
         // A Calendar event with its alarm removed must not suppress the app reminder.
         let alarmStore = verificationStore
-        let firstEvent = try XCTUnwrap(calendarEvents(semester).first { $0.title == occurrences[0].courseName })
+        let firstEvent = try XCTUnwrap(calendarEvents(semester).first { $0.title?.hasPrefix(occurrences[0].courseName) == true })
         let alarmEvent = try XCTUnwrap(alarmStore.calendarItem(withIdentifier: firstEvent.calendarItemIdentifier) as? EKEvent)
         alarmEvent.alarms = []
         try alarmStore.save(alarmEvent, span: .thisEvent, commit: true)
@@ -94,9 +99,10 @@ final class SystemIntegrationTests: XCTestCase {
         let changed = await service.sync(semester: semester, occurrences: occurrences, defaultLeadMinutes: 10)
         XCTAssertTrue(changed.errors.isEmpty, changed.summary)
         XCTAssertEqual(changed.savedCount, 1)
-        let moved = try XCTUnwrap(calendarEvents(semester).first { $0.title == occurrences[0].courseName })
+        let moved = try XCTUnwrap(calendarEvents(semester).first { $0.title?.hasPrefix(occurrences[0].courseName) == true })
         XCTAssertEqual(moved.startDate, occurrences[0].start)
-        XCTAssertEqual(moved.location, occurrences[0].location)
+        XCTAssertEqual(moved.title, "\(occurrences[0].courseName) · \(occurrences[0].location)")
+        XCTAssertNil(moved.structuredLocation)
         let movedIdentifier = moved.calendarItemIdentifier
         XCTAssertEqual(try calendarEvents(semester).count, 2)
 
@@ -111,7 +117,7 @@ final class SystemIntegrationTests: XCTestCase {
         let protected = await service.sync(semester: semester, occurrences: occurrences, defaultLeadMinutes: 10)
         XCTAssertTrue(protected.errors.isEmpty, protected.summary)
         XCTAssertFalse(protected.conflicts.isEmpty)
-        XCTAssertEqual(try calendarEvents(semester).first { $0.title == occurrences[0].courseName }?.location, "用户手动保留的教室")
+        XCTAssertEqual(try calendarEvents(semester).first { $0.title?.hasPrefix(occurrences[0].courseName) == true }?.location, "用户手动保留的教室")
 
         let shiftedEvent = try XCTUnwrap(externalStore.calendarItem(withIdentifier: externalIdentifier) as? EKEvent)
         shiftedEvent.startDate = shiftedEvent.startDate.addingTimeInterval(30 * 60)
