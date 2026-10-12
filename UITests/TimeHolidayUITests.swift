@@ -10,11 +10,15 @@ final class TimeHolidayUITests: XCTestCase {
         return app
     }
     @MainActor @discardableResult private func reveal(_ element: XCUIElement, in app: XCUIApplication, file: StaticString = #filePath, line: UInt = #line) -> Bool {
-        for _ in 0..<18 {
+        // Strokes stay shorter than the visible band and halve on each reversal, so a short
+        // screen such as a folded iPhone Duo cannot keep stepping over the element. They run
+        // down the leading margin: a stroke that starts on a switch row does not scroll.
+        var stride: CGFloat?, wasScrollingUp = true
+        for _ in 0..<40 {
             let confirm = app.buttons["holiday-batch-confirm"]
             let lowerEdge: CGFloat
             if confirm.exists { lowerEdge = confirm.frame.minY - 70 }
-            else { lowerEdge = app.frame.height - 120 }
+            else { lowerEdge = app.frame.height - (app.tabBars.firstMatch.exists ? 120 : 40) }
             var scrollUp = true
             if element.exists {
                 let frame = element.frame
@@ -23,16 +27,22 @@ final class TimeHolidayUITests: XCTestCase {
                 if (fullyVisible || oversizedButTappable) && element.isHittable { return true }
                 scrollUp = frame.minY >= 150
             }
-            let form = app.collectionViews.firstMatch
-            let scroll = app.scrollViews.firstMatch
-            if form.exists {
-                if scrollUp { form.swipeUp(velocity: .slow) } else { form.swipeDown(velocity: .slow) }
-            } else if scroll.exists {
-                if scrollUp { scroll.swipeUp(velocity: .slow) } else { scroll.swipeDown(velocity: .slow) }
-            } else {
-                if scrollUp { app.swipeUp(velocity: .slow) } else { app.swipeDown(velocity: .slow) }
+            let length = scrollUp == wasScrollingUp ? stride ?? (lowerEdge - 150) / 2 : max(40, (stride ?? 80) / 2)
+            stride = length; wasScrollingUp = scrollUp
+            let origin = app.coordinate(withNormalizedOffset: .zero), x: CGFloat = 12, middle = (150 + lowerEdge) / 2
+            let start = origin.withOffset(CGVector(dx: x, dy: middle + (scrollUp ? length : -length) / 2))
+            let end = origin.withOffset(CGVector(dx: x, dy: middle - (scrollUp ? length : -length) / 2))
+            // The measured stroke positions an element the list has already created. Until then, and
+            // whenever a stroke leaves the list where it was, the system swipe moves it in a longer step.
+            let before = element.exists ? element.frame : nil
+            if before != nil { start.press(forDuration: 0.05, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0.1) }
+            if before == nil || (element.exists && element.frame == before) {
+                let form = app.collectionViews.firstMatch, scroll = app.scrollViews.firstMatch
+                let list = form.exists ? form : (scroll.exists ? scroll : app)
+                if scrollUp { list.swipeUp(velocity: .slow) } else { list.swipeDown(velocity: .slow) }
             }
         }
+        capture(app, name: "滚动后仍无法显示")
         XCTFail("滚动后仍无法显示待操作控件", file: file, line: line)
         return false
     }
@@ -96,7 +106,7 @@ final class TimeHolidayUITests: XCTestCase {
         let prompt = holidayGroup(in: app)
         openHolidayGroup(in: app)
         capture(app, name: "节日调休批量确认")
-        app.navigationBars.buttons["稍后再说"].tap()
+        app.barButton("稍后再说").tap()
         XCTAssertTrue(prompt.waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["调休课程待定"].firstMatch.exists)
         openHolidayGroup(in: app)
@@ -192,7 +202,7 @@ final class TimeHolidayUITests: XCTestCase {
         reveal(makeup, in: app)
         XCTAssertTrue(makeup.exists)
         capture(app, name: "深色大字号节日批量确认")
-        app.navigationBars.buttons["稍后再说"].tap()
+        app.barButton("稍后再说").tap()
         XCTAssertTrue(holidayGroup(in: app).waitForExistence(timeout: 5))
     }
     @MainActor func testExportHasNoLiveTimeMarkers() {

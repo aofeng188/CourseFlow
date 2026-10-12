@@ -8,7 +8,7 @@
 
 没有付费开发者账号时，可选择独立的 `CourseFlowTrial` scheme，用普通 Apple 账号的 Personal Team 在自己的 iPhone 上免费签名试用。未签名试用 IPA（约 5 MiB，包含新版图标和 AI 文本导入）可在 [Releases](../../releases/latest) 下载，也可用 `Scripts/package_ipa.sh` 自行打包到 `dist/`；安装步骤见 [免费账号试用与 IPA 安装](docs/INSTALL-IPA.md)。IPA 仍须个人签名才能安装，试用版暂时停用 iCloud、小组件与实况活动。
 
-详见 [当前时间提示与学校调休](docs/OFFICIAL-HOLIDAYS.md)。最新版试用包为 1.0（7），桌面显示「课序」；`Info.plist` 中的名称仍为 ASCII 的 `CourseFlow`，SideStore 以它注册应用标识，中文名由 `App/zh-Hans.lproj/InfoPlist.strings` 提供。
+详见 [当前时间提示与学校调休](docs/OFFICIAL-HOLIDAYS.md)。最新版试用包为 1.0（8），桌面显示「课序」；`Info.plist` 中的名称仍为 ASCII 的 `CourseFlow`，SideStore 以它注册应用标识，中文名由 `App/zh-Hans.lproj/InfoPlist.strings` 提供。
 
 ## 已实现的功能
 
@@ -70,7 +70,7 @@ DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
 
 ## 验证状态与运行边界
 
-当前主 App 与小组件已经完成签名模拟器构建及未签名 Release / iPhoneOS SDK 构建，已实际检查 iPhone 17 Pro、iPad、小屏 iPhone、深色模式和大字号纵向布局。核心包现有 90 项测试通过；App 单元与集成测试 43 项、UI 测试 16 项在 iOS 27 模拟器通过（模拟器预先授予日历与通知权限；App Group 用例需签名构建，未签名时跳过），涵盖 PDF 导入、真实日历、通知队列、Siri 查询文案与坏记录保护。准确日志与截图见 [发布与验收记录](docs/RELEASE.md)。运行验证使用 iOS 27 模拟器；iOS 26 运行、签名真机、CloudKit 跨设备同步及自配模型服务尚需实际验收。此次 Instruments 录制未完成，尚无性能测量通过结论，也尚未提交 App Store。
+当前主 App 与小组件已经完成签名模拟器构建及未签名 Release / iPhoneOS SDK 构建，已实际检查 iPhone 17 Pro、iPad、小屏 iPhone、深色模式和大字号纵向布局。核心包现有 90 项测试通过；App 单元与集成测试 43 项、UI 测试 16 项在 iOS 27 模拟器通过（模拟器预先授予日历与通知权限；App Group 用例需签名构建，未签名时跳过），涵盖 PDF 导入、真实日历、通知队列、Siri 查询文案与坏记录保护。另在 iPhone Duo（iOS 27.1 模拟器）折叠状态的外屏上通过 16 项 UI 测试与 45 项 App 测试；模拟器无法切换到展开状态，内屏布局尚未实际检查。准确日志与截图见 [发布与验收记录](docs/RELEASE.md)。运行验证使用 iOS 27 模拟器；iOS 26 运行、签名真机、CloudKit 跨设备同步及自配模型服务尚需实际验收。此次 Instruments 录制未完成，尚无性能测量通过结论，也尚未提交 App Store。
 
 已排入系统的本地通知不依赖 App 常驻。后台刷新由 iOS 决定，不能保证在某个时间执行；长时间不打开 App 时，超过当前队列覆盖范围的课次不会自动获得可靠保证。需要全学期日历提醒时使用系统日历功能，并检查系统通知设置。
 

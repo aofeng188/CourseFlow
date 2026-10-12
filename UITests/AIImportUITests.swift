@@ -28,7 +28,7 @@ final class AIImportUITests: XCTestCase {
         scrollTo(editor, in: app)
         editor.tap()
         editor.typeText(json)
-        let review = app.buttons["ai-import-review"]
+        let review = app.sheetBarButton("ai-import-review")
         XCTAssertTrue(review.isEnabled)
         review.tap()
         XCTAssertTrue(app.navigationBars["导入课表"].waitForExistence(timeout: 8))
@@ -52,7 +52,7 @@ final class AIImportUITests: XCTestCase {
         let weeks = app.textFields["import-lesson-weeks"]
         scrollTo(weeks, in: app)
         XCTAssertEqual(weeks.value as? String, "1-8 周")
-        app.buttons["import-lesson-save"].tap()
+        app.sheetBarButton("import-lesson-save").tap()
 
         XCTAssertTrue(app.navigationBars["导入课表"].waitForExistence(timeout: 5))
         let commit = app.buttons["import-confirm"]
@@ -60,7 +60,7 @@ final class AIImportUITests: XCTestCase {
         XCTAssertTrue(commit.isEnabled)
         commit.tap()
         XCTAssertTrue(app.buttons["week-picker"].waitForExistence(timeout: 8))
-        app.tabBars.buttons["课程"].tap()
+        app.tab("课程").tap()
         XCTAssertTrue(app.navigationBars["课程"].waitForExistence(timeout: 5))
         let savedCourse = app.staticTexts[editedName].firstMatch
         scrollTo(savedCourse, in: app)
@@ -86,8 +86,9 @@ final class AIImportUITests: XCTestCase {
             if element.exists && element.isHittable { return }
             // A full-screen flick can skip a field while the keyboard covers it.
             // Use a short stroke in the visible form, above the keyboard.
-            let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.88, dy: 0.52))
-            let end = app.coordinate(withNormalizedOffset: CGVector(dx: 0.88, dy: 0.32))
+            let origin = app.coordinate(withNormalizedOffset: .zero), x = app.contentTrailingX
+            let start = origin.withOffset(CGVector(dx: x, dy: app.frame.height * 0.52))
+            let end = origin.withOffset(CGVector(dx: x, dy: app.frame.height * 0.32))
             start.press(forDuration: 0.05, thenDragTo: end)
         }
         XCTAssertTrue(element.exists && element.isHittable, "Expected element to become reachable after scrolling: \(element)", file: file, line: line)
