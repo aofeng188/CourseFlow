@@ -98,7 +98,11 @@ struct TimetableView: View {
                     Button { changeWeek(1, semester: semester) } label: { Image(systemName: "chevron.right").fontWeight(.semibold).frame(width: 36, height: 38) }.disabled(week == semester.weekCount).accessibilityLabel("下一周")
                 }.buttonStyle(.plain).glassEffect().fixedSize().layoutPriority(2)
                 VStack(alignment: .leading, spacing: 1) {
-                    Text(weekRange(semester)).font(.caption.weight(.medium)).monospacedDigit()
+                    // Beside “回到本周” on a narrow screen, such as a folded iPhone Duo, only the week's first day fits.
+                    ViewThatFits(in: .horizontal) {
+                        Text(weekRange(semester))
+                        Text("\(Display.day(ScheduleEngine.date(week: week, weekday: 1, semester: semester), in: semester)) 起")
+                    }.font(.caption.weight(.medium)).monospacedDigit()
                     Text(weekEvents.isEmpty ? "没有课" : "\(weekEvents.count) 次课").font(.caption2).foregroundStyle(.secondary)
                 }.lineLimit(1).minimumScaleFactor(0.7)
                 Spacer(minLength: 0)
@@ -263,9 +267,15 @@ struct CurrentCourseCard: View {
         layout {
             VStack(alignment: .leading, spacing: 6) {
                 Text(event.courseName).font(.title2.weight(.bold)).lineLimit(2)
-                HStack(spacing: 12) {
-                    Label(event.location.isEmpty ? "地点待补充" : event.location, systemImage: "mappin")
-                    if !event.teacher.isEmpty && !large { Label(event.teacher, systemImage: "person").lineLimit(1) }
+                let location = Label(event.location.isEmpty ? "地点待补充" : event.location, systemImage: "mappin")
+                Group {
+                    if event.teacher.isEmpty || large { location } else {
+                        // On a narrow card, such as a folded iPhone Duo, the teacher gives way before the room is cut short.
+                        ViewThatFits(in: .horizontal) {
+                            HStack(spacing: 12) { location; Label(event.teacher, systemImage: "person") }
+                            location
+                        }
+                    }
                 }.font(.subheadline).foregroundStyle(.secondary).lineLimit(large ? nil : 1)
             }
             if !large { Spacer(minLength: 0) }

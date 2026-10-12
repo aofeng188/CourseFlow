@@ -40,7 +40,7 @@ final class ImportUITests: XCTestCase {
         let weeks = app.textFields["import-lesson-weeks"]
         scrollTo(weeks, in: app)
         XCTAssertEqual(weeks.value as? String, "1-8 周")
-        app.buttons["import-lesson-save"].tap()
+        app.sheetBarButton("import-lesson-save").tap()
 
         XCTAssertTrue(app.navigationBars["导入课表"].waitForExistence(timeout: 5))
         let commit = app.buttons["import-confirm"]
@@ -48,7 +48,7 @@ final class ImportUITests: XCTestCase {
         XCTAssertTrue(commit.isEnabled, "A complete course with explicit times should be ready to import.")
         commit.tap()
         XCTAssertTrue(app.buttons["week-picker"].waitForExistence(timeout: 8))
-        app.tabBars.buttons["课程"].tap()
+        app.tab("课程").tap()
         XCTAssertTrue(app.navigationBars["课程"].waitForExistence(timeout: 5))
         let savedCourse = app.staticTexts[courseName].firstMatch
         scrollTo(savedCourse, in: app)

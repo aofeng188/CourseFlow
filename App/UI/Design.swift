@@ -175,7 +175,8 @@ struct CourseRow: View {
             VStack(alignment: .leading, spacing: 3) {
                 Text(Display.time(occurrence.start, zone: timeZoneID)).font(.system(.subheadline, design: .rounded, weight: .semibold))
                 Text(Display.time(occurrence.end, zone: timeZoneID)).font(.caption).foregroundStyle(.secondary)
-            }.monospacedDigit().frame(width: typeSize.isAccessibilitySize ? nil : 48, alignment: .leading)
+            // Sized by the text: a fixed width wraps the time at larger text sizes, such as iPhone Duo's default.
+            }.monospacedDigit().lineLimit(1).fixedSize().frame(minWidth: typeSize.isAccessibilitySize ? nil : 48, alignment: .leading)
             if !typeSize.isAccessibilitySize { CourseDot(colorIndex: occurrence.colorIndex) }
             VStack(alignment: .leading, spacing: 5) {
                 Text(occurrence.courseName).font(.headline).foregroundStyle(.primary)

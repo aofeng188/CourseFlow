@@ -3,8 +3,10 @@ import XCTest
 final class CourseFlowUITests: XCTestCase {
     @MainActor func testEnableNotifications() throws {
         let app = XCUIApplication(); app.launchArguments = ["--uitesting", "--demo"]; app.launch()
-        app.tabBars.buttons["设置"].tap()
+        app.tab("设置").tap()
         let toggle = app.switches["上课提醒"]
+        // A short screen starts with the switch below the fold, where the lazy list has not created it yet.
+        for _ in 0..<4 where !toggle.waitForExistence(timeout: 2) { app.swipeUp(velocity: .slow) }
         XCTAssertTrue(toggle.waitForExistence(timeout: 5))
         if toggle.value as? String != "1" {
             toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.92, dy: 0.5)).tap()
@@ -33,9 +35,9 @@ final class CourseFlowUITests: XCTestCase {
         app.buttons["week-picker"].tap()
         XCTAssertTrue(app.navigationBars["选择教学周"].waitForExistence(timeout: 3))
         app.buttons["完成"].tap()
-        app.tabBars.buttons["课程"].tap()
+        app.tab("课程").tap()
         XCTAssertTrue(app.navigationBars["课程"].waitForExistence(timeout: 3))
-        app.tabBars.buttons["设置"].tap()
+        app.tab("设置").tap()
         XCTAssertTrue(app.staticTexts["学期与作息"].exists)
         let attachment = XCTAttachment(screenshot: app.screenshot()); attachment.name = "Settings"; attachment.lifetime = .keepAlways; add(attachment)
     }
@@ -55,7 +57,7 @@ final class CourseFlowUITests: XCTestCase {
         name.tap(); name.typeText("验收测试课程")
         app.buttons["save-course"].tap()
         XCTAssertTrue(app.buttons["week-picker"].waitForExistence(timeout: 5))
-        app.tabBars.buttons["课程"].tap()
+        app.tab("课程").tap()
         XCTAssertTrue(app.staticTexts["验收测试课程"].waitForExistence(timeout: 5))
         app.staticTexts["验收测试课程"].tap()
         XCTAssertTrue(app.navigationBars["课程详情"].waitForExistence(timeout: 5))
@@ -70,7 +72,7 @@ final class CourseFlowUITests: XCTestCase {
         zone.tap()
         XCTAssertTrue(app.navigationBars["学校时区"].waitForExistence(timeout: 5))
         let picker = XCTAttachment(screenshot: app.screenshot()); picker.name = "Time zone picker"; picker.lifetime = .keepAlways; add(picker)
-        let search = app.searchFields.firstMatch
+        let search = app.openSearchField()
         XCTAssertTrue(search.waitForExistence(timeout: 3))
         search.tap(); search.typeText("香港")
         let hongKong = app.buttons.containing(NSPredicate(format: "label CONTAINS 'Asia/Hong_Kong'")).firstMatch

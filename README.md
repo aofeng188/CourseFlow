@@ -70,7 +70,7 @@ DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
 
 ## 验证状态与运行边界
 
-当前主 App 与小组件已经完成签名模拟器构建及未签名 Release / iPhoneOS SDK 构建，已实际检查 iPhone 17 Pro、iPad、小屏 iPhone、深色模式和大字号纵向布局。核心包现有 90 项测试通过；App 单元与集成测试 43 项、UI 测试 16 项在 iOS 27 模拟器通过（模拟器预先授予日历与通知权限；App Group 用例需签名构建，未签名时跳过），涵盖 PDF 导入、真实日历、通知队列、Siri 查询文案与坏记录保护。准确日志与截图见 [发布与验收记录](docs/RELEASE.md)。运行验证使用 iOS 27 模拟器；iOS 26 运行、签名真机、CloudKit 跨设备同步及自配模型服务尚需实际验收。此次 Instruments 录制未完成，尚无性能测量通过结论，也尚未提交 App Store。
+当前主 App 与小组件已经完成签名模拟器构建及未签名 Release / iPhoneOS SDK 构建，已实际检查 iPhone 17 Pro、iPad、小屏 iPhone、深色模式和大字号纵向布局。核心包现有 90 项测试通过；App 单元与集成测试 43 项、UI 测试 16 项在 iOS 27 模拟器通过（模拟器预先授予日历与通知权限；App Group 用例需签名构建，未签名时跳过），涵盖 PDF 导入、真实日历、通知队列、Siri 查询文案与坏记录保护。另在 iPhone Duo（iOS 27.1 模拟器）折叠状态的外屏上通过 16 项 UI 测试与 45 项 App 测试；模拟器无法切换到展开状态，内屏布局尚未实际检查。准确日志与截图见 [发布与验收记录](docs/RELEASE.md)。运行验证使用 iOS 27 模拟器；iOS 26 运行、签名真机、CloudKit 跨设备同步及自配模型服务尚需实际验收。此次 Instruments 录制未完成，尚无性能测量通过结论，也尚未提交 App Store。
 
 已排入系统的本地通知不依赖 App 常驻。后台刷新由 iOS 决定，不能保证在某个时间执行；长时间不打开 App 时，超过当前队列覆盖范围的课次不会自动获得可靠保证。需要全学期日历提醒时使用系统日历功能，并检查系统通知设置。
 
