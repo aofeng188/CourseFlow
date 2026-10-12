@@ -1,11 +1,11 @@
 {
   "artifact": "CourseFlow-Trial-SideStore-unsigned.ipa",
-  "createdAt": "2026-10-11T17:32:55.465834+00:00",
+  "createdAt": "2026-10-12T08:01:37.615836+00:00",
   "displayName": "CourseFlow",
   "homeScreenName": "课序",
   "bundleIdentifier": "com.courseflow.app.trial",
   "version": "1.0",
-  "build": "8",
+  "build": "9",
   "minimumOSVersion": "26.0",
   "platform": "iPhoneOS",
   "architectures": [
@@ -21,7 +21,7 @@
     "Live Activities",
     "Remote push"
   ],
-  "sizeBytes": 5450236,
-  "sha256": "b34de045f79e7b7f15a1f8b07835f3dc95bcfb4817bf8916d4c8dacbdd156b6b",
+  "sizeBytes": 5450281,
+  "sha256": "7e0d70fa7ad970bca0f45743dfdb8923d000194108b40c794d403c86532fb428",
   "xcode": "Xcode 27.1\nBuild version 27A9275"
 }
