@@ -93,13 +93,27 @@ final class TimeHolidayUITests: XCTestCase {
         let app = launch("2026-10-05T08:20:00+08:00")
         XCTAssertTrue(app.otherElements["grid-now-line"].exists || app.staticTexts["grid-now-line"].exists)
         capture(app, name: "当前时间周课表")
-        app.buttons["课表显示与分享"].tap()
-        app.buttons["显示日程列表"].tap()
+        app.buttons["日程列表"].tap()
         XCTAssertTrue(app.otherElements["now-marker"].exists || app.staticTexts["now-marker"].exists)
         XCTAssertTrue(app.staticTexts["正在上课"].firstMatch.exists)
         let marker = app.descendants(matching: .any).matching(identifier: "now-marker").firstMatch
         reveal(marker, in: app)
         capture(app, name: "当前时间日程列表")
+        app.buttons["周课表"].tap()
+        XCTAssertTrue(app.otherElements["grid-now-line"].waitForExistence(timeout: 3) || app.staticTexts["grid-now-line"].exists)
+    }
+    @MainActor func testCurrentCourseCardOpensDashboard() {
+        let app = launch("2026-10-05T08:20:00+08:00")
+        let card = app.descendants(matching: .any).matching(identifier: "current-course-card").firstMatch
+        XCTAssertTrue(card.waitForExistence(timeout: 5))
+        card.tap()
+        let close = app.buttons["dashboard-close"]
+        XCTAssertTrue(close.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["正在上课"].firstMatch.exists)
+        XCTAssertTrue(app.buttons["dashboard-detail"].exists)
+        capture(app, name: "上课大字仪表盘")
+        close.tap()
+        XCTAssertTrue(app.buttons["week-picker"].waitForExistence(timeout: 5))
     }
     @MainActor func testPendingMakeupCanWaitThenConfirm() {
         let app = launch("2026-10-10T08:20:00+08:00")
@@ -207,7 +221,7 @@ final class TimeHolidayUITests: XCTestCase {
     }
     @MainActor func testExportHasNoLiveTimeMarkers() {
         let app = launch("2026-10-05T08:20:00+08:00")
-        app.buttons["课表显示与分享"].tap()
+        app.buttons["分享与更多"].tap()
         app.buttons["分享本周图片"].tap()
         XCTAssertTrue(app.buttons["关闭"].waitForExistence(timeout: 5) || app.otherElements["ActivityListView"].exists || app.buttons["Copy"].exists || app.buttons["拷贝"].exists)
         capture(app, name: "静态课表分享")
@@ -215,7 +229,7 @@ final class TimeHolidayUITests: XCTestCase {
 
     @MainActor func testPDFExportStillWorks() {
         let app = launch("2026-10-05T08:20:00+08:00")
-        app.buttons["课表显示与分享"].tap()
+        app.buttons["分享与更多"].tap()
         app.buttons["分享本周 PDF"].tap()
         XCTAssertTrue(app.buttons["关闭"].waitForExistence(timeout: 5) || app.otherElements["ActivityListView"].exists || app.buttons["Copy"].exists || app.buttons["拷贝"].exists)
     }
