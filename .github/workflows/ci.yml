@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  core-tests:
+    name: 核心测试（swift test）
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - name: 显示工具版本
+        run: xcodebuild -version && swift --version
+      - name: 运行 CourseKit 测试
+        run: swift test --parallel
+
+  app-build:
+    name: App 构建（模拟器，不签名）
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - name: 显示工具版本
+        run: xcodebuild -version
+      - name: 编译 App、小组件与测试目标
+        # build-for-testing also compiles CourseFlowTests and CourseFlowUITests
+        # without needing a booted simulator.
+        run: |
+          set -o pipefail
+          xcodebuild -project CourseFlow.xcodeproj -scheme CourseFlow \
+            -configuration Debug -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build/DerivedData \
+            CODE_SIGNING_ALLOWED=NO build-for-testing
+      - name: 编译试用版
+        run: |
+          set -o pipefail
+          xcodebuild -project CourseFlow.xcodeproj -scheme CourseFlowTrial \
+            -configuration Debug -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build/DerivedData \
+            CODE_SIGNING_ALLOWED=NO build
