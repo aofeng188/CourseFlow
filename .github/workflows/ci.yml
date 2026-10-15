@@ -31,16 +31,29 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
-      - name: 列出已安装的 Xcode
-        run: ls -d /Applications/Xcode*.app
       # The app uses iOS 27 SDK APIs (e.g. FoundationModels Attachment), so it
-      # needs the newest Xcode on the image, beta included.
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest
+      # needs Xcode 27 or later. Hosted runners may not ship it yet; in that
+      # case skip the build with a visible warning instead of failing every PR.
+      - name: 选择带 iOS 27 SDK 的 Xcode
+        id: xcode
+        run: |
+          ls -d /Applications/Xcode*.app
+          for app in $(ls -d /Applications/Xcode_*.app | sort -V -r); do
+            sdk=$(DEVELOPER_DIR="$app/Contents/Developer" xcrun --sdk iphonesimulator --show-sdk-version 2>/dev/null || true)
+            if [ -n "$sdk" ] && [ "${sdk%%.*}" -ge 27 ]; then
+              echo "DEVELOPER_DIR=$app/Contents/Developer" >> "$GITHUB_ENV"
+              echo "found=true" >> "$GITHUB_OUTPUT"
+              echo "使用 $app（iOS Simulator SDK $sdk）"
+              exit 0
+            fi
+          done
+          echo "found=false" >> "$GITHUB_OUTPUT"
+          echo "::warning title=跳过 App 构建::运行器上没有带 iOS 27 SDK 的 Xcode，本次未编译 App。等 GitHub 更新 macos-26 镜像后会自动恢复。"
       - name: 显示工具版本
+        if: steps.xcode.outputs.found == 'true'
         run: xcodebuild -version && xcodebuild -showsdks | grep -i iphonesimulator
       - name: 编译 App、小组件与测试目标
+        if: steps.xcode.outputs.found == 'true'
         # build-for-testing also compiles CourseFlowTests and CourseFlowUITests
         # without needing a booted simulator.
         run: |
@@ -51,6 +64,7 @@ jobs:
             -derivedDataPath build/DerivedData \
             CODE_SIGNING_ALLOWED=NO build-for-testing
       - name: 编译试用版
+        if: steps.xcode.outputs.found == 'true'
         run: |
           set -o pipefail
           xcodebuild -project CourseFlow.xcodeproj -scheme CourseFlowTrial \
