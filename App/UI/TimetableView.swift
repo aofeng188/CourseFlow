@@ -31,6 +31,8 @@ struct TimetableView: View {
                         VStack(spacing: 16) {
                             HolidayBanner(semester: semester, now: now) { holidaySheet = $0 }
                             CurrentCourseCard(occurrences: store.occurrences, semester: semester, pendingMakeup: pendingMakeup(on: now, semester: semester), onCourse: onCourse)
+                            // The grid needs more room than the accessibility text sizes leave, so those always use the list.
+                            if !typeSize.isAccessibilitySize { viewModePicker }
                             weekControls(semester)
                             if listMode || typeSize.isAccessibilitySize { agenda(semester, now: now) }
                             else { WeekGrid(semester: semester, week: week, occurrences: weekEvents, bells: store.bells, hideEmptyWeekends: store.preferences.hideEmptyWeekends, now: now, holidayDays: semester.holidayHintsEnabled == false ? [] : store.holidays.days(for: semester), pendingMakeupKeys: pendingKeys(semester), onCourse: onCourse) }
@@ -50,11 +52,10 @@ struct TimetableView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Menu {
-                            Button(listMode ? "显示周课表" : "显示日程列表", systemImage: listMode ? "calendar" : "list.bullet") { listMode.toggle() }
                             Button("分享本周图片", systemImage: "photo") { exportWeek(semester, pdf: false) }
                             Button("分享本周 PDF", systemImage: "doc") { exportWeek(semester, pdf: true) }
                             if let label = store.undoLabel { Button("撤销“\(label)”", systemImage: "arrow.uturn.backward") { store.undo() } }
-                        } label: { Image(systemName: "ellipsis").accessibilityLabel("课表显示与分享") }
+                        } label: { Image(systemName: "ellipsis").accessibilityLabel("分享与更多") }
                     }
                 }
             } else { welcome.navigationTitle("课序") }
@@ -72,6 +73,14 @@ struct TimetableView: View {
         if raw < 1 { return "\(semester.name) · 尚未开学" }
         if raw > semester.weekCount { return "\(semester.name) · 已结束" }
         return "第 \(raw) 周 · \(semester.name)"
+    }
+    private var viewModePicker: some View {
+        Picker("显示方式", selection: $listMode.animation(reduceMotion ? nil : .snappy(duration: 0.24))) {
+            Text("周课表").tag(false)
+            Text("日程列表").tag(true)
+        }
+        .pickerStyle(.segmented).labelsHidden()
+        .accessibilityIdentifier("view-mode")
     }
     @ViewBuilder private func weekControls(_ semester: Semester) -> some View {
         if typeSize.isAccessibilitySize {
@@ -228,6 +237,9 @@ struct CurrentCourseCard: View {
     let semester: Semester
     var pendingMakeup = false
     let onCourse: (Occurrence) -> Void
+    @State private var showDashboard = false
+    /// A course chosen from the dashboard's 详情 button, opened once the dashboard has closed.
+    @State private var detail: Occurrence?
     var body: some View {
         // Lesson boundaries fall on whole minutes and the countdown text updates itself,
         // so a per-minute timeline is exact without re-evaluating every second.
@@ -239,9 +251,11 @@ struct CurrentCourseCard: View {
             let active = [CurrentStatus.Kind.inClass, .onBreak, .upcoming].contains(status.kind)
             VStack(alignment: .leading, spacing: 14) {
                 HStack(spacing: 8) {
-                    StatusPill(text: pendingMakeup ? "调休课程待定" : title(status.kind), color: pendingMakeup ? .orange : (active ? color : .secondary), live: status.kind == .inClass)
+                    StatusPill(text: pendingMakeup ? "调休课程待定" : Self.title(status.kind), color: pendingMakeup ? .orange : (active ? color : .secondary), live: status.kind == .inClass)
                     Spacer(minLength: 0)
                     if let current = status.current { Text("\(Display.time(current.start, zone: semester.timeZoneID))–\(Display.time(current.end, zone: semester.timeZoneID))").font(.caption).foregroundStyle(.secondary).monospacedDigit() }
+                    // Hints that a tap opens the large-type dashboard.
+                    if event != nil { Image(systemName: "arrow.up.left.and.arrow.down.right").font(.caption.weight(.semibold)).foregroundStyle(.secondary).accessibilityHidden(true) }
                 }
                 if pendingMakeup { Text("原课表待核对，确认学校安排后更新课程与提醒。").font(.caption).foregroundStyle(.orange) }
                 if let event {
@@ -257,8 +271,25 @@ struct CurrentCourseCard: View {
                     .overlay(RoundedRectangle(cornerRadius: Theme.cardRadius, style: .continuous).fill(LinearGradient(colors: [color.opacity(active ? 0.17 : 0.08), color.opacity(0.02)], startPoint: .topLeading, endPoint: .bottomTrailing)))
             }
             .contentShape(RoundedRectangle(cornerRadius: Theme.cardRadius, style: .continuous))
-            .onTapGesture { if let event { onCourse(event) } }
+            .onTapGesture { if event != nil { showDashboard = true } }
+            .contextMenu {
+                if let event {
+                    Button("大字显示", systemImage: "textformat.size") { showDashboard = true }
+                    Button("课程详情", systemImage: "info.circle") { onCourse(event) }
+                }
+            }
             .accessibilityElement(children: .combine)
+            .accessibilityAddTraits(event != nil ? .isButton : [])
+            .accessibilityHint(event != nil ? "打开大字显示" : "")
+            .accessibilityAction(named: "课程详情") { if let event { onCourse(event) } }
+            .accessibilityIdentifier("current-course-card")
+        }
+        .fullScreenCover(isPresented: $showDashboard, onDismiss: {
+            if let detail { self.detail = nil; onCourse(detail) }
+        }) {
+            CourseDashboardView(occurrences: occurrences, semester: semester, pendingMakeup: pendingMakeup,
+                                onClose: { showDashboard = false },
+                                onDetail: { detail = $0; showDashboard = false })
         }
     }
     @ViewBuilder private func lesson(_ event: Occurrence, status: CurrentStatus, now: Date) -> some View {
@@ -279,10 +310,10 @@ struct CurrentCourseCard: View {
                 }.font(.subheadline).foregroundStyle(.secondary).lineLimit(large ? nil : 1)
             }
             if !large { Spacer(minLength: 0) }
-            if let target = countdownTarget(status), target > now {
+            if let target = Self.countdownTarget(status), target > now {
                 VStack(alignment: large ? .leading : .trailing, spacing: 3) {
                     if status.current != nil || target.timeIntervalSince(now) < 4 * 3600 {
-                        countdown(to: target, from: now).font(.system(.title2, design: .rounded, weight: .semibold)).monospacedDigit().lineLimit(1).minimumScaleFactor(0.7).multilineTextAlignment(large ? .leading : .trailing)
+                        Self.countdown(to: target, from: now).font(.system(.title2, design: .rounded, weight: .semibold)).monospacedDigit().lineLimit(1).minimumScaleFactor(0.7).multilineTextAlignment(large ? .leading : .trailing)
                         Text(status.kind == .inClass ? "本节剩余" : (status.kind == .onBreak ? "后继续上课" : "后开始上课")).font(.caption2).foregroundStyle(.secondary)
                     } else {
                         Text(Display.relativeDay(target, now: now, in: semester)).font(.caption.weight(.medium)).foregroundStyle(.secondary)
@@ -339,17 +370,17 @@ struct CurrentCourseCard: View {
             }
         }
     }
-    private func title(_ kind: CurrentStatus.Kind) -> String {
+    static func title(_ kind: CurrentStatus.Kind) -> String {
         switch kind { case .inClass: "正在上课"; case .onBreak: "课间休息"; case .upcoming: "下一节课"; case .finishedToday: "今天的课已结束"; case .beforeSemester: "学期尚未开始"; case .afterSemester: "学期已结束"; case .empty: "今天，从容一点" }
     }
     /// A fixed preview clock shows the remaining time at that moment, so screenshots do not depend
     /// on the day the tests run; otherwise the system timer text counts down live.
-    private func countdown(to target: Date, from now: Date) -> Text {
+    static func countdown(to target: Date, from now: Date) -> Text {
         guard PreviewClock.fixedDate != nil else { return Text(timerInterval: now...target, countsDown: true) }
         let remaining = Duration.seconds(Int(target.timeIntervalSince(now)))
         return Text(remaining.formatted(.time(pattern: remaining >= .seconds(3600) ? .hourMinuteSecond : .minuteSecond)))
     }
-    private func countdownTarget(_ status: CurrentStatus) -> Date? { status.kind == .inClass ? status.segment?.end : (status.kind == .onBreak ? status.nextSegment?.start : status.next?.start) }
+    static func countdownTarget(_ status: CurrentStatus) -> Date? { status.kind == .inClass ? status.segment?.end : (status.kind == .onBreak ? status.nextSegment?.start : status.next?.start) }
 }
 
 struct WeekGrid: View {
