@@ -111,16 +111,17 @@ struct StatusPill: View {
 struct ClassProgressBar: View {
     var progress: LessonProgress
     var color: Color
+    var height: CGFloat = 6
     var body: some View {
         WeightedRow(weights: progress.parts.map(\.weight)) {
             ForEach(Array(progress.parts.enumerated()), id: \.offset) { _, part in
                 GeometryReader { geometry in
                     ZStack(alignment: .leading) {
                         Capsule().fill(color.opacity(0.15))
-                        if part.fraction > 0 { Capsule().fill(color.gradient).frame(width: max(6, geometry.size.width * part.fraction)) }
+                        if part.fraction > 0 { Capsule().fill(color.gradient).frame(width: max(height, geometry.size.width * part.fraction)) }
                     }
                 }
-                .frame(height: 6)
+                .frame(height: height)
             }
         }
         .accessibilityElement()
