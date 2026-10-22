@@ -111,6 +111,9 @@ final class TimeHolidayUITests: XCTestCase {
         XCTAssertTrue(close.waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["正在上课"].firstMatch.exists)
         XCTAssertTrue(app.buttons["dashboard-detail"].exists)
+        // The speedometer stays off until turned on, so opening the dashboard never asks for location.
+        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "dashboard-speedometer").firstMatch.exists)
+        XCTAssertTrue(app.buttons["dashboard-speed-toggle"].exists)
         capture(app, name: "上课大字仪表盘")
         close.tap()
         XCTAssertTrue(app.buttons["week-picker"].waitForExistence(timeout: 5))

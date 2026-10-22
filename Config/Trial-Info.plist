@@ -44,6 +44,8 @@
 	<string>使用相机扫描你的课表或学校作息表，识别结果由你核对后保存。</string>
 	<key>NSCalendarsFullAccessUsageDescription</key>
 	<string>将课程添加到专属课表日历，并在改课时更新已有事件，避免重复添加。只管理课序创建的课程事件。</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>在课程大字显示中测量骑车或步行的时速。位置只在本机计算速度，不会保存或上传。</string>
 	<key>NSSupportsLiveActivities</key>
 	<false/>
 	<key>UIBackgroundModes</key>
